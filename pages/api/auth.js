@@ -12,9 +12,9 @@ const authHandler = async (req, res) => {
     try {
       if (req.body.isRegister) {
         const { username, email, password, confirmPassword } = req.body;
-        console.log(req.body);
+
         const user = await collection.findOne({ email });
-        console.log(user);
+
         if (user) return res.json({ message: "That user already exists" });
 
         if (password !== confirmPassword)
@@ -31,9 +31,7 @@ const authHandler = async (req, res) => {
         res.json({ message: "Registered successfuly!" });
       } else {
         const { email, password } = req.body;
-
-        const user = await collection.find({ email });
-
+        const user = await collection.findOne({ email });
         if (!user)
           return res.json({
             message: "The user with that email doesn't exist",
@@ -50,7 +48,15 @@ const authHandler = async (req, res) => {
             { expiresIn: "15m" }
           );
 
-          res.json({ message: "Logged in!", token });
+          res.json({
+            message: "Logged in!",
+            user: {
+              username: user.username,
+              email: user.email,
+              id: user._id,
+              token,
+            },
+          });
         }
       }
     } catch (error) {

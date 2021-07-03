@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import styles from "../styles/Register.module.css";
 import Link from "next/link";
 export default function register() {
+  const router = useRouter();
+
   const [inputs, setInputs] = useState({
     username: "",
     email: "",
@@ -36,6 +39,9 @@ export default function register() {
 
         const resultJSON = await result.json();
 
+        if (resultJSON.message === "Registered successfuly!")
+          router.push("/login");
+
         console.log(resultJSON);
       } catch (error) {
         console.log(error);
@@ -61,7 +67,7 @@ export default function register() {
             onChange={(e) => handleChange(e)}
             required
           />
-          <label for="username">Username</label>
+          <label htmlFor="username">Username</label>
         </div>
         <div className={styles.input_group}>
           <input
@@ -72,7 +78,7 @@ export default function register() {
             onChange={(e) => handleChange(e)}
             required
           />
-          <label for="email">E-mail</label>
+          <label htmlFor="email">E-mail</label>
         </div>
         <div className={styles.input_group}>
           <input
@@ -83,7 +89,7 @@ export default function register() {
             onChange={(e) => handleChange(e)}
             required
           />
-          <label for="password">Password</label>
+          <label htmlFor="password">Password</label>
         </div>
         <div className={styles.input_group}>
           <input
@@ -94,7 +100,7 @@ export default function register() {
             onChange={(e) => handleChange(e)}
             required
           />
-          <label for="confirmPassword">Confirm password</label>
+          <label htmlFor="confirmPassword">Confirm password</label>
         </div>
         <button type="submit">Register</button>
         <p>
