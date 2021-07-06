@@ -1,0 +1,11 @@
+.submitButton {
+  display: block;
+  width: 100%;
+  background-color: #e50914;
+  border: none;
+  padding: 15px;
+  border-radius: 5px;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+}

@@ -1,0 +1,41 @@
+.input_group {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 30px 15px 15px 15px;
+  border: none;
+  background: rgb(22, 22, 22);
+  border-radius: 5px;
+  color: #f3f3f3;
+  margin: 20px 0;
+}
+
+.input_group input {
+  color: white;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 16px;
+}
+
+.input_group:focus-within {
+  background: rgb(34, 34, 34);
+}
+
+.input_group label {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  cursor: text;
+  color: #777;
+}
+
+.input_group:focus-within label,
+.input_group input:not(:placeholder-shown) ~ label {
+  top: 10px;
+  transform: translateY(0);
+  font-size: 12px;
+}
