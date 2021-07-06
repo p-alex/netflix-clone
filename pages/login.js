@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import styles from "../styles/Login.module.css";
+import Form from "../components/Form";
+import InputGroup from "../components/InputGroup";
+import SubmitButton from "../components/SubmitButton";
 import Link from "next/link";
+import styles from "../styles/Login.module.css";
 export default function register() {
   const router = useRouter();
 
@@ -10,10 +13,22 @@ export default function register() {
     password: "",
     isRegister: false,
   });
+
+  const inputList = [
+    { label: "E-mail", setNameId: "email", type: "email", placeholder: " " },
+    {
+      label: "Password",
+      setNameId: "password",
+      type: "password",
+      placeholder: " ",
+    },
+  ];
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email && password) {
-      try {
+    const { email, password } = inputs;
+    try {
+      if (email && password) {
         const result = await fetch("http://localhost:3000/api/auth", {
           method: "POST",
           headers: {
@@ -21,21 +36,18 @@ export default function register() {
           },
           body: JSON.stringify(inputs),
         });
-
         const resultJSON = await result.json();
-        //if (resultJSON) localStorage.setItem("user", JSON.stringify(user));
-
         const user = resultJSON.user;
-
         if (resultJSON.message === "Logged in!") {
           await localStorage.setItem("user", JSON.stringify(user));
           router.push("/");
         }
-      } catch {
-        console.log(resultJSON);
       }
+    } catch {
+      console.log(resultJSON);
     }
   };
+
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
@@ -48,35 +60,28 @@ export default function register() {
       style={{ backgroundImage: "url(/images/bg/auth-bg.jpg)" }}
     >
       <div className={styles.black_overlay}></div>
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <Form submitFunc={handleSubmit}>
         <div className={styles.logo}>
           <img src="/images/logo/netflix-logo.png" alt="" />
         </div>
-        <div className={styles.input_group}>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder=" "
-            onChange={(e) => handleChange(e)}
-          />
-          <label htmlFor="email">E-mail</label>
-        </div>
-        <div className={styles.input_group}>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder=" "
-            onChange={(e) => handleChange(e)}
-          />
-          <label htmlFor="password">Password</label>
-        </div>
-        <button type="submit">Login</button>
+        {inputList.map((input) => {
+          return (
+            <InputGroup
+              key={input.label}
+              setId={input.setNameId}
+              setType={input.type}
+              setPlaceholder={input.placeholder}
+              setName={input.setNameId}
+              setLabel={input.label}
+              handleChangeFunc={handleChange}
+            />
+          );
+        })}
+        <SubmitButton>Login</SubmitButton>
         <p>
           Need an account? <Link href="/register">Register now</Link>
         </p>
-      </form>
+      </Form>
     </div>
   );
 }
