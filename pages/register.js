@@ -51,33 +51,27 @@ export default function register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      inputs.username &&
-      inputs.email &&
-      inputs.password &&
-      inputs.confirmPassword
-    ) {
-      try {
-        const result = await fetch("http://localhost:3000/api/auth", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ ...inputs, date: Date.now() }),
-        });
+    try {
+      const result = await fetch("http://localhost:3000/api/auth", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...inputs, date: Date.now() }),
+      });
 
-        const resultJSON = await result.json();
+      const resultJSON = await result.json();
 
-        resultJSON.message === "Registered successfuly!"
-          ? setFeedback(
-              "We sent you an email to verify your account! Check your email"
-            )
-          : setFeedback(resultJSON.message);
-      } catch (error) {
-        console.log(error);
-      }
+      resultJSON.message === "Registered successfuly!"
+        ? setFeedback(
+            "We sent you an email to verify your account! Check your email"
+          )
+        : setFeedback(resultJSON.message);
+    } catch (error) {
+      console.log(error);
     }
   };
+
   return (
     <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.jpg)"}>
       <main>

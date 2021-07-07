@@ -6,32 +6,52 @@ const authHandler = async (req, res) => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
+
   const db = client.db();
+
   const collection = db.collection("users");
+
   if (req.method === "POST") {
     try {
       if (req.body.isRegister) {
-        const { username, email, password, confirmPassword } = req.body;
+        const { username, email, password, confirmPassword, date } = req.body;
 
-        const user = await collection.findOne({ email });
+        const userWithEmail = await collection.findOne({ email });
 
-        if (user) return res.json({ message: "That user already exists" });
+        const userWithUsername = await collection.findOne({ username });
+
+        if (!username || !email || !password || !confirmPassword)
+          return res.json({ message: "Please fill in all fields" });
+
+        if (userWithEmail)
+          return res.json({ message: "A user with that email already exists" });
+
+        if (userWithUsername)
+          return res.json({
+            message: "A user with that username already exists",
+          });
 
         if (password !== confirmPassword)
           return res.json({ message: "Passwords must match" });
 
         const hashedPassword = await bcrypt.hash(password, 12);
 
-        await collection.insertOne({
+        const result = await collection.insertOne({
           username,
           email,
           password: hashedPassword,
+          date: new Date(date),
         });
 
         res.json({ message: "Registered successfuly!" });
       } else {
         const { email, password } = req.body;
+
+        if (!email || !password)
+          return res.json({ message: "Please fill in all fields" });
+
         const user = await collection.findOne({ email });
+
         if (!user)
           return res.json({
             message: "The user with that email doesn't exist",
@@ -61,7 +81,10 @@ const authHandler = async (req, res) => {
       }
     } catch (error) {
       console.log(error);
+
       res.json({ message: "Something went wrong..." });
+    } finally {
+      client.close();
     }
   }
 };

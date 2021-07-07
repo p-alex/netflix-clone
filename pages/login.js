@@ -18,6 +18,8 @@ export default function register() {
     isRegister: false,
   });
 
+  const [feedback, setFeedback] = useState("");
+
   const inputList = [
     { label: "E-mail", setNameId: "email", type: "email", placeholder: " " },
     {
@@ -31,29 +33,27 @@ export default function register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { email, password } = inputs;
-
     try {
-      if (email && password) {
-        const result = await fetch("http://localhost:3000/api/auth", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(inputs),
-        });
+      const result = await fetch("http://localhost:3000/api/auth", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inputs),
+      });
 
-        const resultJSON = await result.json();
+      const resultJSON = await result.json();
 
-        const user = resultJSON.user;
+      const user = resultJSON.user;
 
-        if (resultJSON.message === "Logged in!") {
-          await localStorage.setItem("user", JSON.stringify(user));
-          router.push("/");
-        }
+      if (resultJSON.message === "Logged in!") {
+        await localStorage.setItem("user", JSON.stringify(user));
+        router.push("/");
+      } else {
+        setFeedback(resultJSON.message);
       }
     } catch {
-      console.log(resultJSON);
+      setFeedback("Something went wrong... Try again later.");
     }
   };
 
@@ -71,6 +71,7 @@ export default function register() {
           <div className={styles.logo}>
             <img src="/images/logo/netflix-logo.png" alt="" />
           </div>
+          <p>{feedback && feedback}</p>
           {inputList.map((input) => {
             return (
               <InputGroup
