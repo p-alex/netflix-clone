@@ -1,0 +1,30 @@
+.logo {
+  position: relative;
+  width: 150px;
+  margin: 0px auto 50px auto;
+}
+
+.logo img {
+  width: 100%;
+}
+
+.container {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.7);
+  max-width: 400px;
+  padding: 50px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+}
+
+.container p {
+  color: #777;
+}
+
+.container a {
+  color: #e50914;
+}

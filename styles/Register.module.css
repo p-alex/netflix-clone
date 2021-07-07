@@ -6,6 +6,7 @@
   background-repeat: no-repeat;
   background-color: black;
 }
+
 .black_overlay {
   position: absolute;
   width: 100%;
@@ -13,11 +14,22 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 0;
 }
+
 .logo {
   position: relative;
   width: 150px;
   margin: 0px auto 50px auto;
 }
+
+.logo img {
+  width: 100%;
+}
+.logo {
+  position: relative;
+  width: 150px;
+  margin: 0px auto 50px auto;
+}
+
 .logo img {
   width: 100%;
 }

@@ -1,9 +1,13 @@
 import { useState } from "react";
-import styles from "../styles/Register.module.css";
+
 import Link from "next/link";
+
+import FullscreenWrapper from "../components/FullscreenWrapper";
 import Form from "../components/Form";
 import InputGroup from "../components/InputGroup";
 import SubmitButton from "../components/SubmitButton";
+
+import styles from "../styles/Register.module.css";
 export default function register() {
   const [inputs, setInputs] = useState({
     username: "",
@@ -12,6 +16,7 @@ export default function register() {
     confirmPassword: "",
     isRegister: true,
   });
+
   const inputList = [
     {
       label: "Username",
@@ -33,6 +38,7 @@ export default function register() {
       placeholder: " ",
     },
   ];
+
   const [feedback, setFeedback] = useState("");
 
   const handleChange = (e) => {
@@ -44,6 +50,7 @@ export default function register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (
       inputs.username &&
       inputs.email &&
@@ -66,42 +73,38 @@ export default function register() {
               "We sent you an email to verify your account! Check your email"
             )
           : setFeedback(resultJSON.message);
-
-        console.log(resultJSON);
       } catch (error) {
         console.log(error);
       }
     }
   };
   return (
-    <div
-      className={styles.register_wrapper}
-      style={{ backgroundImage: "url(/images/bg/auth-bg.jpg)" }}
-    >
-      <div className={styles.black_overlay}></div>
-      <Form submitFunc={handleSubmit}>
-        <div className={styles.logo}>
-          <img src="/images/logo/netflix-logo.png" alt="" />
-        </div>
-        {feedback && <p>{feedback}</p>}
-        {inputList.map((input) => {
-          return (
-            <InputGroup
-              key={input.label}
-              setId={input.setNameId}
-              setType={input.type}
-              setPlaceholder={input.placeholder}
-              setName={input.setNameId}
-              setLabel={input.label}
-              handleChangeFunc={handleChange}
-            />
-          );
-        })}
-        <SubmitButton>Register</SubmitButton>
-        <p>
-          Already have an account? <Link href="/login">Login now</Link>
-        </p>
-      </Form>
-    </div>
+    <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.jpg)"}>
+      <main>
+        <Form submitFunc={handleSubmit}>
+          <div className={styles.logo}>
+            <img src="/images/logo/netflix-logo.png" alt="" />
+          </div>
+          {feedback && <p>{feedback}</p>}
+          {inputList.map((input) => {
+            return (
+              <InputGroup
+                key={input.label}
+                setId={input.setNameId}
+                setType={input.type}
+                setPlaceholder={input.placeholder}
+                setName={input.setNameId}
+                setLabel={input.label}
+                handleChangeFunc={handleChange}
+              />
+            );
+          })}
+          <SubmitButton>Register</SubmitButton>
+          <p>
+            Already have an account? <Link href="/login">Login now</Link>
+          </p>
+        </Form>
+      </main>
+    </FullscreenWrapper>
   );
 }
