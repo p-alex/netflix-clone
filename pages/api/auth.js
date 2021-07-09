@@ -1,20 +1,20 @@
 import { MongoClient } from "mongodb";
+import cookie from "cookie";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import sgMail from "@sendgrid/mail";
-const authHandler = async (req, res) => {
+export default async function authHandler(req, res) {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
 
-  const db = client.db();
-
-  const collection = db.collection("users");
+  const collection = client.db().collection("users");
 
   if (req.method === "POST") {
     try {
       if (req.body.isRegister) {
+        //-----------REGISTER-----------
         const { username, email, password, confirmPassword, date } = req.body;
 
         const userWithEmail = await collection.findOne({ email });
@@ -24,13 +24,13 @@ const authHandler = async (req, res) => {
         if (!username || !email || !password || !confirmPassword)
           return res.json({ message: "Please fill in all fields" });
 
-        if (userWithEmail)
-          return res.json({ message: "A user with that email already exists" });
-
         if (userWithUsername)
           return res.json({
             message: "A user with that username already exists",
           });
+
+        if (userWithEmail)
+          return res.json({ message: "A user with that email already exists" });
 
         if (password !== confirmPassword)
           return res.json({ message: "Passwords must match" });
@@ -48,12 +48,13 @@ const authHandler = async (req, res) => {
         sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 
         const msg = {
-          to: email, // Change to your recipient
-          from: "netflixclonepalex@gmail.com", // Change to your verified sender
+          to: email,
+          from: "netflixclonepalex@gmail.com",
           subject: "Verification code",
           text: "This is your code",
           html: `<div style='text-align:center;position:relative; width:400px;padding:40px;margin:0 auto;background-color:black;color:white;'><h1>Click the link to verify your account.</h1><br/><br/><a style='display:inline-block;text-decoration:none;background-color:#e50914;padding:15px;color:white;border-radius:5px;font-weight:bold;font-family:Helvetica, sans-serif;' href="http://localhost:3000/user/verify/${result.ops[0]._id}">Confirm account</a></div>`,
         };
+
         // sgMail
         //   .send(msg)
         //   .then(() => {
@@ -66,6 +67,8 @@ const authHandler = async (req, res) => {
 
         res.json({ message: "Registered successfuly!" });
       } else {
+        //-----------LOGIN-----------
+
         const { email, password } = req.body;
 
         if (!email || !password)
@@ -75,12 +78,13 @@ const authHandler = async (req, res) => {
 
         if (!user)
           return res.json({
-            message: "The user with that email doesn't exist",
+            message: "Wrong email or password",
           });
 
         const isValidPassword = await bcrypt.compare(password, user.password);
 
-        if (!isValidPassword) return res.json({ message: "Wrong password" });
+        if (!isValidPassword)
+          return res.json({ message: "Wrong email or password" });
 
         if (user && isValidPassword) {
           const token = await jwt.sign(
@@ -88,15 +92,18 @@ const authHandler = async (req, res) => {
             process.env.SECRET,
             { expiresIn: "15m" }
           );
-
+          res.setHeader(
+            "Set-Cookie",
+            cookie.serialize("token", token, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV !== "development",
+              sameSite: "strict",
+              path: "/",
+              maxAge: 604800,
+            })
+          );
           res.json({
             message: "Logged in!",
-            user: {
-              username: user.username,
-              email: user.email,
-              id: user._id,
-              token,
-            },
           });
         }
       }
@@ -108,6 +115,4 @@ const authHandler = async (req, res) => {
       client.close();
     }
   }
-};
-
-export default authHandler;
+}

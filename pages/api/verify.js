@@ -1,13 +1,11 @@
 import { MongoClient, ObjectId } from "mongodb";
-const verifyHandler = async (req, res) => {
+export default async function verifyHandler(req, res) {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
 
-  const db = client.db();
-
-  const collection = db.collection("users");
+  const collection = client.db().collection("users");
 
   if (req.method === "POST") {
     try {
@@ -34,6 +32,4 @@ const verifyHandler = async (req, res) => {
       client.close();
     }
   }
-};
-
-export default verifyHandler;
+}

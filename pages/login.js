@@ -9,7 +9,7 @@ import InputGroup from "../components/InputGroup";
 import SubmitButton from "../components/SubmitButton";
 
 import styles from "../styles/Login.module.css";
-export default function register() {
+export default function login() {
   const router = useRouter();
 
   const [inputs, setInputs] = useState({
@@ -44,10 +44,7 @@ export default function register() {
 
       const resultJSON = await result.json();
 
-      const user = resultJSON.user;
-
       if (resultJSON.message === "Logged in!") {
-        await localStorage.setItem("user", JSON.stringify(user));
         router.push("/");
       } else {
         setFeedback(resultJSON.message);
