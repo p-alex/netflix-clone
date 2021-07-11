@@ -1,5 +1,5 @@
-import styles from "../styles/BigLogo.module.css";
-export default function BigLogo({ type, margin }) {
+import styles from "../styles/Logo.module.css";
+export default function Logo({ type, margin }) {
   return (
     <>
       {type === "big" && (
