@@ -22,7 +22,7 @@ export default function verify({ message }) {
 }
 
 verify.getInitialProps = async (context) => {
-  const result = await fetch("http://localhost:3000/api/verify", {
+  const result = await fetch("http://localhost:3000/api/verify-account", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
