@@ -1,10 +1,24 @@
-import { useState } from "react";
-
+import { useRouter } from "next/router";
 export default function Home({ result }) {
+  const router = useRouter();
+  const handleLogout = async () => {
+    const result = await fetch("http://localhost:3000/api/auth", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ authType: "logout" }),
+    });
+    const resultJSON = await result.json();
+    if (resultJSON.message === "Logged out") {
+      router.push("/login");
+    }
+  };
   return (
     <div>
       <h1>Netflix Clone</h1>
       <p>Result: {JSON.stringify(result)}</p>
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 }

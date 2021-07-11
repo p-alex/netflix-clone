@@ -108,6 +108,21 @@ export default async function authHandler(req, res) {
           });
         }
       }
+
+      if (authType === "logout") {
+        //-----------LOGOUT-----------
+        res.setHeader(
+          "Set-Cookie",
+          cookie.serialize("token", "", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV !== "development",
+            sameSite: "strict",
+            path: "/",
+            expires: new Date(0),
+          })
+        );
+        res.json({ message: "Logged out" });
+      }
     } catch (error) {
       console.log(error);
 
