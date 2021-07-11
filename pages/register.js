@@ -57,7 +57,11 @@ export default function register() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...inputs, date: Date.now() }),
+        body: JSON.stringify({
+          ...inputs,
+          date: Date.now(),
+          authType: "register",
+        }),
       });
 
       const resultJSON = await result.json();
@@ -101,4 +105,28 @@ export default function register() {
       </main>
     </FullscreenWrapper>
   );
+}
+
+export async function getServerSideProps(context) {
+  const token = context.req.cookies.token;
+  if (token) {
+    const result = await fetch("http://localhost:3000/api/verify-token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const resultJSON = await result.json();
+    if (resultJSON.message === "Logged in") {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+        props: {},
+      };
+    }
+  }
+  return { props: {} };
 }

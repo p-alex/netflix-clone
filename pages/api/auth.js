@@ -12,8 +12,9 @@ export default async function authHandler(req, res) {
   const collection = client.db().collection("users");
 
   if (req.method === "POST") {
+    const { authType } = req.body;
     try {
-      if (req.body.isRegister) {
+      if (authType === "register") {
         //-----------REGISTER-----------
         const { username, email, password, confirmPassword, date } = req.body;
 
@@ -66,9 +67,9 @@ export default async function authHandler(req, res) {
         //   });
 
         res.json({ message: "Registered successfuly!" });
-      } else {
+      }
+      if (authType === "login") {
         //-----------LOGIN-----------
-
         const { email, password } = req.body;
 
         if (!email || !password)

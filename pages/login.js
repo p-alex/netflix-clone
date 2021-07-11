@@ -15,7 +15,6 @@ export default function login() {
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
-    isRegister: false,
   });
 
   const [feedback, setFeedback] = useState("");
@@ -39,7 +38,7 @@ export default function login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(inputs),
+        body: JSON.stringify({ ...inputs, authType: "login" }),
       });
 
       const resultJSON = await result.json();
@@ -90,4 +89,28 @@ export default function login() {
       </main>
     </FullscreenWrapper>
   );
+}
+
+export async function getServerSideProps(context) {
+  const token = context.req.cookies.token;
+  if (token) {
+    const result = await fetch("http://localhost:3000/api/verify-token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const resultJSON = await result.json();
+    if (resultJSON.message === "Logged in") {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+        props: {},
+      };
+    }
+  }
+  return { props: {} };
 }
