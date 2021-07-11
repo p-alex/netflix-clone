@@ -1,5 +1,5 @@
 import { MongoClient, ObjectId } from "mongodb";
-export default async function verifyHandler(req, res) {
+export default async function verifyAccountHandler(req, res) {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
