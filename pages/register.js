@@ -6,8 +6,8 @@ import FullscreenWrapper from "../components/FullscreenWrapper";
 import Form from "../components/Form";
 import InputGroup from "../components/InputGroup";
 import SubmitButton from "../components/SubmitButton";
+import Logo from "../components/Logo";
 
-import styles from "../styles/Register.module.css";
 export default function register() {
   const [inputs, setInputs] = useState({
     username: "",
@@ -80,9 +80,7 @@ export default function register() {
     <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.jpg)"}>
       <main>
         <Form submitFunc={handleSubmit}>
-          <div className={styles.logo}>
-            <img src="/images/logo/netflix-logo.png" alt="" />
-          </div>
+          <Logo type="big" margin="0 auto 50px auto" />
           {feedback && <p>{feedback}</p>}
           {inputList.map((input) => {
             return (
