@@ -10,6 +10,7 @@ export default async function verifyTokenHandler(req, res) {
     try {
       const token = req.headers.authorization.split(" ")[1];
       if (token) {
+        console.log(token);
         let decoded = await jwt.verify(
           token,
           process.env.SECRET,
@@ -21,7 +22,7 @@ export default async function verifyTokenHandler(req, res) {
         if (decoded) {
           const user = collection.find({ _id: decoded.id });
           if (user) {
-            return res.json({ message: "Logged in" });
+            return res.json({ message: "Authorized" });
           } else {
             return res.json({ message: "That user doesn't exist" });
           }

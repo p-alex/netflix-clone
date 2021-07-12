@@ -84,6 +84,10 @@ export default function login() {
           <p>
             Need an account? <Link href="/register">Register now</Link>
           </p>
+          <p>
+            Forget your password?{" "}
+            <Link href="/user/reset-password-email-check">Reset password</Link>
+          </p>
         </Form>
       </main>
     </FullscreenWrapper>
@@ -101,7 +105,7 @@ export async function getServerSideProps(context) {
       },
     });
     const resultJSON = await result.json();
-    if (resultJSON.message === "Logged in") {
+    if (resultJSON.message === "Authorized") {
       return {
         redirect: {
           destination: "/",

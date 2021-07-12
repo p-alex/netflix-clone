@@ -116,7 +116,7 @@ export async function getServerSideProps(context) {
       },
     });
     const resultJSON = await result.json();
-    if (resultJSON.message === "Logged in") {
+    if (resultJSON.message === "Authorized") {
       return {
         redirect: {
           destination: "/",
