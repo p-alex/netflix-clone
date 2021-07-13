@@ -66,6 +66,7 @@ export default async function authHandler(req, res) {
         //     return res.json({message: 'Something went wrong! Please try again later.'})
         //   });
 
+        console.log(`http://localhost:3000/user/verify/${result.ops[0]._id}`);
         res.json({ message: "Registered successfuly!" });
       }
       if (authType === "login") {

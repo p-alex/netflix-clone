@@ -1,15 +1,15 @@
 import Link from "next/link";
 
 import FullscreenWrapper from "../../../components/FullscreenWrapper";
+import Logo from "../../../components/Logo";
 
 import styles from "../../../styles/Verify.module.css";
+
 export default function verify({ message }) {
   return (
     <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.jpg)"}>
       <main className={styles.container}>
-        <div className={styles.logo}>
-          <img src="/images/logo/netflix-logo.png" alt="" />
-        </div>
+        <Logo type="big" margin="0 auto 50px auto" />
         <p>{message}</p>
         <br />
         {message === "Verification Successful!" ||
