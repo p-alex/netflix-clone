@@ -46,15 +46,15 @@ export default async function authHandler(req, res) {
           date: new Date(date),
         });
 
-        sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+        // sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 
-        const msg = {
-          to: email,
-          from: "netflixclonepalex@gmail.com",
-          subject: "Verification code",
-          text: "This is your code",
-          html: `<div style='text-align:center;position:relative; width:400px;padding:40px;margin:0 auto;background-color:black;color:white;'><h1>Click the link to verify your account.</h1><br/><br/><a style='display:inline-block;text-decoration:none;background-color:#e50914;padding:15px;color:white;border-radius:5px;font-weight:bold;font-family:Helvetica, sans-serif;' href="http://localhost:3000/user/verify/${result.ops[0]._id}">Confirm account</a></div>`,
-        };
+        // const msg = {
+        //   to: email,
+        //   from: "netflixclonepalex@gmail.com",
+        //   subject: "Verification code",
+        //   text: "This is your code",
+        //   html: `<div style='text-align:center;position:relative; width:400px;padding:40px;margin:0 auto;background-color:black;color:white;'><h1>Click the link to verify your account.</h1><br/><br/><a style='display:inline-block;text-decoration:none;background-color:#e50914;padding:15px;color:white;border-radius:5px;font-weight:bold;font-family:Helvetica, sans-serif;' href="http://localhost:3000/user/verify/${result.ops[0]._id}">Confirm account</a></div>`,
+        // };
 
         // sgMail
         //   .send(msg)
@@ -92,7 +92,7 @@ export default async function authHandler(req, res) {
           const token = await jwt.sign(
             { username: user.username, email: user.email, id: user._id },
             process.env.SECRET,
-            { expiresIn: "15m" }
+            { expiresIn: "604800s" }
           );
           res.setHeader(
             "Set-Cookie",
