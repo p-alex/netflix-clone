@@ -110,6 +110,7 @@ export default function register() {
 
 export async function getServerSideProps(context) {
   const token = context.req.cookies.token;
+  const token = await context.req.cookies.token;
   let url =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"

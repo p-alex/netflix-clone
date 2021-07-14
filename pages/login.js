@@ -103,6 +103,7 @@ export async function getServerSideProps(context) {
       ? "http://localhost:3000"
       : "https://netflix-clone-inky-five.vercel.app";
   const token = context.req.cookies.token;
+  const token = await context.req.cookies.token;
   if (token) {
     const result = await fetch(`${url}/api/verify-token`, {
       method: "POST",
