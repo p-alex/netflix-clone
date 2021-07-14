@@ -2,7 +2,11 @@ import { useRouter } from "next/router";
 export default function Home({ result }) {
   const router = useRouter();
   const handleLogout = async () => {
-    const result = await fetch("http://localhost:3000/api/auth", {
+    let url =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : "https://netflix-clone-inky-five.vercel.app";
+    const result = await fetch(`${url}/api/auth`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,8 +29,12 @@ export default function Home({ result }) {
 
 export const getServerSideProps = async (context) => {
   let { token } = context.req.cookies;
+  let url =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://netflix-clone-inky-five.vercel.app";
   if (token) {
-    let result = await fetch("http://localhost:3000/api/movies", {
+    let result = await fetch(`${url}/api/movies`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

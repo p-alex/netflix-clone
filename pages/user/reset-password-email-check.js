@@ -21,16 +21,17 @@ export default function resetPasswordEmailCheck() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await fetch(
-      "http://localhost:3000/api/password-reset-send-email",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(inputs),
-      }
-    );
+    let url =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : "https://netflix-clone-inky-five.vercel.app";
+    const result = await fetch(`${url}/api/password-reset-send-email`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(inputs),
+    });
     const resultJSON = await result.json();
 
     if (resultJSON.message === "Sent")

@@ -31,9 +31,12 @@ export default function login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    let url =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : "https://netflix-clone-inky-five.vercel.app";
     try {
-      const result = await fetch("http://localhost:3000/api/auth", {
+      const result = await fetch(`${url}/api/auth`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -95,9 +98,13 @@ export default function login() {
 }
 
 export async function getServerSideProps(context) {
+  let url =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://netflix-clone-inky-five.vercel.app";
   const token = context.req.cookies.token;
   if (token) {
-    const result = await fetch("http://localhost:3000/api/verify-token", {
+    const result = await fetch(`${url}/api/verify-token`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
