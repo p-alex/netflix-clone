@@ -92,16 +92,17 @@ export default async function authHandler(req, res) {
           const token = await jwt.sign(
             { username: user.username, email: user.email, id: user._id },
             process.env.SECRET,
-            { expiresIn: "604800s" }
+            { expiresIn: "72h" }
           );
           res.setHeader(
             "Set-Cookie",
             cookie.serialize("token", token, {
               httpOnly: true,
               secure: process.env.NODE_ENV !== "development",
-              sameSite: "strict",
+              sameSite: "Lax",
               path: "/",
-              maxAge: 604800,
+              expiresIn: 259200,
+              maxAge: 259200,
             })
           );
           res.json({
@@ -117,7 +118,7 @@ export default async function authHandler(req, res) {
           cookie.serialize("token", "", {
             httpOnly: true,
             secure: process.env.NODE_ENV !== "development",
-            sameSite: "strict",
+            sameSite: "Lax",
             path: "/",
             expires: new Date(0),
           })
