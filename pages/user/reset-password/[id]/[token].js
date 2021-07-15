@@ -41,7 +41,7 @@ export default function resetPassword() {
     <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.jpg)"}>
       <main>
         <Form submitFunc={handleSubmit}>
-          <Logo type="big" margin="0 auto 50px auto" />
+          <Logo type="big" margin="0 auto 50px auto" maxWidth="160px" />
           <p>{feedback && feedback}</p>
           <InputGroup
             setId="password"

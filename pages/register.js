@@ -83,7 +83,7 @@ export default function register() {
     <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.jpg)"}>
       <main>
         <Form submitFunc={handleSubmit}>
-          <Logo type="big" margin="0 auto 50px auto" />
+          <Logo type="big" margin="0 auto 50px auto" maxWidth="160px" />
           {feedback && <p>{feedback}</p>}
           {inputList.map((input) => {
             return (
