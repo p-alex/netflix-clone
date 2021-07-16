@@ -9,7 +9,7 @@ export default function verify({ message }) {
   return (
     <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.jpg)"}>
       <main className={styles.container}>
-        <Logo type="big" margin="0 auto 50px auto" />
+        <Logo type="big" margin="0 auto 50px auto" maxWidth="160px" />
         <p>{message}</p>
         <br />
         {message === "Verification Successful!" ||
