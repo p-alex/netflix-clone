@@ -1,61 +1,68 @@
-import { useRouter } from "next/router";
-export default function Home({ result }) {
-  const router = useRouter();
-  const handleLogout = async () => {
-    let url =
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000"
-        : "https://netflix-clone-inky-five.vercel.app";
-    const result = await fetch(`${url}/api/auth`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ authType: "logout" }),
-    });
-    const resultJSON = await result.json();
-    if (resultJSON.message === "Logged out") {
-      router.push("/login");
-    }
-  };
+import { useContext } from "react";
+import ProjectContext from "../context/Project-context";
+import NavBar from "../components/NavBar";
+import styles from "../styles/Home.module.css";
+export default function Home({ username, profileImg }) {
+  const context = useContext(ProjectContext);
   return (
-    <div>
-      <h1>Netflix Clone</h1>
-      <p>Result: {JSON.stringify(result)}</p>
-      <button onClick={handleLogout}>Logout</button>
-    </div>
+    <>
+      <NavBar username={username} profileImg={profileImg} />
+    </>
   );
 }
 
 export const getServerSideProps = async (context) => {
-  let { token } = context.req.cookies;
-  let url =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : "https://netflix-clone-inky-five.vercel.app";
-  if (token) {
-    let result = await fetch(`${url}/api/movies`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    let resultJSON = await result.json();
-    if (resultJSON.message === "Not allowed") {
+  try {
+    let url =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : "https://netflix-clone-inky-five.vercel.app";
+
+    let token = context.req.cookies.token;
+    if (token) {
+      let result = await fetch(`${url}/api/movies`, {
+        mode: "same-origin",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      let resultJSON = await result.json();
+      let user = await fetch(`${url}/api/user-data`, {
+        mode: "same-origin",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      let userJSON = await user.json();
+      if (resultJSON.message === "Not Allowed") {
+        return {
+          redirect: {
+            destination: "/login",
+            permanent: false,
+          },
+        };
+      }
+      return {
+        props: {
+          username: userJSON.username,
+          profileImg: userJSON.profileImg,
+          movies: resultJSON.message,
+        },
+      };
+    } else {
       return {
         redirect: {
           destination: "/login",
-          permanent: true,
+          permanent: false,
         },
+        props: {},
       };
     }
-    return {
-      props: {
-        result: resultJSON,
-      },
-    };
-  } else {
+  } catch {
     return {
       redirect: {
         destination: "/login",

@@ -1,0 +1,68 @@
+.navbar {
+  position: fixed;
+  background: linear-gradient(rgba(0, 0, 0, 0.8), transparent);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 60px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  transition: background 300ms;
+}
+.links {
+  flex-grow: 1;
+  margin-left: 30px;
+}
+
+.links li a {
+  color: white;
+}
+.user {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+.user p:last-child {
+  cursor: pointer;
+}
+.user ul img {
+  position: relative;
+  width: 30px;
+  margin-right: 10px;
+}
+
+.user ul li:first-child {
+  display: flex;
+  align-items: center;
+  padding: 15px 0;
+  cursor: pointer;
+}
+.user ul li:first-child i {
+  transition: transform 200ms ease-in-out;
+}
+.user ul li ul {
+  position: absolute;
+  top: 60px;
+  background: black;
+  padding: 10px;
+  right: 0;
+  display: none;
+  width: 150px;
+}
+
+.user ul li ul li button {
+  background: transparent;
+  text-decoration: underline;
+  color: white;
+}
+
+.user ul li:hover ul {
+  display: block;
+}
+
+.user ul li:first-child:hover i {
+  transform: rotate(180deg);
+}
