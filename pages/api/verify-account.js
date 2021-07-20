@@ -1,4 +1,5 @@
 import { MongoClient, ObjectId } from "mongodb";
+import jwt from "jsonwebtoken";
 export default async function verifyAccountHandler(req, res) {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -9,9 +10,15 @@ export default async function verifyAccountHandler(req, res) {
 
   if (req.method === "POST") {
     try {
-      const { id } = req.body;
+      const { token } = req.body;
 
-      let user = await collection.findOne({ _id: ObjectId(id) });
+      console.log(token);
+
+      const decoded = await jwt.verify(token, process.env.SECRET);
+
+      if (!decoded.id) return res.json({ message: "Invalid token" });
+
+      let user = await collection.findOne({ _id: ObjectId(decoded.id) });
 
       if (!user) {
         return res.json({ message: "That user doesn't exist" });
@@ -21,7 +28,7 @@ export default async function verifyAccountHandler(req, res) {
         return res.json({ message: "Your account is already verified!" });
 
       await collection.updateOne(
-        { _id: ObjectId(id) },
+        { _id: ObjectId(decoded.id) },
         { $set: { isVerified: true } }
       );
 
