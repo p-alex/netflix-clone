@@ -44,7 +44,18 @@ export default async function authHandler(req, res) {
           password: hashedPassword,
           isVerified: false,
           date: new Date(date),
+          profileImg: `/images/default-profile-pictures/image-${Math.floor(
+            Math.random() * 6
+          )}.jpg`,
         });
+
+        const token = await jwt.sign(
+          { id: result.ops[0]._id },
+          process.env.SECRET,
+          {
+            expiresIn: "25m",
+          }
+        );
 
         // sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 
@@ -53,7 +64,7 @@ export default async function authHandler(req, res) {
         //   from: "netflixclonepalex@gmail.com",
         //   subject: "Verification code",
         //   text: "This is your code",
-        //   html: `<div style='text-align:center;position:relative; width:400px;padding:40px;margin:0 auto;background-color:black;color:white;'><h1>Click the link to verify your account.</h1><br/><br/><a style='display:inline-block;text-decoration:none;background-color:#e50914;padding:15px;color:white;border-radius:5px;font-weight:bold;font-family:Helvetica, sans-serif;' href="http://localhost:3000/user/verify/${result.ops[0]._id}">Confirm account</a></div>`,
+        //   html: `<div style='text-align:center;position:relative; width:400px;padding:40px;margin:0 auto;background-color:black;color:white;'><h1>Click the link to verify your account.</h1><br/><br/><a style='display:inline-block;text-decoration:none;background-color:#e50914;padding:15px;color:white;border-radius:5px;font-weight:bold;font-family:Helvetica, sans-serif;' href="http://localhost:3000/user/verify/${token}">Confirm account</a></div>`,
         // };
 
         // sgMail
@@ -66,7 +77,7 @@ export default async function authHandler(req, res) {
         //     return res.json({message: 'Something went wrong! Please try again later.'})
         //   });
 
-        console.log(`http://localhost:3000/user/verify/${result.ops[0]._id}`);
+        console.log(`http://localhost:3000/user/verify/${token}`);
         res.json({ message: "Registered successfuly!" });
       }
       if (authType === "login") {
@@ -88,18 +99,21 @@ export default async function authHandler(req, res) {
         if (!isValidPassword)
           return res.json({ message: "Wrong email or password" });
 
-        if (user && isValidPassword) {
-          const token = await jwt.sign(
-            { username: user.username, email: user.email, id: user._id },
-            process.env.SECRET,
-            { expiresIn: "72h" }
-          );
+        if (!user.isVerified)
+          return res.json({
+            message: "Your account isn't verified! Please check your email.",
+          });
+
+        if (user && isValidPassword && user.isVerified) {
+          const token = await jwt.sign({ id: user._id }, process.env.SECRET, {
+            expiresIn: "72h",
+          });
           res.setHeader(
             "Set-Cookie",
             cookie.serialize("token", token, {
               httpOnly: true,
               secure: process.env.NODE_ENV !== "development",
-              sameSite: "Lax",
+              sameSite: "Strict",
               path: "/",
               expiresIn: 259200,
               maxAge: 259200,
@@ -118,7 +132,7 @@ export default async function authHandler(req, res) {
           cookie.serialize("token", "", {
             httpOnly: true,
             secure: process.env.NODE_ENV !== "development",
-            sameSite: "Lax",
+            sameSite: "Strict",
             path: "/",
             expires: new Date(0),
           })
