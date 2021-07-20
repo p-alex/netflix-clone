@@ -6,6 +6,7 @@ import Form from "../../../../components/Form";
 import InputGroup from "../../../../components/InputGroup";
 import SubmitButton from "../../../../components/SubmitButton";
 import Logo from "../../../../components/Logo";
+import Link from "next/link";
 
 export default function resetPassword() {
   const router = useRouter();
@@ -26,7 +27,11 @@ export default function resetPassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await fetch("http://localhost:3000/api/password-reset", {
+    let url =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : "https://netflix-clone-inky-five.vercel.app";
+    const result = await fetch(`${url}/api/password-reset`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,6 +48,7 @@ export default function resetPassword() {
         <Form submitFunc={handleSubmit}>
           <Logo type="big" margin="0 auto 50px auto" maxWidth="160px" />
           <p>{feedback && feedback}</p>
+          {feedback === "Success" && <Link href="/login">Login</Link>}
           <InputGroup
             setId="password"
             setLabel="New password"
@@ -67,7 +73,11 @@ export default function resetPassword() {
 }
 
 export async function getServerSideProps(context) {
-  const result = await fetch("http://localhost:3000/api/verify-token", {
+  let url =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://netflix-clone-inky-five.vercel.app";
+  const result = await fetch(`${url}/api/verify-token`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
