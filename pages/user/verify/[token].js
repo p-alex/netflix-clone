@@ -22,12 +22,16 @@ export default function verify({ message }) {
 }
 
 verify.getInitialProps = async (context) => {
-  const result = await fetch("http://localhost:3000/api/verify-account", {
+  let url =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://netflix-clone-inky-five.vercel.app";
+  const result = await fetch(`${url}/api/verify-account`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ id: context.query.id }),
+    body: JSON.stringify({ token: context.query.token }),
   });
 
   const resultJSON = await result.json();
