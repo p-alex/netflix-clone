@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import withProtect from "../../middleware/withProtect";
 async function moviesHandler(req, res) {
   if (req.method === "POST") {
@@ -8,9 +8,12 @@ async function moviesHandler(req, res) {
     });
     const collection = client.db().collection("users");
     try {
-      const user = await collection.find({ _id: req.userId });
-      if (user) {
-        return res.json({ message: "movies.." });
+      const user = await collection.findOne({ _id: ObjectId(req.userId) });
+      console.log(user);
+      if (user.username) {
+        return res.json({
+          message: "movies..",
+        });
       }
       return res.json({ message: `User doesn't exist` });
     } catch {
