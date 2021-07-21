@@ -11,25 +11,9 @@ export default function Home({ username, profileImg, movies }) {
           <div key={movie._id}>
             {" "}
             <img
-              src={`/movies/${movie.nameSlug}/${movie.nameSlug}-logo.png`}
-              alt=""
-            />
-            <img
               src={`/movies/${movie.nameSlug}/${movie.nameSlug}-mini.jpg`}
               alt=""
             />
-            <img
-              src={`/movies/${movie.nameSlug}/${movie.nameSlug}-video-cover.jpg`}
-              alt={movie.name}
-            />
-            <p>{movie.release}</p>
-            <p>{movie.description}</p>
-            {movie.genres.map((genre) => {
-              return <p key={genre}>{genre}</p>;
-            })}
-            {movie.cast.map((cast) => {
-              return <p key={cast}>{cast}</p>;
-            })}
           </div>
         );
       })}
