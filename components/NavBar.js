@@ -17,6 +17,7 @@ export default function NavBar({ username, profileImg }) {
       <div className={styles.user}>
         <ul>
           <li>
+            <p>{username}</p>
             <img src={profileImg} alt="" />
             <i className="fas fa-caret-down"></i>
             <ul>
