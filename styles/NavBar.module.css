@@ -31,7 +31,7 @@
 .user ul img {
   position: relative;
   width: 30px;
-  margin-right: 10px;
+  margin: 0 10px;
 }
 
 .user ul li:first-child {
