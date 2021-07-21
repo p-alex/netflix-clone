@@ -113,7 +113,7 @@ export default async function authHandler(req, res) {
             cookie.serialize("token", token, {
               httpOnly: true,
               secure: process.env.NODE_ENV !== "development",
-              sameSite: "Strict",
+              sameSite: "Lax",
               path: "/",
               expiresIn: 259200,
               maxAge: 259200,
