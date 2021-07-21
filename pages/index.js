@@ -1,11 +1,38 @@
 import { useContext } from "react";
 import ProjectContext from "../context/Project-context";
 import NavBar from "../components/NavBar";
-export default function Home({ username, profileImg }) {
+export default function Home({ username, profileImg, movies }) {
   const context = useContext(ProjectContext);
   return (
     <>
       <NavBar username={username} profileImg={profileImg} />
+      {movies.map((movie) => {
+        return (
+          <div key={movie._id}>
+            {" "}
+            <img
+              src={`/movies/${movie.nameSlug}/${movie.nameSlug}-logo.png`}
+              alt=""
+            />
+            <img
+              src={`/movies/${movie.nameSlug}/${movie.nameSlug}-mini.jpg`}
+              alt=""
+            />
+            <img
+              src={`/movies/${movie.nameSlug}/${movie.nameSlug}-video-cover.jpg`}
+              alt={movie.name}
+            />
+            <p>{movie.release}</p>
+            <p>{movie.description}</p>
+            {movie.genres.map((genre) => {
+              return <p key={genre}>{genre}</p>;
+            })}
+            {movie.cast.map((cast) => {
+              return <p key={cast}>{cast}</p>;
+            })}
+          </div>
+        );
+      })}
     </>
   );
 }
@@ -21,7 +48,7 @@ export const getServerSideProps = async (context) => {
     if (token) {
       let result = await fetch(`${url}/api/movies`, {
         mode: "same-origin",
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -49,7 +76,7 @@ export const getServerSideProps = async (context) => {
         props: {
           username: userJSON.username,
           profileImg: userJSON.profileImg,
-          movies: resultJSON.message,
+          movies: resultJSON.movies,
         },
       };
     } else {
