@@ -1,9 +1,10 @@
 .banner {
   position: relative;
   width: 100%;
-  height: 54vw;
+  height: 50.8vw;
   background-size: cover;
   background-repeat: no-repeat;
+  animation: opacity 500ms;
 }
 .banner_content {
   display: flex;
@@ -22,6 +23,7 @@
   font-size: 1.4vw;
   width: 39vw;
   margin: 1.4vw 0;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
 }
 .btn {
   padding: 0.8vw 1.5vw;
@@ -39,6 +41,15 @@
 .btn i {
   margin-right: 10px;
   font-size: 1.6vw;
+}
+
+@keyframes opacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @media screen and (max-width: 800px) {

@@ -3,39 +3,37 @@ import ProjectContext from "../context/Project-context";
 import SiteWrapper from "../components/SiteWrapper";
 import NavBar from "../components/NavBar";
 import Banner from "../components/Banner";
-import { compareSync } from "bcryptjs";
+import FullscreenLoader from "../components/FullscreenLoader";
 export default function Home({ username, profileImg }) {
   const context = useContext(ProjectContext);
   const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(async () => {
+    setIsLoading(true);
     let url =
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000"
         : "https://netflix-clone-inky-five.vercel.app";
     const movieList = await fetch(`${url}/api/movies`);
     const moviesJSON = await movieList.json();
-    console.log(moviesJSON);
     await setMovies(moviesJSON.movies);
+    setIsLoading(false);
     console.log(movies);
   }, []);
   return (
     <>
-      {movies.length !== 0 ? (
-        <SiteWrapper>
+      {!isLoading ? (
+        <>
           <NavBar username={username} profileImg={profileImg} />
-          <Banner movies={movies} />
-          {movies.map((movie) => {
-            return (
-              <div key={movie._id}>
-                <img
-                  src={`/movies/${movie.nameSlug}/${movie.nameSlug}-mini.jpg`}
-                  alt=""
-                />
-              </div>
-            );
-          })}
-        </SiteWrapper>
-      ) : null}
+          {movies.length !== 0 && (
+            <>
+              <Banner movies={movies} />
+            </>
+          )}
+        </>
+      ) : (
+        <FullscreenLoader />
+      )}
     </>
   );
 }
@@ -63,13 +61,20 @@ export async function getServerSideProps(context) {
         },
         props: {},
       };
-    } else {
-      return {
-        props: {
-          username: resultJSON.username,
-          profileImg: resultJSON.profileImg,
-        },
-      };
     }
+    return {
+      props: {
+        username: resultJSON.username,
+        profileImg: resultJSON.profileImg,
+      },
+    };
+  } else {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+      props: {},
+    };
   }
 }

@@ -9,6 +9,10 @@
   font-family: "Roboto", sans-serif;
 }
 
+body {
+  background: black;
+}
+
 button {
   border: none;
   cursor: pointer;
