@@ -66,3 +66,12 @@
 .user ul li:first-child:hover i {
   transform: rotate(180deg);
 }
+
+@media screen and (max-width: 800px) {
+  .navbar {
+    background: black;
+  }
+  .user ul li:first-child p {
+    display: none;
+  }
+}
