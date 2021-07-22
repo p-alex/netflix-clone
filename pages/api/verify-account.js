@@ -6,7 +6,7 @@ export default async function verifyAccountHandler(req, res) {
     useUnifiedTopology: true,
   });
 
-  const collection = client.db().collection("users");
+  const collection = await client.db().collection("users");
 
   if (req.method === "POST") {
     try {
