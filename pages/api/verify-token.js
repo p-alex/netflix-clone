@@ -12,7 +12,7 @@ export default async function verifyTokenHandler(req, res) {
       if (token) {
         let decoded = await jwt.verify(token, process.env.SECRET);
         if (decoded?.id) {
-          const user = collection.findOne({ _id: ObjectId(decoded.id) });
+          const user = await collection.findOne({ _id: ObjectId(decoded.id) });
           if (user) {
             return res.json({ message: "Authorized" });
           } else {
