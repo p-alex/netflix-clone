@@ -1,15 +1,17 @@
 import { useContext } from "react";
 import ProjectContext from "../context/Project-context";
+import SiteWrapper from "../components/SiteWrapper";
 import NavBar from "../components/NavBar";
+import Banner from "../components/Banner";
 export default function Home({ username, profileImg, movies }) {
   const context = useContext(ProjectContext);
   return (
-    <>
+    <SiteWrapper>
       <NavBar username={username} profileImg={profileImg} />
+      <Banner movies={movies} />
       {movies.map((movie) => {
         return (
           <div key={movie._id}>
-            {" "}
             <img
               src={`/movies/${movie.nameSlug}/${movie.nameSlug}-mini.jpg`}
               alt=""
@@ -17,7 +19,7 @@ export default function Home({ username, profileImg, movies }) {
           </div>
         );
       })}
-    </>
+    </SiteWrapper>
   );
 }
 
@@ -41,7 +43,7 @@ export const getServerSideProps = async (context) => {
       let resultJSON = await result.json();
       let user = await fetch(`${url}/api/user-data`, {
         mode: "same-origin",
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
