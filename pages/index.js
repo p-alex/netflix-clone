@@ -17,7 +17,10 @@ export default function Home({ username, profileImg }) {
     const movieList = await fetch(`${url}/api/movies`);
     const moviesJSON = await movieList.json();
     await setMovies(moviesJSON.movies);
-    setIsLoading(false);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 400);
+
     console.log(movies);
   }, []);
   return (
