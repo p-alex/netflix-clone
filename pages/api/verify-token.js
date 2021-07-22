@@ -10,16 +10,27 @@ export default async function verifyTokenHandler(req, res) {
     try {
       const token = req.headers.authorization.split(" ")[1];
       if (token) {
-        let decoded = await jwt.verify(token, process.env.SECRET);
-        if (decoded?.id) {
-          const user = await collection.findOne({ _id: ObjectId(decoded.id) });
-          if (user) {
-            return res.json({ message: "Authorized" });
-          } else {
-            return res.json({ message: "That user doesn't exist" });
+        let decoded = await jwt.verify(
+          token,
+          process.env.SECRET,
+          (err, decoded) => {
+            if (err) return "";
+            return decoded;
           }
-        } else {
+        );
+        if (!decoded) {
           return res.json({ message: "Invalid signiture" });
+        }
+
+        const user = await collection.findOne({ _id: ObjectId(decoded.id) });
+        if (user) {
+          return res.json({
+            message: "Authorized",
+            username: user.username,
+            profileImg: user.profileImg,
+          });
+        } else {
+          return res.json({ message: "That user doesn't exist" });
         }
       }
     } catch (error) {

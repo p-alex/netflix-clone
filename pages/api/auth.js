@@ -121,6 +121,10 @@ export default async function authHandler(req, res) {
           );
           res.json({
             message: "Logged in!",
+            user: {
+              username: user.username,
+              profileImg: user.profileImg,
+            },
           });
         }
       }

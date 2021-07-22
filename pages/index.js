@@ -1,71 +1,61 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import ProjectContext from "../context/Project-context";
 import SiteWrapper from "../components/SiteWrapper";
 import NavBar from "../components/NavBar";
 import Banner from "../components/Banner";
-export default function Home({ username, profileImg, movies }) {
+import { compareSync } from "bcryptjs";
+export default function Home({ username, profileImg }) {
   const context = useContext(ProjectContext);
-  return (
-    <SiteWrapper>
-      <NavBar username={username} profileImg={profileImg} />
-      <Banner movies={movies} />
-      {movies.map((movie) => {
-        return (
-          <div key={movie._id}>
-            <img
-              src={`/movies/${movie.nameSlug}/${movie.nameSlug}-mini.jpg`}
-              alt=""
-            />
-          </div>
-        );
-      })}
-    </SiteWrapper>
-  );
-}
-
-export const getServerSideProps = async (context) => {
-  try {
+  const [movies, setMovies] = useState([]);
+  useEffect(async () => {
     let url =
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000"
         : "https://netflix-clone-inky-five.vercel.app";
+    const movieList = await fetch(`${url}/api/movies`);
+    const moviesJSON = await movieList.json();
+    console.log(moviesJSON);
+    await setMovies(moviesJSON.movies);
+    console.log(movies);
+  }, []);
+  return (
+    <>
+      {movies.length !== 0 ? (
+        <SiteWrapper>
+          <NavBar username={username} profileImg={profileImg} />
+          <Banner movies={movies} />
+          {movies.map((movie) => {
+            return (
+              <div key={movie._id}>
+                <img
+                  src={`/movies/${movie.nameSlug}/${movie.nameSlug}-mini.jpg`}
+                  alt=""
+                />
+              </div>
+            );
+          })}
+        </SiteWrapper>
+      ) : null}
+    </>
+  );
+}
 
-    let token = context.req.cookies.token;
-    if (token) {
-      let result = await fetch(`${url}/api/movies`, {
-        mode: "same-origin",
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      let resultJSON = await result.json();
-      let user = await fetch(`${url}/api/user-data`, {
-        mode: "same-origin",
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      let userJSON = await user.json();
-      if (resultJSON.message === "Not Allowed") {
-        return {
-          redirect: {
-            destination: "/login",
-            permanent: false,
-          },
-        };
-      }
-      return {
-        props: {
-          username: userJSON.username,
-          profileImg: userJSON.profileImg,
-          movies: resultJSON.movies,
-        },
-      };
-    } else {
+export async function getServerSideProps(context) {
+  let url =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://netflix-clone-inky-five.vercel.app";
+  const token = await context.req.cookies.token;
+  if (token) {
+    const result = await fetch(`${url}/api/verify-token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const resultJSON = await result.json();
+    if (resultJSON.message !== "Authorized") {
       return {
         redirect: {
           destination: "/login",
@@ -73,14 +63,13 @@ export const getServerSideProps = async (context) => {
         },
         props: {},
       };
+    } else {
+      return {
+        props: {
+          username: resultJSON.username,
+          profileImg: resultJSON.profileImg,
+        },
+      };
     }
-  } catch {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-      props: {},
-    };
   }
-};
+}

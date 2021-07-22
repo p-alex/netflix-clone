@@ -4,10 +4,21 @@ const withProtect = (handler) => {
     try {
       const token = req.headers.authorization.split(" ")[1];
       if (token) {
-        let decoded = await jwt.verify(token, process.env.SECRET);
-        if (!decoded.id) return res.json({ message: "Not allowed" });
-        req.userId = decoded.id;
-        return handler(req, res);
+        let decoded = await jwt.verify(
+          token,
+          process.env.SECRET,
+          (err, decoded) => {
+            if (err) return "Incorrect";
+            return decoded;
+          }
+        );
+        if (decoded === "Incorrect") {
+          console.log("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+          return res.json({ message: "Not allowed" });
+        } else {
+          req.userId = decoded?.id;
+          return handler(req, res);
+        }
       }
     } catch (error) {
       return res.json(error);
