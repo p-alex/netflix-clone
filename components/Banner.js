@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from "../styles/Banner.module.css";
+import Image from "next/image";
 export default function Banner({ movies }) {
   const [movie, setMovie] = useState({});
   useEffect(() => {
@@ -18,7 +19,15 @@ export default function Banner({ movies }) {
           }}
         >
           <div className={styles.banner_content}>
-            <img src={`/movies/${nameSlug}/${nameSlug}-logo.png`} alt="" />
+            <div className={styles.banner_logo}>
+              <Image
+                src={`/movies/${nameSlug}/${nameSlug}-logo.png`}
+                alt=""
+                width="625"
+                height="250"
+              />
+            </div>
+
             <p>{description}</p>
             <div className={styles.btn_container}>
               <button className={styles.btn + " " + styles.play}>

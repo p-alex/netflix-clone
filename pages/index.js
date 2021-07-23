@@ -17,11 +17,14 @@ export default function Home({ username, profileImg }) {
     const movieList = await fetch(`${url}/api/movies`);
     const moviesJSON = await movieList.json();
     await setMovies(moviesJSON.movies);
-    setIsLoading(false);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 250);
   }, []);
   return (
     <>
-      {!isLoading ? (
+      {isLoading && <FullscreenLoader />}
+      {movies.length > 0 && (
         <>
           <NavBar username={username} profileImg={profileImg} />
           {movies.length !== 0 && (
@@ -30,8 +33,6 @@ export default function Home({ username, profileImg }) {
             </>
           )}
         </>
-      ) : (
-        <FullscreenLoader />
       )}
     </>
   );

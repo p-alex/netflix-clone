@@ -61,12 +61,21 @@
     bottom: 0;
     top: 90%;
     transform: translateY(-100%);
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   .banner_content p {
     display: none;
   }
   .banner_content img {
-    width: 50%;
+    position: relative;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  .banner_logo {
     margin-bottom: 20px;
   }
   .btn {

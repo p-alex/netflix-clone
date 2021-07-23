@@ -9,7 +9,6 @@ async function moviesHandler(req, res) {
     const collection = client.db().collection("movies");
     try {
       const movies = await collection.find({}).toArray();
-      console.log(movies);
       res.json({
         message: "movies..",
         movies,

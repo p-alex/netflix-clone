@@ -28,7 +28,7 @@
 .user p:last-child {
   cursor: pointer;
 }
-.user ul img {
+.user ul li .profileImg {
   position: relative;
   width: 30px;
   margin: 0 10px;

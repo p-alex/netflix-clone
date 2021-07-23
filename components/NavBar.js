@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import ProjectContext from "../context/Project-context";
+import Image from "next/image";
 import Logo from "../components/Logo";
 import styles from "../styles/NavBar.module.css";
 export default function NavBar({ username, profileImg }) {
@@ -7,7 +8,12 @@ export default function NavBar({ username, profileImg }) {
   const { handleLogout } = context;
   return (
     <nav className={styles.navbar} id="navbar">
-      <Logo type="big" margin="0" maxWidth="100px" />
+      <Image
+        src={"/images/logo/netflix-logo.png"}
+        alt=""
+        width="112"
+        height="30"
+      />
       <ul className={styles.links}>
         <li>
           <a href="/">Home</a>
@@ -18,7 +24,10 @@ export default function NavBar({ username, profileImg }) {
         <ul>
           <li>
             <p>{username}</p>
-            <img src={profileImg} alt="" />
+            <div className={styles.profileImg}>
+              <Image src={profileImg} alt="" width="300px" height="300px" />
+            </div>
+
             <i className="fas fa-caret-down"></i>
             <ul>
               <li>
