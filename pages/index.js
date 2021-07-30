@@ -45,7 +45,7 @@ export default function Home({ username, profileImg }) {
                               <i className="fas fa-play"></i>
                             </button>
                             <button>
-                              <i class="fas fa-angle-down"></i>
+                              <i className="fas fa-angle-down"></i>
                             </button>
                           </div>
                           <div className={styles.stats}>
