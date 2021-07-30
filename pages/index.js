@@ -4,6 +4,7 @@ import SiteWrapper from "../components/SiteWrapper";
 import NavBar from "../components/NavBar";
 import Banner from "../components/Banner";
 import FullscreenLoader from "../components/FullscreenLoader";
+import styles from "../styles/Home.module.css";
 export default function Home({ username, profileImg }) {
   const context = useContext(ProjectContext);
   const [movies, setMovies] = useState([]);
@@ -29,6 +30,39 @@ export default function Home({ username, profileImg }) {
           {movies.length !== 0 && (
             <>
               <Banner movies={movies} />
+              <div className={styles.movies_container}>
+                <div className={styles.movie_row}>
+                  {movies.map((movie, id) => {
+                    return (
+                      <div className={styles.movie}>
+                        <img
+                          src={`/movies/${movie.nameSlug}/${movie.nameSlug}-mini.jpg`}
+                          alt={`${movie.name}`}
+                        />
+                        <div className={styles.movie_body}>
+                          <div className={styles.controls}>
+                            <button>
+                              <i className="fas fa-play"></i>
+                            </button>
+                            <button>
+                              <i class="fas fa-angle-down"></i>
+                            </button>
+                          </div>
+                          <div className={styles.stats}>
+                            <span>{movie.maturityRating}+</span>
+                            <span>{movie.duration}</span>
+                          </div>
+                          <div className={styles.thisMovieIs}>
+                            {movie.thisMovieIs.map((item, id) => {
+                              return <p key={id}>{item}</p>;
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </>
           )}
         </>
