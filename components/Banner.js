@@ -14,7 +14,7 @@ export default function Banner({ movies }) {
         <header
           className={styles.banner}
           style={{
-            backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.7), transparent),
+            backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.55), transparent),
         url(/movies/${nameSlug}/${nameSlug}-banner.jpg)`,
           }}
         >
