@@ -9,7 +9,6 @@ export default function NavBar() {
   const { username, profileImg } = userData;
   const { handleLogout } = context;
   useEffect(async () => {
-    console.log("getting user");
     let url =
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000"

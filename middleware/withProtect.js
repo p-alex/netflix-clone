@@ -18,6 +18,8 @@ const withProtect = (handler) => {
           req.userId = decoded?.id;
           return handler(req, res);
         }
+      } else {
+        return res.json({ message: "Something went wrong" });
       }
     } catch (error) {
       return res.json(error);

@@ -19,8 +19,7 @@ export default function Home({ username, profileImg }) {
         : "https://netflix-clone-inky-five.vercel.app";
     const movieList = await fetch(`${url}/api/movies`);
     const moviesJSON = await movieList.json();
-    console.log(moviesJSON);
-    if (moviesJSON.message === "Not allowed") {
+    if (moviesJSON.message !== "allowed") {
       router.push("/login");
     } else {
       await setMovies(moviesJSON.movies);
