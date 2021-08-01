@@ -10,14 +10,14 @@ async function moviesHandler(req, res) {
     try {
       const movies = await collection.find({}).toArray();
       res.json({
-        message: "movies..",
+        message: "allowed",
         movies,
       });
     } catch {
-      res.json({ message: "Something went wrong..." });
+      res.json({ message: "Something went wrong...", movies: [] });
     } finally {
       client.close();
     }
   }
 }
-export default moviesHandler;
+export default withProtect(moviesHandler);
