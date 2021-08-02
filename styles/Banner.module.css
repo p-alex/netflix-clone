@@ -58,8 +58,7 @@
 
 @media screen and (max-width: 800px) {
   .banner {
-    margin-top: 80px;
-    height: 80vh;
+    height: 70vh;
     background-position: center;
   }
   .banner_content {
