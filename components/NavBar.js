@@ -7,6 +7,7 @@ export default function NavBar() {
   const context = useContext(ProjectContext);
   const [userData, setUserData] = useState({});
   const { username, profileImg } = userData;
+  const [isScrolled, setIsScrolled] = useState(false);
   const { handleLogout } = context;
   useEffect(async () => {
     let url =
@@ -19,19 +20,37 @@ export default function NavBar() {
       username: resultJSON.username,
       profileImg: resultJSON.profileImg,
     });
-
-    return () => {
-      setUserData({});
-    };
   }, []);
+  useEffect(() => {
+    const navbar = document.querySelector("#navbar");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    });
+  });
   return (
-    <nav className={styles.navbar} id="navbar">
-      <Image
-        src={"/images/logo/netflix-logo.png"}
-        alt=""
-        width="112"
-        height="30"
-      />
+    <nav
+      className={
+        isScrolled ? styles.navbar + " " + styles.navbar_active : styles.navbar
+      }
+      id="navbar"
+    >
+      <div className={styles.logo_big}>
+        <Image
+          src={"/images/logo/netflix-logo.png"}
+          alt=""
+          width="112"
+          height="30"
+        />
+      </div>
+
+      <div className={styles.logo_small}>
+        <img src="/images/logo/netflix-logo-mini.png" />
+      </div>
+
       <ul className={styles.links}>
         <li>
           <a href="/">Home</a>
