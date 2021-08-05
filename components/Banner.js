@@ -6,7 +6,7 @@ export default function Banner({ movies }) {
   useEffect(() => {
     setMovie(movies[Math.floor(Math.random() * movies.length)]);
   }, []);
-  const { nameSlug, description } = movie;
+  const { nameSlug, description, thisMovieIs } = movie;
 
   return (
     <>
@@ -14,7 +14,7 @@ export default function Banner({ movies }) {
         <header
           className={styles.banner}
           style={{
-            backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.55), transparent),
+            backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.35), transparent),
         url(/movies/${nameSlug}/${nameSlug}-banner.jpg)`,
           }}
         >
@@ -27,8 +27,12 @@ export default function Banner({ movies }) {
                 height="250"
               />
             </div>
-
-            <p>{description}</p>
+            <div className={styles.banner__movie_type}>
+              {thisMovieIs.map((item) => {
+                return <p>{item}</p>;
+              })}
+            </div>
+            <p className={styles.banner__description}>{description}</p>
             <div className={styles.btn_container}>
               <button className={styles.btn + " " + styles.play}>
                 <i className="fas fa-play"></i>
