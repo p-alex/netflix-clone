@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import ProjectContext from "../context/Project-context";
 import styles from "../styles/Banner.module.css";
 import Image from "next/image";
 export default function Banner({ movies }) {
+  const context = useContext(ProjectContext);
+  const { handleSelectMovie } = context;
   const [movie, setMovie] = useState({});
   useEffect(() => {
     setMovie(movies[Math.floor(Math.random() * movies.length)]);
@@ -38,7 +41,10 @@ export default function Banner({ movies }) {
                 <i className="fas fa-play"></i>
                 <span>Play</span>
               </button>
-              <button className={styles.btn + " " + styles.more_info}>
+              <button
+                className={styles.btn + " " + styles.more_info}
+                onClick={() => handleSelectMovie(movie)}
+              >
                 <i className="fas fa-info-circle"></i>
                 <span>More Info</span>
               </button>
