@@ -1,14 +1,17 @@
-import { useEffect } from "react";
+import ProjectContext from "../context/Project-context";
+import { useEffect, useContext } from "react";
 import MovieCard from "./MovieCard";
 import styles from "../styles/MovieSlider.module.css";
 
 export default function MovieSlider({ movies, sliderId, sliderTitle }) {
+  const context = useContext(ProjectContext);
+  const { handleSelectMovie } = context;
+
   let currentIndex = 0;
   let howManyVisible = 0;
   let spaceBetweenCards = 5;
   let maxMoveBy = 0;
   let maxIndex = 0;
-
   useEffect(() => {
     const sliderCtrlLeft = document.querySelector(
       `#slider_ctrl_left${sliderId}`
@@ -118,6 +121,7 @@ export default function MovieSlider({ movies, sliderId, sliderTitle }) {
               duration={movie.duration}
               fromSliderWithId={sliderId}
               released={movie.release}
+              handleSelectMovie={() => handleSelectMovie(movie)}
             />
           );
         })}

@@ -7,6 +7,7 @@ export default function MovieCard({
   duration,
   released,
   fromSliderWithId,
+  handleSelectMovie,
 }) {
   return (
     <div className={styles.card} id={`card${fromSliderWithId}`}>
@@ -18,7 +19,7 @@ export default function MovieCard({
           <button>
             <i className="fas fa-play"></i>
           </button>
-          <button>
+          <button onClick={handleSelectMovie}>
             <i className="fas fa-angle-down"></i>
           </button>
         </div>

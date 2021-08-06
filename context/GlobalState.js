@@ -1,7 +1,21 @@
+import { useState, useReducer } from "react";
 import { useRouter } from "next/router";
 import ProjectContext from "./Project-context";
+import { selectedMovieReducer } from "./reducers";
 const GlobalState = ({ children }) => {
   const router = useRouter();
+  const [userData, setUserData] = useState({});
+
+  const [selectedMovie, dispatchSelectedMovie] = useReducer(
+    selectedMovieReducer,
+    {}
+  );
+
+  const handleSelectMovie = (movie) =>
+    dispatchSelectedMovie({ type: "SELECT_MOVIE", payload: movie });
+
+  const handleResetSelectedMovie = () =>
+    dispatchSelectedMovie({ type: "RESET" });
 
   const handleLogout = async () => {
     let url =
@@ -21,8 +35,17 @@ const GlobalState = ({ children }) => {
       router.push("/login");
     }
   };
+
   return (
-    <ProjectContext.Provider value={{ handleLogout }}>
+    <ProjectContext.Provider
+      value={{
+        handleLogout,
+        userData,
+        selectedMovie,
+        handleSelectMovie,
+        handleResetSelectedMovie,
+      }}
+    >
       {children}
     </ProjectContext.Provider>
   );

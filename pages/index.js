@@ -1,15 +1,18 @@
-import { useContext, useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useState, useEffect, useContext } from "react";
 import ProjectContext from "../context/Project-context";
-import SiteWrapper from "../components/SiteWrapper";
+import { useRouter } from "next/router";
 import NavBar from "../components/NavBar";
 import Banner from "../components/Banner";
 import FullscreenLoader from "../components/FullscreenLoader";
+import MovieSlider from "../components/MovieSlider";
+import Modal from "../components/Modal";
 export default function Home({ username, profileImg }) {
-  const context = useContext(ProjectContext);
   const router = useRouter();
+  const context = useContext(ProjectContext);
+  const { selectedMovie } = context;
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
   useEffect(async () => {
     setIsLoading(true);
     let url =
@@ -28,44 +31,22 @@ export default function Home({ username, profileImg }) {
   return (
     <>
       {isLoading && <FullscreenLoader />}
-
       <NavBar username={username} profileImg={profileImg} />
       {movies.length !== 0 && (
         <>
+          {selectedMovie && <Modal movie={selectedMovie} />}
           <Banner movies={movies} />
-          <div className={styles.movies_container}>
-            <div className={styles.movie_row}>
-              {movies.map((movie) => {
-                return (
-                  <div className={styles.movie}>
-                    <img
-                      src={`/movies/${movie.nameSlug}/${movie.nameSlug}-mini.jpg`}
-                      alt={`${movie.name}`}
-                    />
-                    <div className={styles.movie_body}>
-                      <div className={styles.controls}>
-                        <button>
-                          <i className="fas fa-play"></i>
-                        </button>
-                        <button>
-                          <i className="fas fa-angle-down"></i>
-                        </button>
-                      </div>
-                      <div className={styles.stats}>
-                        <span>{movie.maturityRating}+</span>
-                        <span>{movie.duration}</span>
-                      </div>
-                      <div className={styles.thisMovieIs}>
-                        {movie.thisMovieIs.map((item, id) => {
-                          return <p key={id}>{item}</p>;
-                        })}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          <MovieSlider movies={movies} sliderId={"1"} sliderTitle={"Popular"} />
+          <MovieSlider
+            movies={movies}
+            sliderId={"2"}
+            sliderTitle={"Action & Adventure"}
+          />
+          <MovieSlider
+            movies={movies}
+            sliderId={"3"}
+            sliderTitle={"Movies Based on Books"}
+          />
         </>
       )}
     </>
