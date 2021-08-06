@@ -5,7 +5,6 @@ import SiteWrapper from "../components/SiteWrapper";
 import NavBar from "../components/NavBar";
 import Banner from "../components/Banner";
 import FullscreenLoader from "../components/FullscreenLoader";
-import styles from "../styles/Home.module.css";
 export default function Home({ username, profileImg }) {
   const context = useContext(ProjectContext);
   const router = useRouter();
