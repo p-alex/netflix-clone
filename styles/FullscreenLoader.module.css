@@ -1,4 +1,4 @@
-.fullscreenLoader {
+.loader {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -7,8 +7,7 @@
   left: 0;
   z-index: 10000;
 }
-
-.loader {
+.loader__logo {
   position: absolute;
   left: 0;
   right: 0;
@@ -17,13 +16,11 @@
   transform: translateY(-50%);
   width: 200px;
 }
-
-.loader img {
+.loader__logo img {
   position: relative;
   width: 100%;
   animation: opacity 2500ms infinite;
 }
-
 @keyframes opacity {
   0% {
     opacity: 0.2;
