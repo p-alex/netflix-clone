@@ -1,8 +1,12 @@
 import { createContext } from "react";
 export default createContext({
   handleLogout: () => {},
-  handleSelectMovie: () => {},
   userData: [],
   selectedMovie: {},
+  handleSelectMovie: () => {},
   handleResetSelectedMovie: () => {},
+  allMovies: [],
+  isLoading: false,
+  handleGetAllMovies: () => {},
+  handleGetUserData: () => {},
 });

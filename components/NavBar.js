@@ -5,24 +5,11 @@ import Image from "next/image";
 import styles from "../styles/NavBar.module.css";
 export default function NavBar() {
   const context = useContext(ProjectContext);
-  const [userData, setUserData] = useState({});
-  const { username, profileImg } = userData;
+  const { username, profileImg } = context.userData;
   const [isScrolled, setIsScrolled] = useState(false);
-  const { handleLogout } = context;
-  useEffect(async () => {
-    let url =
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000"
-        : "https://netflix-clone-inky-five.vercel.app";
-    const result = await fetch(`${url}/api/user-data`);
-    const resultJSON = await result.json();
-    await setUserData({
-      username: resultJSON.username,
-      profileImg: resultJSON.profileImg,
-    });
-  }, []);
+  const { handleLogout, userData, handleGetUserData } = context;
+
   useEffect(() => {
-    const navbar = document.querySelector("#navbar");
     window.addEventListener("scroll", () => {
       if (window.scrollY > 0) {
         setIsScrolled(true);
@@ -31,6 +18,13 @@ export default function NavBar() {
       }
     });
   });
+
+  useEffect(() => {
+    if (!userData?.username) {
+      handleGetUserData();
+    }
+  }, []);
+
   return (
     <nav
       className={

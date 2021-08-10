@@ -1,55 +1,47 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import ProjectContext from "../context/Project-context";
-import { useRouter } from "next/router";
 import NavBar from "../components/NavBar";
 import Banner from "../components/Banner";
 import FullscreenLoader from "../components/FullscreenLoader";
 import MovieSlider from "../components/MovieSlider";
 import Modal from "../components/Modal";
+import pageWrapperStyles from "../styles/PageWrapperStyles.module.css";
 export default function Home({ username, profileImg }) {
-  const router = useRouter();
   const context = useContext(ProjectContext);
-  const { selectedMovie } = context;
-  const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { selectedMovie, allMovies, isLoading, handleGetAllMovies } = context;
 
-  useEffect(async () => {
-    setIsLoading(true);
-    let url =
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000"
-        : "https://netflix-clone-inky-five.vercel.app";
-    const movieList = await fetch(`${url}/api/movies`);
-    const moviesJSON = await movieList.json();
-    if (moviesJSON.message !== "allowed") {
-      router.push("/login");
-    } else {
-      await setMovies(moviesJSON.movies);
-      setIsLoading(false);
+  useEffect(() => {
+    if (allMovies.length === 0) {
+      handleGetAllMovies();
     }
   }, []);
+
   return (
-    <>
+    <div className={selectedMovie.name && pageWrapperStyles.disableScroll}>
       {isLoading && <FullscreenLoader />}
+      {selectedMovie?.name ? <Modal movie={selectedMovie} /> : null}
       <NavBar username={username} profileImg={profileImg} />
-      {movies.length !== 0 && (
+      {allMovies.length !== 0 && (
         <>
-          {selectedMovie && <Modal movie={selectedMovie} />}
-          <Banner movies={movies} />
-          <MovieSlider movies={movies} sliderId={"1"} sliderTitle={"Popular"} />
+          <Banner movies={allMovies} />
           <MovieSlider
-            movies={movies}
+            movies={allMovies}
+            sliderId={"1"}
+            sliderTitle={"Popular"}
+          />
+          <MovieSlider
+            movies={allMovies}
             sliderId={"2"}
             sliderTitle={"Action & Adventure"}
           />
           <MovieSlider
-            movies={movies}
+            movies={allMovies}
             sliderId={"3"}
             sliderTitle={"Movies Based on Books"}
           />
         </>
       )}
-    </>
+    </div>
   );
 }
 
