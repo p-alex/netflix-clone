@@ -6,7 +6,7 @@
   background-repeat: no-repeat;
   animation: opacity 500ms;
 }
-.banner_content {
+.banner__content {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -15,17 +15,10 @@
   top: 13vw;
   padding: 0 60px;
 }
-.banner_content img {
+.banner__content__logo {
   width: 30vw;
 }
-.banner_content .banner__description {
-  color: white;
-  font-size: 1.4vw;
-  width: 32vw;
-  margin: 1.4vw 0;
-  text-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
-}
-.banner__movie_type {
+.banner__content__movie_type {
   position: relative;
   width: 100%;
   height: auto;
@@ -36,47 +29,44 @@
   gap: 20px;
   justify-content: center;
 }
-.btn_container {
+.banner__content__description {
+  color: white;
+  font-size: 1.4vw;
+  width: 32vw;
+  margin: 1.4vw 0;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+.banner__content__btn_container {
   display: flex;
 }
-.btn {
+.banner__content__btn_container__btn {
   display: inline-block;
   padding: 0.5vw 1.7vw;
   font-size: 1.2vw;
   border-radius: 5px;
   margin-right: 20px;
 }
-.more_info {
-  background: rgba(109, 109, 110, 0.7);
-  color: white;
-}
-.btn:hover {
+.banner__content__btn_container__btn:hover {
   background: black;
   color: white;
 }
-.btn:last-of-type {
+.banner__content__btn_container__btn:last-of-type {
   margin-right: 0;
 }
-.btn i {
+.banner__content__btn_container__btn i {
   margin-right: 15px;
   font-size: 1.3vw;
 }
-
-@keyframes opacity {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.banner__content__btn_container__more_info {
+  background: rgba(109, 109, 110, 0.7);
+  color: white;
 }
-
 @media screen and (max-width: 800px) {
   .banner {
     height: 70vh;
     background-position: center;
   }
-  .banner_content {
+  .banner__content {
     align-items: center;
     bottom: 0;
     top: 90%;
@@ -87,36 +77,40 @@
     align-items: center;
     justify-content: center;
   }
-  .banner_content .banner__description {
+  .banner__content__description {
     display: none;
   }
-  .banner_content img {
+  .banner__content__logo {
     position: relative;
     width: 100%;
     height: 100%;
     object-fit: cover;
     margin-bottom: 20px;
   }
-  .banner__movie_type {
+  .banner__content__movie_type {
     display: flex;
   }
-  .banner_logo {
-    margin-bottom: 20px;
-  }
-  .btn {
+  .banner__content__btn_container__btn {
     padding: 10px 20px;
     font-size: 16px;
     border-radius: 5px;
     margin-right: 20px;
   }
-
-  .btn i {
+  .banner__content__btn_container__btn i {
     font-size: 16px;
   }
-  .more_info i {
+  .banner__content__btn_container__more_info i {
     margin: 0;
   }
-  .more_info span {
+  .banner__content__btn_container__more_info span {
     display: none;
+  }
+}
+@keyframes opacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

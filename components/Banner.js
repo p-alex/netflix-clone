@@ -21,8 +21,8 @@ export default function Banner({ movies }) {
         url(/movies/${nameSlug}/${nameSlug}-banner.jpg)`,
           }}
         >
-          <div className={styles.banner_content}>
-            <div className={styles.banner_logo}>
+          <div className={styles.banner__content}>
+            <div className={styles.banner__content__logo}>
               <Image
                 src={`/movies/${nameSlug}/${nameSlug}-logo.png`}
                 alt=""
@@ -30,19 +30,29 @@ export default function Banner({ movies }) {
                 height="250"
               />
             </div>
-            <div className={styles.banner__movie_type}>
+            <div className={styles.banner__content__movie_type}>
               {thisMovieIs.map((item) => {
-                return <p>{item}</p>;
+                return <p key={`banner-${item}`}>{item}</p>;
               })}
             </div>
-            <p className={styles.banner__description}>{description}</p>
-            <div className={styles.btn_container}>
-              <button className={styles.btn + " " + styles.play}>
+            <p className={styles.banner__content__description}>{description}</p>
+            <div className={styles.banner__content__btn_container}>
+              <button
+                className={
+                  styles.banner__content__btn_container__btn +
+                  " " +
+                  styles.banner__content__btn_container__play
+                }
+              >
                 <i className="fas fa-play"></i>
                 <span>Play</span>
               </button>
               <button
-                className={styles.btn + " " + styles.more_info}
+                className={
+                  styles.banner__content__btn_container__btn +
+                  " " +
+                  styles.banner__content__btn_container__more_info
+                }
                 onClick={() => handleSelectMovie(movie)}
               >
                 <i className="fas fa-info-circle"></i>
