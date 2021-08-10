@@ -41,7 +41,6 @@ export default function resetPassword() {
     const resultJSON = await result.json();
     setFeedback(resultJSON.message);
   };
-
   return (
     <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.jpg)"}>
       <main>
@@ -83,13 +82,12 @@ export async function getServerSideProps(context) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${context.params.token}`,
     },
-    body: JSON.stringify({ id: context.params.id }),
   });
   const resultJSON = await result.json();
-  console.log(resultJSON);
+  console.log(resultJSON.message);
   if (resultJSON.message === "Authorized") {
     return { props: {} };
   } else {
-    return { redirect: { destination: "/", permanent: false }, props: {} };
+    return { redirect: { destination: "/login", permanent: false }, props: {} };
   }
 }
