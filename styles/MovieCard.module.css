@@ -7,6 +7,10 @@
   flex-shrink: 0;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
 }
+.card:hover {
+  transform: scale(1.2) translateY(-20%);
+  z-index: 1;
+}
 .card__image {
   position: relative;
 }
@@ -15,6 +19,10 @@
   width: 100%;
   border-radius: 2px;
   display: flex;
+}
+.card:hover .card__image img {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 .card__body {
   position: absolute;
@@ -29,12 +37,16 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
   z-index: 10;
 }
-.card__controls {
+.card:hover .card__body {
+  display: block;
+  animation: transition 200ms forwards;
+}
+.card__body__controls {
   margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
 }
-.card__controls button {
+.card__body__controls button {
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -44,46 +56,34 @@
   border: none;
   cursor: pointer;
 }
-.card__controls button i {
+.card__body__controls button i {
   position: relative;
   top: 1px;
 }
-.card__controls button:last-child {
+.card__body__controls button:last-child {
   background: transparent;
   border: solid 1px #f3f3f3;
   color: white;
 }
-.card__controls button:hover {
+.card__body__controls button:hover {
   opacity: 0.8;
 }
-.card__thisMovieIs {
+.card__body__stats {
+  margin-bottom: 10px;
+  font-size: 0.8rem;
+}
+.card__body__stats span {
+  margin-right: 10px;
+}
+.card__body__stats span:nth-child(2) {
+  padding: 1px 2px;
+  border: solid white 1px;
+}
+.card__body__thisMovieIs {
   display: flex;
   width: 100%;
   justify-content: space-between;
   font-size: 0.8rem;
-}
-.card__stats {
-  margin-bottom: 10px;
-  font-size: 0.8rem;
-}
-.card__stats span {
-  margin-right: 10px;
-}
-.card__stats span:nth-child(2) {
-  padding: 1px 2px;
-  border: solid white 1px;
-}
-.card:hover .card__body {
-  display: block;
-  animation: transition 200ms forwards;
-}
-.card:hover {
-  transform: scale(1.2) translateY(-20%);
-  z-index: 1;
-}
-.card:hover .card__image img {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
 }
 @keyframes transition {
   from {

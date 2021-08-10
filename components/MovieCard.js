@@ -15,7 +15,7 @@ export default function MovieCard({
         <img src={`/movies/${nameSlug}/${nameSlug}-mini.jpg`} alt={name} />
       </div>
       <div className={styles.card__body} id={`card_body${fromSliderWithId}`}>
-        <div className={styles.card__controls}>
+        <div className={styles.card__body__controls}>
           <button>
             <i className="fas fa-play"></i>
           </button>
@@ -24,14 +24,14 @@ export default function MovieCard({
           </button>
         </div>
 
-        <div className={styles.card__stats}>
+        <div className={styles.card__body__stats}>
           <span>{released}</span>
           <span>{maturityRating}+</span>
           <span>{duration}</span>
         </div>
-        <div className={styles.card__thisMovieIs}>
-          {thisMovieIs.map((item, id) => {
-            return <p key={(item, id)}>{item}</p>;
+        <div className={styles.card__body__thisMovieIs}>
+          {thisMovieIs.map((item) => {
+            return <p key={`card-body-${item}`}>{item}</p>;
           })}
         </div>
       </div>

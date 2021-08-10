@@ -1,18 +1,22 @@
 import ProjectContext from "../context/Project-context";
-import { useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import MovieCard from "./MovieCard";
 import styles from "../styles/MovieSlider.module.css";
 
 export default function MovieSlider({ movies, sliderId, sliderTitle }) {
   const context = useContext(ProjectContext);
   const { handleSelectMovie } = context;
+  const [sliderState, setSliderState] = useState({
+    currentIndex: 0,
+    howManyVisible: 0,
+    spaceBetweenCards: 5,
+    maxMoveBy: 0,
+    maxIndex: 0,
+    move: 0,
+  });
 
-  let currentIndex = 0;
-  let howManyVisible = 0;
-  let spaceBetweenCards = 5;
-  let maxMoveBy = 0;
-  let maxIndex = 0;
   useEffect(() => {
+    console.log("Movie Slider mounted");
     const sliderCtrlLeft = document.querySelector(
       `#slider_ctrl_left${sliderId}`
     );
@@ -44,6 +48,9 @@ export default function MovieSlider({ movies, sliderId, sliderTitle }) {
         sliderCtrlRight.style.opacity = "1";
       });
     });
+    return () => {
+      console.log("Movie Slider unmounted");
+    };
   }, []);
 
   function moveSlider(direction) {
@@ -51,20 +58,24 @@ export default function MovieSlider({ movies, sliderId, sliderTitle }) {
     const cards = document.querySelectorAll(`#card${sliderId}`);
     const row = document.querySelector(`#movie_row${sliderId}`);
 
-    howManyVisible = Math.round(row.offsetWidth / card.offsetWidth);
+    let howManyVisible = Math.round(row.offsetWidth / card.offsetWidth);
 
-    maxMoveBy =
+    let maxMoveBy =
       card.offsetWidth * cards.length -
       howManyVisible * card.offsetWidth +
-      spaceBetweenCards * (cards.length - howManyVisible);
+      sliderState.spaceBetweenCards * (cards.length - howManyVisible);
 
-    maxIndex = /[0-9].[5-9]/.test(maxMoveBy / row.offsetWidth)
+    let maxIndex = /[0-9].[5-9]/.test(maxMoveBy / row.offsetWidth)
       ? Math.round(maxMoveBy / row.offsetWidth + 0.4)
       : Math.round(maxMoveBy / row.offsetWidth);
 
+    let currentIndex = sliderState.currentIndex;
+
     if (direction === "left") {
       currentIndex--;
-    } else currentIndex++;
+    } else {
+      currentIndex++;
+    }
 
     if (direction === "left") {
       if (currentIndex < 0) {
@@ -76,19 +87,29 @@ export default function MovieSlider({ movies, sliderId, sliderTitle }) {
     }
 
     let move =
-      eval(row.offsetWidth * currentIndex + spaceBetweenCards * currentIndex) >=
-      maxMoveBy
+      eval(
+        row.offsetWidth * currentIndex +
+          sliderState.spaceBetweenCards * currentIndex
+      ) >= maxMoveBy
         ? maxMoveBy
         : eval(
-            row.offsetWidth * currentIndex + spaceBetweenCards * currentIndex
+            row.offsetWidth * currentIndex +
+              sliderState.spaceBetweenCards * currentIndex
           );
 
-    row.style.transform = "translateX(-" + move + "px)";
+    setSliderState((prevState) => ({
+      ...prevState,
+      howManyVisible,
+      maxMoveBy,
+      maxIndex,
+      currentIndex,
+      move,
+    }));
   }
 
   return (
-    <div className={styles.slider__container}>
-      <div className={styles.slider__titleAndSliderIndex}>
+    <div className={styles.slider}>
+      <div className={styles.slider__title}>
         <h2>{sliderTitle}</h2>
       </div>
       <button
@@ -108,12 +129,12 @@ export default function MovieSlider({ movies, sliderId, sliderTitle }) {
       <div
         className={styles.slider__row}
         id={`movie_row${sliderId}`}
-        style={{ transform: `translateX(-${moveBy.toString()})` }}
+        style={{ transform: `translateX(-${sliderState.move}px)` }}
       >
         {movies.map((movie) => {
           return (
             <MovieCard
-              key={movie.name + sliderId}
+              key={`movie-card-${movie.name}-${sliderId}`}
               name={movie.name}
               nameSlug={movie.nameSlug}
               thisMovieIs={movie.thisMovieIs}
