@@ -13,11 +13,9 @@ export default async function passwordResetSendEmailHandler(req, res) {
       const { email } = req.body;
       const user = await collection.findOne({ email });
       if (user) {
-        let token = await jwt.sign(
-          { email: user.email, id: user._id },
-          process.env.SECRET,
-          { expiresIn: "15m" }
-        );
+        let token = await jwt.sign({ id: user._id }, process.env.SECRET, {
+          expiresIn: "15m",
+        });
         if (token) {
           // const msg = {
           //   to: user.email,
