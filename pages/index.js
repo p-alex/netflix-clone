@@ -5,7 +5,6 @@ import Banner from "../components/Banner";
 import FullscreenLoader from "../components/FullscreenLoader";
 import MovieSlider from "../components/MovieSlider";
 import Modal from "../components/Modal";
-import pageWrapperStyles from "../styles/PageWrapperStyles.module.css";
 export default function Home({ username, profileImg }) {
   const context = useContext(ProjectContext);
   const { selectedMovie, allMovies, isLoading, handleGetAllMovies } = context;
