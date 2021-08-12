@@ -34,9 +34,6 @@
   color: red;
   margin-left: 10px;
 }
-.modal p {
-  margin: 10px 0;
-}
 .modal a:hover {
   text-decoration: underline;
 }
