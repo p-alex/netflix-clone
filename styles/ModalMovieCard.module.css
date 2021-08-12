@@ -1,0 +1,49 @@
+.modalMovieCard {
+  background: #2f2f2f;
+  border-radius: 3px;
+}
+.modalMovieCard_maxWidth {
+  width: 300px;
+}
+.modalMovieCard__image {
+  width: 100%;
+  border-radius: 3px;
+}
+.modalMovieCard__cardBody {
+  padding: 20px;
+}
+.modalMovieCard__cardBody__infoAndAdd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.modalMovieCard__cardBody__infoAndAdd__info {
+  display: flex;
+  align-items: center;
+}
+.modalMovieCard__cardBody__infoAndAdd__info__maturityRating {
+  border: solid white 1px;
+  padding: 2px;
+  margin-right: 10px;
+}
+.modalMovieCard__cardBody__infoAndAdd__add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: none;
+  color: white;
+  border: solid grey 3px;
+  width: 40px;
+  height: 40px;
+  font-size: 21px;
+}
+.modalMovieCard__cardBody__infoAndAdd__add:hover {
+  opacity: 0.7;
+}
+@media screen and (max-width: 800px) {
+  .modalMovieCard_maxWidth {
+    width: 100%;
+  }
+}

@@ -1,0 +1,18 @@
+.moreLikeThis {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.minThree {
+  display: flex;
+}
+
+@media screen and (max-width: 520px) {
+  .minThree {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import ProjectContext from "../context/Project-context";
 import styles from "../styles/Modal.module.css";
+import MoreLikeThisSection from "../containers/MoreLikeThisSection";
 export default function Modal({ movie }) {
   const [moreLikeThisArray, setMoreLikeThisArray] = useState([]);
   const {
@@ -124,17 +125,7 @@ export default function Modal({ movie }) {
 
               {/*------------------ MORE LIKE THIS ------------------*/}
               {moreLikeThisArray.length !== 0 && (
-                <div className={styles.modal__moreLikeThis}>
-                  <h2>More like this</h2>
-                  {moreLikeThisArray.map((item) => {
-                    return (
-                      <img
-                        key={`modal-moreLikeThis-${item.name}`}
-                        src={`/movies/${item.nameSlug}/${item.nameSlug}-mini.jpg`}
-                      />
-                    );
-                  })}
-                </div>
+                <MoreLikeThisSection movies={moreLikeThisArray} />
               )}
 
               {/*------------------ MODAL ABOUT ------------------*/}
