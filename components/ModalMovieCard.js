@@ -1,6 +1,10 @@
+import { useContext } from "react";
+import ProjectContext from "../context/Project-context";
 import styles from "../styles/ModalMovieCard.module.css";
 export default function ModalMovieCard({ movie, isMinThree }) {
-  const { nameSlug, maturityRating, release, description } = movie;
+  const context = useContext(ProjectContext);
+  const { handleAddMovieToList, movieList } = context;
+  const { nameSlug, maturityRating, release, description, _id } = movie;
   return (
     <div
       className={
@@ -31,9 +35,25 @@ export default function ModalMovieCard({ movie, isMinThree }) {
               {release}
             </p>
           </div>
-          <button className={styles.modalMovieCard__cardBody__infoAndAdd__add}>
-            +
-          </button>
+          {movieList.includes(_id) ? (
+            <button
+              className={
+                styles.modalMovieCard__cardBody__infoAndAdd__add +
+                " " +
+                styles.movieIsAdded
+              }
+              onClick={() => handleAddMovieToList(_id, false)}
+            >
+              <i class="fas fa-check"></i>
+            </button>
+          ) : (
+            <button
+              className={styles.modalMovieCard__cardBody__infoAndAdd__add}
+              onClick={() => handleAddMovieToList(_id, true)}
+            >
+              <i class="fas fa-plus"></i>
+            </button>
+          )}
         </div>
         <p className={styles.modalMovieCard__cardBody__description}>
           {description}
