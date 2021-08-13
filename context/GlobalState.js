@@ -13,6 +13,36 @@ const GlobalState = ({ children }) => {
     {}
   );
 
+  const handleAddMovieToList = async (id, isAdding) => {
+    let url =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : "https://netflix-clone-inky-five.vercel.app";
+    const result = await fetch(`${url}/api/add-movie-to-list`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ movieId: id }),
+    });
+    const resultJSON = await result.json();
+    if (resultJSON.message !== "Something went wrong") {
+      if (isAdding) {
+        setUserData((prevState) => ({
+          ...prevState,
+          movieList: [...prevState.movieList, id],
+        }));
+      } else {
+        setUserData((prevState) => ({
+          ...prevState,
+          movieList: prevState.movieList.filter((item) => item !== id),
+        }));
+      }
+    }
+  };
+
+  console.log(userData);
+
   const handleGetUserData = async () => {
     console.log("get user");
     let url =
@@ -27,6 +57,7 @@ const GlobalState = ({ children }) => {
       setUserData({
         username: resultJSON.username,
         profileImg: resultJSON.profileImg,
+        movieList: resultJSON.movieList,
       });
     }
   };
@@ -85,6 +116,8 @@ const GlobalState = ({ children }) => {
         isLoading,
         handleGetAllMovies,
         handleGetUserData,
+        handleAddMovieToList,
+        movieList: userData.movieList,
       }}
     >
       {children}

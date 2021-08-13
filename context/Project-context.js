@@ -9,4 +9,5 @@ export default createContext({
   isLoading: false,
   handleGetAllMovies: () => {},
   handleGetUserData: () => {},
+  handleAddMovieToList: () => {},
 });

@@ -64,6 +64,7 @@ export default function register() {
           ...inputs,
           date: Date.now(),
           authType: "register",
+          movieList: [],
         }),
       });
 
