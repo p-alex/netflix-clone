@@ -2,10 +2,57 @@
   background: #2f2f2f;
   border-radius: 3px;
 }
+.modalMovieCard:hover {
+  cursor: pointer;
+}
 .modalMovieCard_maxWidth {
   width: 300px;
 }
-.modalMovieCard__image {
+.modalMovieCard__cardHeader {
+  position: relative;
+}
+.modalMovieCard__cardHeader::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    216deg,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+.modalMovieCard__cardHeader__duration {
+  position: absolute;
+  padding: 10px;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+.modalMovieCard__cardHeader__playBtn {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: solid grey 3px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.75);
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+}
+.modalMovieCard:hover .modalMovieCard__cardHeader__playBtn {
+  display: flex;
+  animation: opacityTransition 300ms;
+}
+.modalMovieCard__cardHeader__image {
   width: 100%;
   border-radius: 3px;
 }
@@ -50,5 +97,13 @@
 @media screen and (max-width: 800px) {
   .modalMovieCard_maxWidth {
     width: 100%;
+  }
+}
+@keyframes opacityTransition {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
