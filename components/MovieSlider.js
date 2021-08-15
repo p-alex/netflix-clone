@@ -143,6 +143,7 @@ export default function MovieSlider({ movies, sliderId, sliderTitle }) {
               fromSliderWithId={sliderId}
               released={movie.release}
               handleSelectMovie={() => handleSelectMovie(movie)}
+              _id={movie._id}
             />
           );
         })}

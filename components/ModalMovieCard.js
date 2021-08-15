@@ -1,15 +1,12 @@
-import { useContext } from "react";
-import ProjectContext from "../context/Project-context";
 import styles from "../styles/ModalMovieCard.module.css";
-export default function ModalMovieCard({ movie, isMinThree }) {
-  const context = useContext(ProjectContext);
-  const { handleAddMovieToList, movieList } = context;
+import AddToListBtn from "./AddToListBtn";
+export default function ModalMovieCard({ movie, isMaxThree }) {
   const { nameSlug, maturityRating, release, description, _id, duration } =
     movie;
   return (
     <div
       className={
-        isMinThree
+        isMaxThree
           ? styles.modalMovieCard
           : styles.modalMovieCard + " " + styles.modalMovieCard_maxWidth
       }
@@ -45,25 +42,7 @@ export default function ModalMovieCard({ movie, isMinThree }) {
               {release}
             </p>
           </div>
-          {movieList.includes(_id) ? (
-            <button
-              className={
-                styles.modalMovieCard__cardBody__infoAndAdd__add +
-                " " +
-                styles.movieIsAdded
-              }
-              onClick={() => handleAddMovieToList(_id, false)}
-            >
-              <i class="fas fa-check"></i>
-            </button>
-          ) : (
-            <button
-              className={styles.modalMovieCard__cardBody__infoAndAdd__add}
-              onClick={() => handleAddMovieToList(_id, true)}
-            >
-              <i class="fas fa-plus"></i>
-            </button>
-          )}
+          <AddToListBtn id={_id} />
         </div>
         <p className={styles.modalMovieCard__cardBody__description}>
           {description}

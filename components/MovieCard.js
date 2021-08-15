@@ -1,4 +1,5 @@
 import styles from "../styles/MovieCard.module.css";
+import AddToListBtn from "./AddToListBtn";
 export default function MovieCard({
   name,
   nameSlug,
@@ -8,6 +9,7 @@ export default function MovieCard({
   released,
   fromSliderWithId,
   handleSelectMovie,
+  _id,
 }) {
   return (
     <div className={styles.card} id={`card${fromSliderWithId}`}>
@@ -16,10 +18,17 @@ export default function MovieCard({
       </div>
       <div className={styles.card__body} id={`card_body${fromSliderWithId}`}>
         <div className={styles.card__body__controls}>
-          <button>
-            <i className="fas fa-play"></i>
-          </button>
-          <button onClick={handleSelectMovie}>
+          <div className={styles.card__body__controls__container}>
+            <button className={styles.card__body__controls__container__playBtn}>
+              <i className="fas fa-play"></i>
+            </button>
+            <AddToListBtn id={_id} />
+          </div>
+
+          <button
+            className={styles.card__body__controls__moreInfo}
+            onClick={handleSelectMovie}
+          >
             <i className="fas fa-angle-down"></i>
           </button>
         </div>

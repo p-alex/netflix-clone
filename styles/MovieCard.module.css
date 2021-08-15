@@ -46,9 +46,15 @@
   display: flex;
   justify-content: space-between;
 }
-.card__body__controls button {
-  width: 32px;
-  height: 32px;
+.card__body__controls__container {
+  display: flex;
+}
+.card__body__controls__container button {
+  margin-right: 10px;
+}
+.card__body__controls__container__playBtn {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -56,17 +62,22 @@
   border: none;
   cursor: pointer;
 }
+.card__body__controls__moreInfo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid grey 3px;
+  cursor: pointer;
+  background: transparent;
+  color: white;
+  font-size: 18px;
+}
 .card__body__controls button i {
   position: relative;
   top: 1px;
-}
-.card__body__controls button:last-child {
-  background: transparent;
-  border: solid 1px #f3f3f3;
-  color: white;
-}
-.card__body__controls button:hover {
-  opacity: 0.8;
 }
 .card__body__stats {
   margin-bottom: 10px;
