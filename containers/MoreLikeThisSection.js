@@ -2,25 +2,34 @@ import { useState, useEffect } from "react";
 import ModalMovieCard from "../components/ModalMovieCard";
 import styles from "../styles/MoreLikeThisSection.module.css";
 export default function MoreLikeThisSection({ movies }) {
-  const [isMinThree, setIsMinThree] = useState(false);
+  const [isMaxThree, setIsMaxThree] = useState(false);
   useEffect(() => {
     if (movies.length >= 3) {
-      setIsMinThree(true);
+      setIsMaxThree(true);
     } else {
-      setIsMinThree(false);
+      setIsMaxThree(false);
     }
   }, []);
   return (
-    <section
-      className={
-        isMinThree
-          ? styles.moreLikeThis
-          : styles.moreLikeThis + " " + styles.minThree
-      }
-    >
-      {movies.map((movie) => {
-        return <ModalMovieCard movie={movie} isMinThree={isMinThree} />;
-      })}
+    <section className={styles.moreLikeThis}>
+      <h2 className={styles.moreLikeThis__sectionName}>More like this</h2>
+      <div
+        className={
+          isMaxThree
+            ? styles.moreLikeThis__movieContainer
+            : styles.moreLikeThis__movieContainer + " " + styles.maxThree
+        }
+      >
+        {movies.map((movie) => {
+          return (
+            <ModalMovieCard
+              key={`${movie.nameSlug}-modal-movie-card`}
+              movie={movie}
+              isMaxThree={isMaxThree}
+            />
+          );
+        })}
+      </div>
     </section>
   );
 }

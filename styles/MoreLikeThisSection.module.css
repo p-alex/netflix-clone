@@ -1,17 +1,21 @@
 .moreLikeThis {
   position: relative;
+  padding: 20px;
+}
+.moreLikeThis__sectionName {
+  margin-bottom: 20px;
+}
+.moreLikeThis__movieContainer {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 20px;
-  padding: 20px;
 }
-
-.minThree {
+.maxThree {
   display: flex;
 }
-
 @media screen and (max-width: 520px) {
-  .minThree {
+  .maxThree {
     display: grid;
     grid-template-columns: 1fr;
   }
