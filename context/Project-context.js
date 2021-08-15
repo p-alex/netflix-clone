@@ -10,4 +10,5 @@ export default createContext({
   handleGetAllMovies: () => {},
   handleGetUserData: () => {},
   handleAddMovieToList: () => {},
+  userMovieList: [],
 });

@@ -2,7 +2,7 @@ import { useState, useReducer } from "react";
 import { useRouter } from "next/router";
 import ProjectContext from "./Project-context";
 import { selectedMovieReducer } from "./reducers";
-const GlobalState = ({ children }) => {
+export default function GlobalState({ children }) {
   const router = useRouter();
   const [userData, setUserData] = useState({});
   const [allMovies, setAllMovies] = useState([]);
@@ -41,8 +41,6 @@ const GlobalState = ({ children }) => {
     }
   };
 
-  console.log(userData);
-
   const handleGetUserData = async () => {
     console.log("get user");
     let url =
@@ -61,6 +59,7 @@ const GlobalState = ({ children }) => {
       });
     }
   };
+
   const handleGetAllMovies = async () => {
     console.log("get movie");
     setIsLoading(true);
@@ -98,7 +97,6 @@ const GlobalState = ({ children }) => {
       body: JSON.stringify({ authType: "logout" }),
     });
     const resultJSON = await result.json();
-    console.log(resultJSON);
     if (resultJSON.message === "Logged out") {
       router.push("/login");
     }
@@ -117,12 +115,10 @@ const GlobalState = ({ children }) => {
         handleGetAllMovies,
         handleGetUserData,
         handleAddMovieToList,
-        movieList: userData.movieList,
+        userMovieList: userData.movieList,
       }}
     >
       {children}
     </ProjectContext.Provider>
   );
-};
-
-export default GlobalState;
+}
