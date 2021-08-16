@@ -14,6 +14,12 @@ export default function MovieCard({
   return (
     <div className={styles.card} id={`card${fromSliderWithId}`}>
       <div className={styles.card__image}>
+        <button
+          className={styles.card__image__openModalBtn}
+          onClick={handleSelectMovie}
+        >
+          {name}
+        </button>
         <img src={`/movies/${nameSlug}/${nameSlug}-mini.jpg`} alt={name} />
       </div>
       <div className={styles.card__body} id={`card_body${fromSliderWithId}`}>
