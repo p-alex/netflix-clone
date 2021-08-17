@@ -15,41 +15,45 @@
   background: #111;
   padding: 0px 60px;
 }
-.logo_small {
+.navbar__logoSmall {
   display: none;
 }
-.links {
+.navbar__links {
   flex-grow: 1;
   margin-left: 30px;
+  display: flex;
 }
-.links li a {
+.navbar__links a {
+  margin-right: 20px;
+}
+.navbar__links li a {
   color: white;
 }
-.user {
+.navbar__user {
   position: relative;
   display: flex;
   align-items: center;
   color: white;
 }
-.user p:last-child {
+.navbar__user p:last-child {
   cursor: pointer;
 }
-.user ul li .profileImg {
+.navbar__user__profileImage {
   position: relative;
   width: 30px;
   margin: 0 10px;
 }
 
-.user ul li:first-child {
+.navbar__user ul li:first-child {
   display: flex;
   align-items: center;
   padding: 15px 0;
   cursor: pointer;
 }
-.user ul li:first-child i {
+.navbar__user ul li:first-child i {
   transition: transform 200ms ease-in-out;
 }
-.user ul li ul {
+.navbar__user ul li ul {
   position: absolute;
   top: 60px;
   background: black;
@@ -59,17 +63,17 @@
   width: 150px;
 }
 
-.user ul li ul li button {
+.navbar__user ul li ul li button {
   background: transparent;
   text-decoration: underline;
   color: white;
 }
 
-.user ul li:hover ul {
+.navbar__user ul li:hover ul {
   display: block;
 }
 
-.user ul li:first-child:hover i {
+.navbar__user ul li:first-child:hover i {
   transform: rotate(180deg);
 }
 
@@ -77,20 +81,20 @@
   .navbar {
     padding: 0px 20px;
   }
-  .logo_small {
+  .navbar__logoSmall {
     display: block;
     width: 40px;
     height: 40px;
   }
-  .logo_small img {
+  .navbar__logoSmall img {
     width: 100%;
     height: 100%;
     object-fit: contain;
   }
-  .logo_big {
+  .navbar__logoBig {
     display: none;
   }
-  .user ul li:first-child p {
+  .navbar__user ul li:first-child p {
     display: none;
   }
   .navbar.navbar_active {

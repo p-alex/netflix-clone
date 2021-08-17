@@ -32,7 +32,7 @@ export default function NavBar() {
       }
       id="navbar"
     >
-      <div className={styles.logo_big}>
+      <div className={styles.navbar__logoBig}>
         <Image
           src={"/images/logo/netflix-logo.png"}
           alt=""
@@ -41,21 +41,21 @@ export default function NavBar() {
         />
       </div>
 
-      <div className={styles.logo_small}>
+      <div className={styles.navbar__logoSmall}>
         <img src="/images/logo/netflix-logo-mini.png" />
       </div>
 
-      <ul className={styles.links}>
+      <ul className={styles.navbar__links}>
         <li>
           <a href="/">Home</a>
         </li>
       </ul>
       {userData.username && (
-        <div className={styles.user}>
+        <div className={styles.navbar__user}>
           <ul>
             <li>
               <p>{username}</p>
-              <div className={styles.profileImg}>
+              <div className={styles.navbar__user__profileImage}>
                 <Image src={profileImg} alt="" width="300px" height="300px" />
               </div>
 
