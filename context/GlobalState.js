@@ -1,4 +1,4 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer, useEffect } from "react";
 import { useRouter } from "next/router";
 import ProjectContext from "./Project-context";
 import { selectedMovieReducer } from "./reducers";
@@ -12,34 +12,6 @@ export default function GlobalState({ children }) {
     selectedMovieReducer,
     {}
   );
-
-  const handleAddMovieToList = async (id, isAdding) => {
-    let url =
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000"
-        : "https://netflix-clone-inky-five.vercel.app";
-    const result = await fetch(`${url}/api/add-movie-to-list`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ movieId: id }),
-    });
-    const resultJSON = await result.json();
-    if (resultJSON.message !== "Something went wrong") {
-      if (isAdding) {
-        setUserData((prevState) => ({
-          ...prevState,
-          movieList: [...prevState.movieList, id],
-        }));
-      } else {
-        setUserData((prevState) => ({
-          ...prevState,
-          movieList: prevState.movieList.filter((item) => item !== id),
-        }));
-      }
-    }
-  };
 
   const handleGetUserData = async () => {
     console.log("get user");
@@ -75,6 +47,48 @@ export default function GlobalState({ children }) {
     } else {
       setAllMovies(moviesJSON.movies);
       setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (allMovies.length === 0) {
+      handleGetAllMovies();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!userData?.username) {
+      handleGetUserData();
+    }
+  }, []);
+
+  const handleAddMovieToList = async (movie, isAdding) => {
+    let url =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : "https://netflix-clone-inky-five.vercel.app";
+    const result = await fetch(`${url}/api/add-movie-to-list`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ movie }),
+    });
+    const resultJSON = await result.json();
+    if (resultJSON.message !== "Something went wrong") {
+      if (isAdding) {
+        setUserData((prevState) => ({
+          ...prevState,
+          movieList: [...prevState.movieList, movie],
+        }));
+      } else {
+        setUserData((prevState) => ({
+          ...prevState,
+          movieList: prevState.movieList.filter(
+            (item) => item._id !== movie._id
+          ),
+        }));
+      }
     }
   };
 

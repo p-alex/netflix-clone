@@ -11,4 +11,6 @@ export default createContext({
   handleGetUserData: () => {},
   handleAddMovieToList: () => {},
   userMovieList: [],
+  bannerMovie: {},
+  handleSetBannerMovie: () => {},
 });

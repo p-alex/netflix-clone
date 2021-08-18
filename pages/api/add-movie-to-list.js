@@ -12,16 +12,15 @@ async function addMovieToListHandler(req, res) {
 
       const user = await usersCollection.findOne({ _id: ObjectId(req.userId) });
 
-      const movieId = req.body.movieId;
+      const movie = req.body.movie;
 
-      if (movieId) {
+      console.log("movie: " + movie._id);
+
+      if (movie._id) {
         let oldMovieList = user.movieList;
-
-        if (!oldMovieList.includes(movieId)) {
+        if (!oldMovieList.some((item) => item._id === movie._id)) {
           // ADDING MOVIE ID TO MOVIE LIST
-          let updatedMovieList = [...oldMovieList, movieId];
-
-          console.log(updatedMovieList);
+          let updatedMovieList = [...oldMovieList, movie];
 
           const updateMovieList = await usersCollection.updateOne(
             { _id: ObjectId(req.userId) },
@@ -33,7 +32,9 @@ async function addMovieToListHandler(req, res) {
           }
         } else {
           // REMOVING MOVIE ID FROM MOVIE LIST
-          let updatedMovieList = oldMovieList.filter((id) => id !== movieId);
+          let updatedMovieList = oldMovieList.filter(
+            (item) => item._id !== movie._id
+          );
 
           const updateMovieList = await usersCollection.updateOne(
             { _id: ObjectId(req.userId) },

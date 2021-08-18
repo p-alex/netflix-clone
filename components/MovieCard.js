@@ -1,22 +1,22 @@
+import { useContext } from "react";
+import ProjectContext from "../context/Project-context";
 import styles from "../styles/MovieCard.module.css";
 import AddToListBtn from "./AddToListBtn";
-export default function MovieCard({
-  name,
-  nameSlug,
-  thisMovieIs,
-  maturityRating,
-  duration,
-  released,
-  fromSliderWithId,
-  handleSelectMovie,
-  _id,
-}) {
+export default function MovieCard({ movie, fromSliderWithId }) {
+  const context = useContext(ProjectContext);
+
+  const { handleSelectMovie } = context;
+  const { name, nameSlug, maturityRating, duration, thisMovieIs } = movie;
   return (
-    <div className={styles.card} id={`card${fromSliderWithId}`}>
+    <div
+      className={styles.card}
+      id={fromSliderWithId ? `card${fromSliderWithId}` : `card${name}`}
+      style={fromSliderWithId ? null : { width: "auto" }}
+    >
       <div className={styles.card__image}>
         <button
           className={styles.card__image__openModalBtn}
-          onClick={handleSelectMovie}
+          onClick={() => handleSelectMovie(movie)}
         >
           {name}
         </button>
@@ -28,20 +28,21 @@ export default function MovieCard({
             <button className={styles.card__body__controls__container__playBtn}>
               <i className="fas fa-play"></i>
             </button>
-            <AddToListBtn id={_id} />
+            <AddToListBtn movie={movie} />
           </div>
 
           <button
             className={styles.card__body__controls__moreInfo}
-            onClick={handleSelectMovie}
+            onClick={() => handleSelectMovie(movie)}
           >
             <i className="fas fa-angle-down"></i>
           </button>
         </div>
 
         <div className={styles.card__body__stats}>
-          <span>{released}</span>
-          <span>{maturityRating}+</span>
+          <span className={styles.card__body__stats__maturityRating}>
+            {maturityRating}+
+          </span>
           <span>{duration}</span>
         </div>
         <div className={styles.card__body__thisMovieIs}>

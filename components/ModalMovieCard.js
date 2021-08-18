@@ -1,8 +1,7 @@
 import styles from "../styles/ModalMovieCard.module.css";
 import AddToListBtn from "./AddToListBtn";
 export default function ModalMovieCard({ movie, isMaxThree }) {
-  const { nameSlug, maturityRating, release, description, _id, duration } =
-    movie;
+  const { nameSlug, maturityRating, release, description, duration } = movie;
   return (
     <div
       className={
@@ -42,7 +41,7 @@ export default function ModalMovieCard({ movie, isMaxThree }) {
               {release}
             </p>
           </div>
-          <AddToListBtn id={_id} />
+          <AddToListBtn movie={movie} />
         </div>
         <p className={styles.modalMovieCard__cardBody__description}>
           {description}

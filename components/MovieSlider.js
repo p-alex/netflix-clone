@@ -135,15 +135,8 @@ export default function MovieSlider({ movies, sliderId, sliderTitle }) {
           return (
             <MovieCard
               key={`movie-card-${movie.name}-${sliderId}`}
-              name={movie.name}
-              nameSlug={movie.nameSlug}
-              thisMovieIs={movie.thisMovieIs}
-              maturityRating={movie.maturityRating}
-              duration={movie.duration}
+              movie={movie}
               fromSliderWithId={sliderId}
-              released={movie.release}
-              handleSelectMovie={() => handleSelectMovie(movie)}
-              _id={movie._id}
             />
           );
         })}

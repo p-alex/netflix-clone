@@ -97,7 +97,7 @@
 .card__body__stats span {
   margin-right: 10px;
 }
-.card__body__stats span:nth-child(2) {
+.card__body__stats__maturityRating {
   padding: 1px 2px;
   border: solid white 1px;
 }
