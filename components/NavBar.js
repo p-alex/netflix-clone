@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useContext } from "react";
 import ProjectContext from "../context/Project-context";
 import Image from "next/image";
+import Link from "next/link";
 import styles from "../styles/NavBar.module.css";
 export default function NavBar() {
   const context = useContext(ProjectContext);
@@ -17,12 +18,6 @@ export default function NavBar() {
         setIsScrolled(false);
       }
     });
-  });
-
-  useEffect(() => {
-    if (!userData?.username) {
-      handleGetUserData();
-    }
   }, []);
 
   return (
@@ -47,7 +42,10 @@ export default function NavBar() {
 
       <ul className={styles.navbar__links}>
         <li>
-          <a href="/">Home</a>
+          <Link href="/">Home</Link>
+        </li>
+        <li>
+          <Link href="/my-list">My List</Link>
         </li>
       </ul>
       {userData.username && (
