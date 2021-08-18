@@ -1,0 +1,36 @@
+.movieContainer {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  padding: 0 60px;
+  margin-top: 200px;
+  color: white;
+  overflow-y: visible;
+  gap: 130px 10px;
+  padding-bottom: 140px;
+}
+.lessThanSix {
+  display: flex;
+}
+.movieContainer h1 {
+  position: absolute;
+  transform: translateY(-150%);
+}
+
+@media screen and (max-width: 1400px) {
+  .movieContainer {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media screen and (max-width: 900px) {
+  .movieContainer {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 0 30px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .movieContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
