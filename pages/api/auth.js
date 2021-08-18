@@ -47,6 +47,7 @@ export default async function authHandler(req, res) {
           profileImg: `/images/default-profile-pictures/image-${Math.floor(
             Math.random() * 6
           )}.jpg`,
+          movieList: [],
         });
 
         const token = await jwt.sign(
