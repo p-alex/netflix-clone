@@ -1,20 +1,15 @@
-import { useEffect, useContext } from "react";
+import { useContext } from "react";
 import ProjectContext from "../context/Project-context";
 import NavBar from "../components/NavBar";
 import Banner from "../components/Banner";
 import FullscreenLoader from "../components/FullscreenLoader";
 import MovieSlider from "../components/MovieSlider";
 import Modal from "../components/Modal";
+
 import pageWrapperStyles from "../styles/PageWrapperStyles.module.css";
 export default function Home({ username, profileImg }) {
   const context = useContext(ProjectContext);
-  const { selectedMovie, allMovies, isLoading, handleGetAllMovies } = context;
-
-  useEffect(() => {
-    if (allMovies.length === 0) {
-      handleGetAllMovies();
-    }
-  }, []);
+  const { selectedMovie, allMovies, isLoading } = context;
 
   return (
     <div className={selectedMovie.name && pageWrapperStyles.disableScroll}>
