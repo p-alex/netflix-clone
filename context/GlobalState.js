@@ -104,8 +104,8 @@ export default function GlobalState({ children }) {
     });
     const resultJSON = await result.json();
     if (resultJSON.message === "Logged out") {
-      await setUserData({});
       router.push("/login");
+      setUserData({});
     }
   };
 
