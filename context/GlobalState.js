@@ -51,15 +51,7 @@ export default function GlobalState({ children }) {
   };
 
   useEffect(() => {
-    if (allMovies.length === 0) {
-      handleGetAllMovies();
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!userData?.username) {
-      handleGetUserData();
-    }
+    if (allMovies.length === 0) handleGetAllMovies();
   }, []);
 
   const handleAddMovieToList = async (movie, isAdding) => {
@@ -112,6 +104,7 @@ export default function GlobalState({ children }) {
     });
     const resultJSON = await result.json();
     if (resultJSON.message === "Logged out") {
+      await setUserData({});
       router.push("/login");
     }
   };

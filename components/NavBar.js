@@ -11,6 +11,10 @@ export default function NavBar() {
   const { handleLogout, userData, handleGetUserData } = context;
 
   useEffect(() => {
+    if (!userData?.username) handleGetUserData();
+  }, []);
+
+  useEffect(() => {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 0) {
         setIsScrolled(true);

@@ -29,11 +29,6 @@ export default function Home({ username, profileImg }) {
             sliderId={"2"}
             sliderTitle={"Action & Adventure"}
           />
-          <MovieSlider
-            movies={allMovies}
-            sliderId={"3"}
-            sliderTitle={"Movies Based on Books"}
-          />
         </>
       )}
     </div>
