@@ -12,7 +12,7 @@
   transition: background 300ms, padding 300ms;
 }
 .navbar.navbar_active {
-  background: #111;
+  background: #141414;
   padding: 0px 60px;
 }
 .navbar__logoSmall {
