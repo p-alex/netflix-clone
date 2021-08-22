@@ -1,11 +1,13 @@
-import ProjectContext from "../context/Project-context";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import MovieCard from "./MovieCard";
 import styles from "../styles/MovieSlider.module.css";
 
-export default function MovieSlider({ movies, sliderId, sliderTitle }) {
-  const context = useContext(ProjectContext);
-  const { handleSelectMovie } = context;
+export default function MovieSlider({
+  movies,
+  sliderId,
+  sliderTitle,
+  hasMovies,
+}) {
   const [sliderState, setSliderState] = useState({
     currentIndex: 0,
     howManyVisible: 0,
@@ -108,39 +110,43 @@ export default function MovieSlider({ movies, sliderId, sliderTitle }) {
   }
 
   return (
-    <div className={styles.slider}>
-      <div className={styles.slider__title}>
-        <h2>{sliderTitle}</h2>
-      </div>
-      <button
-        className={styles.slider__ctrl + " " + styles.left__ctrl}
-        id={`slider_ctrl_left${sliderId}`}
-        onClick={() => moveSlider("left")}
-      >
-        <i className="fas fa-chevron-left"></i>
-      </button>
-      <button
-        className={styles.slider__ctrl + " " + styles.right__ctrl}
-        id={`slider_ctrl_right${sliderId}`}
-        onClick={() => moveSlider("right")}
-      >
-        <i className="fas fa-chevron-right"></i>
-      </button>
-      <div
-        className={styles.slider__row}
-        id={`movie_row${sliderId}`}
-        style={{ transform: `translateX(-${sliderState.move}px)` }}
-      >
-        {movies.map((movie) => {
-          return (
-            <MovieCard
-              key={`movie-card-${movie.name}-${sliderId}`}
-              movie={movie}
-              fromSliderWithId={sliderId}
-            />
-          );
-        })}
-      </div>
-    </div>
+    <>
+      {hasMovies && (
+        <div className={styles.slider}>
+          <div className={styles.slider__title}>
+            <h2>{sliderTitle}</h2>
+          </div>
+          <button
+            className={styles.slider__ctrl + " " + styles.left__ctrl}
+            id={`slider_ctrl_left${sliderId}`}
+            onClick={() => moveSlider("left")}
+          >
+            <i className="fas fa-chevron-left"></i>
+          </button>
+          <button
+            className={styles.slider__ctrl + " " + styles.right__ctrl}
+            id={`slider_ctrl_right${sliderId}`}
+            onClick={() => moveSlider("right")}
+          >
+            <i className="fas fa-chevron-right"></i>
+          </button>
+          <div
+            className={styles.slider__row}
+            id={`movie_row${sliderId}`}
+            style={{ transform: `translateX(-${sliderState.move}px)` }}
+          >
+            {movies.map((movie) => {
+              return (
+                <MovieCard
+                  key={`movie-card-${movie.name}-${sliderId}`}
+                  movie={movie}
+                  fromSliderWithId={sliderId}
+                />
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
