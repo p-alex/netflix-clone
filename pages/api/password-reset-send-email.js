@@ -1,5 +1,5 @@
 import { MongoClient } from "mongodb";
-import sgMail from "@sendgrid/mail";
+//import sgMail from "@sendgrid/mail";
 import jwt from "jsonwebtoken";
 export default async function passwordResetSendEmailHandler(req, res) {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
@@ -7,12 +7,12 @@ export default async function passwordResetSendEmailHandler(req, res) {
     useUnifiedTopology: true,
   });
   const collection = await client.db().collection("users");
-  sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+  //sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
   if (req.method === "POST") {
     try {
       const { email } = req.body;
       const user = await collection.findOne({ email });
-      if (user) {
+      if (user?.email) {
         let token = await jwt.sign({ id: user._id }, process.env.SECRET, {
           expiresIn: "15m",
         });
@@ -41,6 +41,8 @@ export default async function passwordResetSendEmailHandler(req, res) {
           );
           res.json({ message: "Sent" });
         }
+      } else {
+        res.json({ message: "Something went wrong..." });
       }
     } catch (error) {
       return res.json({ message: "Something went wrong..." });
