@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import ProjectContext from "../context/Project-context";
 import NavBar from "../components/NavBar";
 import Banner from "../components/Banner";
@@ -9,8 +9,11 @@ import Modal from "../components/Modal";
 import pageWrapperStyles from "../styles/PageWrapperStyles.module.css";
 export default function Home({ username, profileImg }) {
   const context = useContext(ProjectContext);
-  const { selectedMovie, allMovies, isLoading } = context;
-
+  const { selectedMovie, allMovies, isLoading, handleGetAllMovies } = context;
+  const { movieList } = context.userData;
+  useEffect(() => {
+    if (allMovies.length === 0) handleGetAllMovies();
+  }, []);
   return (
     <div style={{ overflowX: "hidden" }}>
       <div className={selectedMovie.name && pageWrapperStyles.disableScroll}>

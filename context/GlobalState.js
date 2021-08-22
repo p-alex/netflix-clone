@@ -50,10 +50,6 @@ export default function GlobalState({ children }) {
     }
   };
 
-  useEffect(() => {
-    if (allMovies.length === 0) handleGetAllMovies();
-  }, []);
-
   const handleAddMovieToList = async (movie, isAdding) => {
     let url =
       process.env.NODE_ENV === "development"
