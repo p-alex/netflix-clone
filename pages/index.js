@@ -12,25 +12,6 @@ export default function Home({ username, profileImg }) {
   const { selectedMovie, allMovies, isLoading } = context;
 
   return (
-    <div className={selectedMovie.name && pageWrapperStyles.disableScroll}>
-      {isLoading && <FullscreenLoader />}
-      {selectedMovie?.name ? <Modal movie={selectedMovie} /> : null}
-      <NavBar username={username} profileImg={profileImg} />
-      {allMovies.length !== 0 && (
-        <>
-          <Banner movies={allMovies} />
-          <MovieSlider
-            movies={allMovies}
-            sliderId={"1"}
-            sliderTitle={"Popular"}
-          />
-          <MovieSlider
-            movies={allMovies}
-            sliderId={"2"}
-            sliderTitle={"Action & Adventure"}
-          />
-        </>
-      )}
     <div style={{ overflowX: "hidden" }}>
       <div className={selectedMovie.name && pageWrapperStyles.disableScroll}>
         {isLoading && <FullscreenLoader />}
