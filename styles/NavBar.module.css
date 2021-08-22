@@ -98,7 +98,7 @@
     display: none;
   }
   .navbar.navbar_active {
-    background: #111;
+    background: #141414;
     padding: 0px 20px;
   }
 }
