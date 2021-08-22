@@ -2,11 +2,12 @@ import { useContext } from "react";
 import ProjectContext from "../context/Project-context";
 import styles from "../styles/MovieCard.module.css";
 import AddToListBtn from "./AddToListBtn";
+import { useRouter } from "next/router";
 export default function MovieCard({ movie, fromSliderWithId }) {
   const context = useContext(ProjectContext);
-
+  const router = useRouter();
   const { handleSelectMovie } = context;
-  const { name, nameSlug, maturityRating, duration, thisMovieIs } = movie;
+  const { name, nameSlug, maturityRating, duration, thisMovieIs, _id } = movie;
   return (
     <div
       className={styles.card}
@@ -25,7 +26,10 @@ export default function MovieCard({ movie, fromSliderWithId }) {
       <div className={styles.card__body} id={`card_body${fromSliderWithId}`}>
         <div className={styles.card__body__controls}>
           <div className={styles.card__body__controls__container}>
-            <button className={styles.card__body__controls__container__playBtn}>
+            <button
+              className={styles.card__body__controls__container__playBtn}
+              onClick={() => router.push(`/movie/${_id}`)}
+            >
               <i className="fas fa-play"></i>
             </button>
             <AddToListBtn movie={movie} />

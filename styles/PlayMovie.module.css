@@ -1,0 +1,17 @@
+.movie {
+  position: relative;
+  display: block;
+  width: 94%;
+  margin: 0 auto;
+  margin-top: 84px;
+  height: 80vh;
+  animation: opacity 1000ms;
+}
+@keyframes opacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
