@@ -1,15 +1,17 @@
 import { useState, useEffect, useContext } from "react";
+import { useRouter } from "next/router";
 import ProjectContext from "../context/Project-context";
 import styles from "../styles/Banner.module.css";
 import Image from "next/image";
 export default function Banner({ movies }) {
   const context = useContext(ProjectContext);
+  const router = useRouter();
   const { handleSelectMovie } = context;
   const [movie, setMovie] = useState({});
   useEffect(() => {
     setMovie(movies[Math.floor(Math.random() * movies.length)]);
   }, []);
-  const { nameSlug, description, thisMovieIs } = movie;
+  const { nameSlug, description, thisMovieIs, _id } = movie;
 
   return (
     <>
@@ -43,6 +45,7 @@ export default function Banner({ movies }) {
                   " " +
                   styles.banner__content__btn_container__play
                 }
+                onClick={() => router.push(`/movie/${_id}`)}
               >
                 <i className="fas fa-play"></i>
                 <span>Play</span>
