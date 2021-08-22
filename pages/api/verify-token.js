@@ -18,16 +18,15 @@ export default async function verifyTokenHandler(req, res) {
             return decoded;
           }
         );
-        if (!decoded) {
+
+        if (!decoded?.id) {
           return res.json({ message: "Invalid signiture" });
         }
 
         const user = await collection.findOne({ _id: ObjectId(decoded.id) });
-        if (user) {
+        if (user?.username) {
           return res.json({
             message: "Authorized",
-            username: user.username,
-            profileImg: user.profileImg,
           });
         } else {
           return res.json({ message: "That user doesn't exist" });
