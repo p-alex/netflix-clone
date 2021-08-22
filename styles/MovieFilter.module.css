@@ -1,0 +1,81 @@
+.movieFilter {
+  position: fixed;
+  top: 85px;
+  display: flex;
+  color: white;
+  height: 60px;
+  padding: 0 60px;
+  width: 100%;
+  align-items: center;
+  z-index: 100;
+  transition: top 300ms, padding 300ms;
+  background: #141414;
+}
+.movieFilter__scrolled {
+  top: 64px;
+}
+.movieFilter__filters {
+  position: relative;
+  margin-left: 20px;
+}
+.movieFilter__filtersToggle {
+  position: relative;
+  display: flex;
+  border: solid white 1px;
+  padding: 5px 10px;
+  align-items: center;
+  cursor: pointer;
+  background: none;
+  color: white;
+  font-size: 1.2rem;
+}
+.movieFilter__filtersToggle:hover {
+  background: #303030;
+}
+.movieFilter__filtersToggle i {
+  position: relative;
+  top: -3px;
+  margin-left: 10px;
+}
+.movieFilter__dropdown {
+  position: absolute;
+  left: 0;
+  border: solid white 1px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  flex-wrap: wrap;
+  width: 300px;
+  margin-top: 5px;
+  padding: 5px;
+  gap: 10px 15px;
+  background: #141414;
+}
+.movieFilter__dropdown__filter {
+  cursor: pointer;
+}
+.movieFilter__dropdown__filter:hover {
+  text-decoration: underline;
+}
+
+.movieFilter__activeFilter {
+  display: flex;
+  color: grey;
+  margin-left: 20px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.movieFilter__activeFilter i {
+  margin-right: 5px;
+}
+
+.movieFilter__activeFilter:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 800px) {
+  .movieFilter {
+    top: 64px;
+    padding: 0 30px;
+  }
+}
