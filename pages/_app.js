@@ -4,9 +4,7 @@ import "../styles/globals.css";
 function MyApp({ Component, pageProps }) {
   return (
     <GlobalState>
-      <div style={{ overflowX: "hidden" }}>
-        <Component {...pageProps} />
-      </div>
+      <Component {...pageProps} />
     </GlobalState>
   );
 }

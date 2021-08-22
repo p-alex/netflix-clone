@@ -31,6 +31,63 @@ export default function Home({ username, profileImg }) {
           />
         </>
       )}
+    <div style={{ overflowX: "hidden" }}>
+      <div className={selectedMovie.name && pageWrapperStyles.disableScroll}>
+        {isLoading && <FullscreenLoader />}
+        {selectedMovie?.name ? <Modal movie={selectedMovie} /> : null}
+        <NavBar username={username} profileImg={profileImg} />
+        {allMovies.length !== 0 && (
+          <>
+            <Banner movies={allMovies} />
+            <MovieSlider
+              movies={movieList}
+              sliderId={"1"}
+              sliderTitle={"My List"}
+              hasMovies={movieList?.length}
+            />
+            <MovieSlider
+              movies={allMovies.filter((movie) =>
+                movie.genres.includes("Action & Adventure")
+              )}
+              sliderId={"2"}
+              sliderTitle={"Action & Adventure"}
+              hasMovies={allMovies?.length}
+            />
+            <MovieSlider
+              movies={allMovies.filter((movie) =>
+                movie.genres.includes("Dramas")
+              )}
+              sliderId={"3"}
+              sliderTitle={"Dramas"}
+              hasMovies={allMovies?.length}
+            />
+            <MovieSlider
+              movies={allMovies
+                .filter((movie) => movie.genres.includes("Sci-Fi Movies"))
+                .reverse()}
+              sliderId={"4"}
+              sliderTitle={"Sci-Fi"}
+              hasMovies={allMovies?.length}
+            />
+            <MovieSlider
+              movies={allMovies.filter((movie) =>
+                movie.genres.includes("Children & Family Movies")
+              )}
+              sliderId={"5"}
+              sliderTitle={"Children & Family"}
+              hasMovies={allMovies?.length}
+            />
+            <MovieSlider
+              movies={allMovies.filter((movie) =>
+                movie.thisMovieIs.includes("Romantic")
+              )}
+              sliderId={"6"}
+              sliderTitle={"Romantic"}
+              hasMovies={allMovies?.length}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 }
