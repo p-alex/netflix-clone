@@ -4,31 +4,34 @@ import Modal from "../components/Modal";
 import NavBar from "../components/NavBar";
 import MovieFilter from "../components/MovieFilter";
 import MoviesContainer from "../components/MoviesContainer";
-
+import FullscreenLoader from "../components/FullscreenLoader";
 export default function Movies() {
   const context = useContext(ProjectContext);
-  const { allMovies, selectedMovie, handleGetAllMovies } = context;
+
+  const { allMovies, selectedMovie, handleGetAllMovies, isLoading } = context;
   const [activeFilter, setActiveFilter] = useState("");
   const [filterdMovieArray, setFilteredMovieArray] = useState([]);
 
   const handleSetActiveFilter = (filter) => setActiveFilter(filter);
+
   const handleResetActiveFilter = () => setActiveFilter("");
 
-  console.log(activeFilter);
   useEffect(() => {
     const filtered = allMovies.filter(
       (movie) =>
         movie.genres.includes(activeFilter) ||
         movie.thisMovieIs.includes(activeFilter)
     );
-    console.log(filtered);
     setFilteredMovieArray(filtered);
   }, [activeFilter]);
+
   useEffect(() => {
     if (allMovies.length === 0) handleGetAllMovies();
   }, []);
+
   return (
     <>
+      {isLoading && <FullscreenLoader />}
       {selectedMovie?.name ? <Modal movie={selectedMovie} /> : null}
       <NavBar />
       <MovieFilter
