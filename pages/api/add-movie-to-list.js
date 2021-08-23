@@ -14,8 +14,6 @@ async function addMovieToListHandler(req, res) {
 
       const movie = req.body.movie;
 
-      console.log("movie: " + movie._id);
-
       if (movie._id) {
         let oldMovieList = user.movieList;
         if (!oldMovieList.some((item) => item._id === movie._id)) {
