@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import ProjectContext from "../context/Project-context";
 import styles from "../styles/Banner.module.css";
 import Image from "next/image";
+import Button from "./Button";
 export default function Banner({ movies }) {
   const context = useContext(ProjectContext);
   const router = useRouter();
@@ -39,28 +40,16 @@ export default function Banner({ movies }) {
             </div>
             <p className={styles.banner__content__description}>{description}</p>
             <div className={styles.banner__content__btn_container}>
-              <button
-                className={
-                  styles.banner__content__btn_container__btn +
-                  " " +
-                  styles.banner__content__btn_container__play
-                }
-                onClick={() => router.push(`/movie/${_id}`)}
-              >
-                <i className="fas fa-play"></i>
-                <span>Play</span>
-              </button>
-              <button
-                className={
-                  styles.banner__content__btn_container__btn +
-                  " " +
-                  styles.banner__content__btn_container__more_info
-                }
-                onClick={() => handleSelectMovie(movie)}
-              >
-                <i className="fas fa-info-circle"></i>
-                <span>More Info</span>
-              </button>
+              <Button
+                value="Play"
+                type="play"
+                func={() => router.push(`/movie/${movie._id}`)}
+              />
+              <Button
+                value="More Info"
+                type="moreInfo"
+                func={() => handleSelectMovie(movie)}
+              />
             </div>
           </div>
         </header>
