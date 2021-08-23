@@ -1,8 +1,11 @@
 import { useState, useContext, useEffect } from "react";
+import { useRouter } from "next/router";
 import ProjectContext from "../context/Project-context";
 import styles from "../styles/Modal.module.css";
 import MoreLikeThisSection from "../containers/MoreLikeThisSection";
+import Button from "./Button";
 export default function Modal({ movie }) {
+  const router = useRouter();
   const [moreLikeThisArray, setMoreLikeThisArray] = useState([]);
   const {
     name,
@@ -66,6 +69,13 @@ export default function Modal({ movie }) {
                     src={`/movies/${nameSlug}/${nameSlug}-logo.png`}
                     alt=""
                   />
+                  <div className={styles.modal__header__video__btnContainer}>
+                    <Button
+                      type="play"
+                      value="Play"
+                      func={() => router.push(`/movie/${movie._id}`)}
+                    />
+                  </div>
                 </div>
               </div>
 

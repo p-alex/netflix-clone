@@ -82,11 +82,17 @@
 .modal__header__video__movieLogo {
   position: absolute;
   z-index: 5;
+  bottom: 120px;
+  left: 20px;
+  width: 50%;
+}
+.modal__header__video__btnContainer {
+  position: absolute;
+  z-index: 5;
   bottom: 50px;
   left: 20px;
   width: 50%;
 }
-
 .modal__info {
   display: flex;
 }
