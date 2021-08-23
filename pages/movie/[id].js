@@ -4,34 +4,52 @@ import styles from "../../styles/PlayMovie.module.css";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import ProjectContext from "../../context/Project-context";
+import FullscreenLoader from "../../components/FullscreenLoader";
 export default function PlayMovie() {
   const router = useRouter();
   const context = useContext(ProjectContext);
-  const { allMovies } = context;
-  const [currentMovie, setCurrentMovie] = useState("");
+  const { allMovies, handleGetAllMovies, isLoading } = context;
+  const [currentMovie, setCurrentMovie] = useState({});
+
+  useEffect(() => {
+    if (allMovies.length === 0) handleGetAllMovies();
+  }, []);
+
   useEffect(() => {
     if (allMovies) {
       allMovies.map((movie) => {
         if (movie._id === router.query.id) {
-          console.log(movie);
-          return setCurrentMovie(movie.videoUrl);
+          return setCurrentMovie(movie);
         }
       });
     }
   }, [allMovies]);
-  console.log(currentMovie);
   return (
     <>
+      {isLoading && <FullscreenLoader />}
       <NavBar />
-      <div className={styles.movie}>
-        <ReactPlayer
-          url={currentMovie + "?rel=0"}
-          playing
-          controls
-          width={"100%"}
-          height={"100%"}
-        />
-      </div>
+      <section className={styles.movieSection}>
+        <button
+          className={styles.movieSection__backBtn}
+          onClick={() => router.back()}
+        >
+          {`<`} Go Back
+        </button>
+        <div className={styles.movieSection__info}>
+          <h1>{currentMovie.name}</h1>
+          <h2>{currentMovie.maturityRating}+</h2>
+        </div>
+
+        <div className={styles.movieSection__movie}>
+          <ReactPlayer
+            url={currentMovie.videoUrl + "?rel=0"}
+            playing
+            controls
+            width={"100%"}
+            height={"100%"}
+          />
+        </div>
+      </section>
     </>
   );
 }
