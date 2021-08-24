@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from "react";
 import ProjectContext from "../context/Project-context";
 import Modal from "../components/Modal/Modal";
-import NavBar from "../components/NavBar/Navbar";
+import NavBar from "../components/NavBar/NavBar";
 import MovieFilter from "../components/MovieFilter/MovieFilter";
-import MoviesContainer from "../components/MoviesContainer/MovieContainer";
+import MoviesContainer from "../components/MoviesContainer/MoviesContainer";
 import FullscreenLoader from "../components/FullscreenLoader/FullscreenLoader";
 export default function Movies() {
   const context = useContext(ProjectContext);

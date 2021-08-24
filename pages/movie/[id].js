@@ -1,4 +1,4 @@
-import NavBar from "../../components/NavBar";
+import NavBar from "../../components/NavBar/NavBar";
 import ReactPlayer from "react-player/youtube";
 import styles from "../../styles/PlayMovie.module.css";
 import { useRouter } from "next/router";

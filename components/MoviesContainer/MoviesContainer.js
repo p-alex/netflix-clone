@@ -1,4 +1,4 @@
-import MovieCard from "./MovieCard/MovieCard";
+import MovieCard from "../MovieCard/MovieCard";
 import styles from "./MoviesContainer.module.css";
 export default function MoviesContainer({ movies, title, marginTop }) {
   return (
