@@ -12,7 +12,7 @@ export default function MovieFilter({
     "Anime",
     "Award-Winning",
     "Children & Family Movies",
-    "Classics",
+    "Classic",
     "Comedies",
     "Crime",
     "Documentaries",
