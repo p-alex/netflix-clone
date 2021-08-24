@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import Link from "next/link";
 
-import FullscreenWrapper from "../components/FullscreenWrapper/FullscreenLoader";
+import FullscreenWrapper from "../components/FullscreenWrapper/FullscreenWrapper";
 import Form from "../components/Form/Form";
 import InputGroup from "../components/InputGroup/InputGroup";
 import SubmitButton from "../components/SubmitButton/SubmitButton";
