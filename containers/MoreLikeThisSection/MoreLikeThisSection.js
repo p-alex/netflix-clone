@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import ModalMovieCard from "../components/ModalMovieCard";
-import styles from "../styles/MoreLikeThisSection.module.css";
+import ModalMovieCard from "../../components/ModalMovieCard/ModalMovieCard";
+import styles from "./MoreLikeThisSection.module.css";
 export default function MoreLikeThisSection({ movies }) {
   const [isMaxThree, setIsMaxThree] = useState(false);
   useEffect(() => {

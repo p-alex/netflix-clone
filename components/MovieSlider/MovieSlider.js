@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import MovieCard from "./MovieCard";
-import styles from "../styles/MovieSlider.module.css";
+import MovieCard from "../MovieCard/MovieCard";
+import styles from "./MovieSlider.module.css";
 
 export default function MovieSlider({
   movies,

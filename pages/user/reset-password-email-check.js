@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-import FullscreenWrapper from "../../components/FullscreenWrapper";
-import Form from "../../components/Form";
-import InputGroup from "../../components/InputGroup";
-import SubmitButton from "../../components/SubmitButton";
-import Logo from "../../components/Logo";
+import FullscreenWrapper from "../../components/FullscreenWrapper/FullscreenWrapper";
+import Form from "../../components/Form/Form";
+import InputGroup from "../../components/InputGroup/InputGroup";
+import SubmitButton from "../../components/SubmitButton/SubmitButton";
+import Logo from "../../components/Logo/Logo";
 
 export default function resetPasswordEmailCheck() {
   const [feedback, setFeedback] = useState("");

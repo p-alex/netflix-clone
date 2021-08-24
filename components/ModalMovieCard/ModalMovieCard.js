@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import styles from "../styles/ModalMovieCard.module.css";
-import AddToListBtn from "./AddToListBtn";
+import styles from "./ModalMovieCard.module.css";
+import AddToListBtn from "../AddToListBtn/AddToListBtn";
 export default function ModalMovieCard({ movie, isMaxThree }) {
   const { nameSlug, maturityRating, release, description, duration, _id } =
     movie;
@@ -12,9 +12,11 @@ export default function ModalMovieCard({ movie, isMaxThree }) {
           ? styles.modalMovieCard
           : styles.modalMovieCard + " " + styles.modalMovieCard_maxWidth
       }
-      onClick={() => router.push(`/movie/${_id}`)}
     >
-      <div className={styles.modalMovieCard__cardHeader}>
+      <div
+        className={styles.modalMovieCard__cardHeader}
+        onClick={() => router.push(`/movie/${_id}`)}
+      >
         <p className={styles.modalMovieCard__cardHeader__duration}>
           {duration}
         </p>

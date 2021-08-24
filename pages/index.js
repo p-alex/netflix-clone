@@ -1,10 +1,10 @@
 import { useContext, useEffect } from "react";
 import ProjectContext from "../context/Project-context";
-import NavBar from "../components/NavBar";
-import Banner from "../components/Banner";
-import FullscreenLoader from "../components/FullscreenLoader";
-import MovieSlider from "../components/MovieSlider";
-import Modal from "../components/Modal";
+import NavBar from "../components/NavBar/NavBar";
+import Banner from "../components/Banner/Banner";
+import FullscreenLoader from "../components/FullscreenLoader/FullscreenLoader";
+import MovieSlider from "../components/MovieSlider/MovieSlider";
+import Modal from "../components/Modal/Modal";
 
 import pageWrapperStyles from "../styles/PageWrapperStyles.module.css";
 export default function Home({ username, profileImg }) {

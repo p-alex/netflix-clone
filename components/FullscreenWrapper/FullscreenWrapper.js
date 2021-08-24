@@ -1,4 +1,4 @@
-import styles from "../styles/FullscreenWrapper.module.css";
+import styles from "./FullscreenWrapper.module.css";
 export default function FullscreenWrapper({ children, bgImg }) {
   return (
     <div className={styles.wrapper} style={{ backgroundImage: bgImg }}>

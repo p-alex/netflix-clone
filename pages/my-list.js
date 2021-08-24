@@ -1,9 +1,9 @@
 import { useEffect, useContext } from "react";
 import ProjectContext from "../context/Project-context";
-import Modal from "../components/Modal";
-import NavBar from "../components/NavBar";
-import MoviesContainer from "../components/MoviesContainer";
-import FullscreenLoader from "../components/FullscreenLoader";
+import Modal from "../components/Modal/Modal";
+import NavBar from "../components/NavBar/NavBar";
+import MoviesContainer from "../components/MoviesContainer/MovieContainer";
+import FullscreenLoader from "../components/FullscreenLoader/FullscreenLoader";
 export default function MyList() {
   const context = useContext(ProjectContext);
   const { allMovies, selectedMovie, isLoading, handleGetAllMovies } = context;

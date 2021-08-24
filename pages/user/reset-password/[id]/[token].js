@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import FullscreenWrapper from "../../../../components/FullscreenWrapper";
+import FullscreenWrapper from "../../../../components/FullscreenWrapper/FullscreenWrapper";
 import Form from "../../../../components/Form";
-import InputGroup from "../../../../components/InputGroup";
+import InputGroup from "../../../../components/InputGroup/InputGroup";
 import SubmitButton from "../../../../components/SubmitButton";
 import Logo from "../../../../components/Logo";
 import Link from "next/link";

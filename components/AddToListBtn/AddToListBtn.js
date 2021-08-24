@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import ProjectContext from "../context/Project-context";
-import styles from "../styles/AddToListBtn.module.css";
+import ProjectContext from "../../context/Project-context";
+import styles from "./AddToListBtn.module.css";
 export default function AddToListBtn({ movie }) {
   const context = useContext(ProjectContext);
   const { userMovieList, handleAddMovieToList } = context;

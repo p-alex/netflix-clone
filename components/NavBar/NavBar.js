@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useContext } from "react";
-import ProjectContext from "../context/Project-context";
+import ProjectContext from "../../context/Project-context";
 import Image from "next/image";
 import Link from "next/link";
-import styles from "../styles/NavBar.module.css";
+import styles from "./NavBar.module.css";
 export default function NavBar() {
   const context = useContext(ProjectContext);
   const { username, profileImg } = context.userData;

@@ -4,7 +4,7 @@ import styles from "../../styles/PlayMovie.module.css";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import ProjectContext from "../../context/Project-context";
-import FullscreenLoader from "../../components/FullscreenLoader";
+import FullscreenLoader from "../../components/FullscreenLoader/FullscreenLoader";
 export default function PlayMovie() {
   const router = useRouter();
   const context = useContext(ProjectContext);

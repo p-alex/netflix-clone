@@ -1,4 +1,4 @@
-import styles from "../styles/InputGroup.module.css";
+import styles from "./InputGroup.module.css";
 export default function InputGroup({
   setLabel,
   setType,

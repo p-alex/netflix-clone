@@ -3,11 +3,11 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import FullscreenWrapper from "../components/FullscreenWrapper";
-import Form from "../components/Form";
-import InputGroup from "../components/InputGroup";
-import SubmitButton from "../components/SubmitButton";
-import Logo from "../components/Logo";
+import FullscreenWrapper from "../components/FullscreenWrapper/FullscreenWrapper";
+import Form from "../components/Form/Form";
+import InputGroup from "../components/InputGroup/InputGroup";
+import SubmitButton from "../components/SubmitButton/SubmitButton";
+import Logo from "../components/Logo/Logo";
 
 export default function login() {
   const router = useRouter();

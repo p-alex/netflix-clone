@@ -1,9 +1,9 @@
 import { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
-import ProjectContext from "../context/Project-context";
-import styles from "../styles/Modal.module.css";
-import MoreLikeThisSection from "../containers/MoreLikeThisSection";
-import Button from "./Button";
+import ProjectContext from "../../context/Project-context";
+import styles from "./Modal.module.css";
+import MoreLikeThisSection from "../../containers/MoreLikeThisSection/MoreLikeThisSection";
+import Button from "../Button/Button";
 export default function Modal({ movie }) {
   const router = useRouter();
   const [moreLikeThisArray, setMoreLikeThisArray] = useState([]);

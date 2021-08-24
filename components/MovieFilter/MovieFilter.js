@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import styles from "../styles/MovieFilter.module.css";
+import styles from "./MovieFilter.module.css";
 export default function MovieFilter({
   activeFilter,
   handleSetActiveFilter,

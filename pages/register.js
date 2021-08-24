@@ -2,11 +2,11 @@ import { useState } from "react";
 
 import Link from "next/link";
 
-import FullscreenWrapper from "../components/FullscreenWrapper";
-import Form from "../components/Form";
-import InputGroup from "../components/InputGroup";
-import SubmitButton from "../components/SubmitButton";
-import Logo from "../components/Logo";
+import FullscreenWrapper from "../components/FullscreenWrapper/FullscreenLoader";
+import Form from "../components/Form/Form";
+import InputGroup from "../components/InputGroup/InputGroup";
+import SubmitButton from "../components/SubmitButton/SubmitButton";
+import Logo from "../components/Logo/Logo";
 
 export default function register() {
   const [inputs, setInputs] = useState({

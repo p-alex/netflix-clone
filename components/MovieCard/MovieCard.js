@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import ProjectContext from "../context/Project-context";
-import styles from "../styles/MovieCard.module.css";
-import AddToListBtn from "./AddToListBtn";
+import ProjectContext from "../../context/Project-context";
+import styles from "./MovieCard.module.css";
+import AddToListBtn from "../AddToListBtn/AddToListBtn";
 import { useRouter } from "next/router";
 export default function MovieCard({ movie, fromSliderWithId }) {
   const context = useContext(ProjectContext);

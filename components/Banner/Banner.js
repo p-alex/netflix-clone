@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
-import ProjectContext from "../context/Project-context";
-import styles from "../styles/Banner.module.css";
+import ProjectContext from "../../context/Project-context";
+import styles from "./Banner.module.css";
 import Image from "next/image";
-import Button from "./Button";
+import Button from "../Button/Button";
 export default function Banner({ movies }) {
   const context = useContext(ProjectContext);
   const router = useRouter();
