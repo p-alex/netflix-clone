@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 import FullscreenWrapper from "../../../../components/FullscreenWrapper/FullscreenWrapper";
-import Form from "../../../../components/Form";
+import Form from "../../../../components/Form/Form";
 import InputGroup from "../../../../components/InputGroup/InputGroup";
-import SubmitButton from "../../../../components/SubmitButton";
-import Logo from "../../../../components/Logo";
+import SubmitButton from "../../../../components/SubmitButton/SubmitButton";
+import Logo from "../../../../components/Logo/Logo";
 import Link from "next/link";
 
 export default function resetPassword() {
