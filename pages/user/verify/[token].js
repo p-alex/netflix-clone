@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import FullscreenWrapper from "../../../components/FullscreenWrapper/FullscreenWrapper";
-import Logo from "../../../components/Logo";
+import Logo from "../../../components/Logo/Logo";
 
 import styles from "../../../styles/Verify.module.css";
 
