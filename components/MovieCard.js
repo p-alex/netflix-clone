@@ -50,8 +50,11 @@ export default function MovieCard({ movie, fromSliderWithId }) {
           <span>{duration}</span>
         </div>
         <div className={styles.card__body__thisMovieIs}>
-          {thisMovieIs.map((item) => {
-            return <p key={`card-body-${item}`}>{item}</p>;
+          {thisMovieIs.map((item, id) => {
+            if (id < 3) {
+              return <p key={`card-body-${item}`}>{item}</p>;
+            }
+            return;
           })}
         </div>
       </div>
