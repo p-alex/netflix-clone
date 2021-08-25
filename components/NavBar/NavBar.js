@@ -22,6 +22,9 @@ export default function NavBar() {
         setIsScrolled(false);
       }
     });
+    return () => {
+      window.removeEventListener("scroll", () => {});
+    };
   }, []);
 
   return (
@@ -38,10 +41,6 @@ export default function NavBar() {
           width="112"
           height="30"
         />
-      </div>
-
-      <div className={styles.navbar__logoSmall}>
-        <img src="/images/logo/netflix-logo-mini.png" />
       </div>
 
       <ul className={styles.navbar__links}>

@@ -4,6 +4,7 @@ import Modal from "../components/Modal/Modal";
 import NavBar from "../components/NavBar/NavBar";
 import MoviesContainer from "../components/MoviesContainer/MoviesContainer";
 import FullscreenLoader from "../components/FullscreenLoader/FullscreenLoader";
+import MobileNavBar from "../components/MobileNavBar/MobileNavBar";
 export default function MyList() {
   const context = useContext(ProjectContext);
   const { allMovies, selectedMovie, isLoading, handleGetAllMovies } = context;
@@ -16,7 +17,7 @@ export default function MyList() {
       {isLoading && <FullscreenLoader />}
       {selectedMovie?.name ? <Modal movie={selectedMovie} /> : null}
       <NavBar />
-
+      <MobileNavBar />
       <MoviesContainer movies={movieList} title={"My List"} />
     </>
   );

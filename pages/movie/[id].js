@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import ProjectContext from "../../context/Project-context";
 import FullscreenLoader from "../../components/FullscreenLoader/FullscreenLoader";
+import MobileNavBar from "../../components/MobileNavBar/MobileNavBar";
 export default function PlayMovie() {
   const router = useRouter();
   const context = useContext(ProjectContext);
@@ -28,6 +29,7 @@ export default function PlayMovie() {
     <>
       {isLoading && <FullscreenLoader />}
       <NavBar />
+      <MobileNavBar />
       <section className={styles.movieSection}>
         <button
           className={styles.movieSection__backBtn}

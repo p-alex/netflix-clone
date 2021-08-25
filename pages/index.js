@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import ProjectContext from "../context/Project-context";
 import NavBar from "../components/NavBar/NavBar";
+import MobileNavBar from "../components/MobileNavBar/MobileNavBar";
 import Banner from "../components/Banner/Banner";
 import FullscreenLoader from "../components/FullscreenLoader/FullscreenLoader";
 import MovieSlider from "../components/MovieSlider/MovieSlider";
@@ -19,7 +20,8 @@ export default function Home({ username, profileImg }) {
       <div className={selectedMovie.name && pageWrapperStyles.disableScroll}>
         {isLoading && <FullscreenLoader />}
         {selectedMovie?.name ? <Modal movie={selectedMovie} /> : null}
-        <NavBar username={username} profileImg={profileImg} />
+        <NavBar />
+        <MobileNavBar />
         {allMovies.length !== 0 && (
           <>
             <Banner movies={allMovies} />
