@@ -1,31 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import ProjectContext from "../../context/Project-context";
 import styles from "./MovieFilter.module.css";
 export default function MovieFilter({
   activeFilter,
   handleSetActiveFilter,
   handleResetActiveFilter,
 }) {
+  const context = useContext(ProjectContext);
+  const { filters } = context;
   const [isDropdownActive, setIsDropdownActive] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const filters = [
-    "Action & Adventure",
-    "Anime",
-    "Award-Winning",
-    "Children & Family Movies",
-    "Classic",
-    "Comedies",
-    "Crime",
-    "Documentaries",
-    "Dramas",
-    "Fantasy Movie",
-    "Horror",
-    "Independent",
-    "Music & Musicals",
-    "Romantic",
-    "Sci-Fi Movies",
-    "Sports",
-    "Thriller",
-  ];
   useEffect(() => {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 0) {

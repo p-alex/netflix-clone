@@ -7,6 +7,25 @@ export default function GlobalState({ children }) {
   const [userData, setUserData] = useState({});
   const [allMovies, setAllMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const filters = [
+    "Action & Adventure",
+    "Anime",
+    "Award-Winning",
+    "Children & Family Movies",
+    "Classic",
+    "Comedies",
+    "Crime",
+    "Documentaries",
+    "Dramas",
+    "Fantasy Movie",
+    "Horror",
+    "Independent",
+    "Music & Musicals",
+    "Romantic",
+    "Sci-Fi Movies",
+    "Sports",
+    "Thriller",
+  ];
 
   const [selectedMovie, dispatchSelectedMovie] = useReducer(
     selectedMovieReducer,
@@ -119,6 +138,7 @@ export default function GlobalState({ children }) {
         handleGetUserData,
         handleAddMovieToList,
         userMovieList: userData.movieList,
+        filters,
       }}
     >
       {children}
