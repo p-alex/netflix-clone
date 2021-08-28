@@ -13,4 +13,5 @@ export default createContext({
   userMovieList: [],
   bannerMovie: {},
   handleSetBannerMovie: () => {},
+  filters: [],
 });

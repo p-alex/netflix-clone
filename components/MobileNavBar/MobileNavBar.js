@@ -1,107 +1,77 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import ProjectContext from "../../context/Project-context";
-import React from "react";
 import styles from "./MobileNavBar.module.css";
 import Link from "next/link";
 export default function MobileNavBar() {
   const context = useContext(ProjectContext);
-  const { handleLogout } = context;
-  const [isBrowseDropdownActive, setIsBrowseDropdownActive] = useState(false);
-  const [isUserDropdownActive, setIsUserDropdownActive] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 0) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    });
-    return () => {
-      window.removeEventListener("scroll", () => {});
-    };
-  }, []);
-  const handleToggleBrowseDropdown = () => {
-    if (isBrowseDropdownActive) return setIsBrowseDropdownActive(false);
-    if (!isBrowseDropdownActive) {
-      if (isUserDropdownActive) setIsUserDropdownActive(false);
-      setIsBrowseDropdownActive(true);
-    }
-  };
-
-  const handleToggleUserDropdown = () => {
-    if (isUserDropdownActive) return setIsUserDropdownActive(false);
-    if (!isUserDropdownActive) {
-      if (isBrowseDropdownActive) setIsBrowseDropdownActive(false);
-      setIsUserDropdownActive(true);
-    }
-  };
-
-  const handleResetDropdowns = () => {
-    setIsBrowseDropdownActive(false);
-    setIsUserDropdownActive(false);
-  };
-
+  const { handleLogout, filters } = context;
   const { profileImg, username } = context.userData;
+  const [isMenuActive, setIsMenuActive] = useState(false);
+
+  const handleToggleMenu = () => setIsMenuActive(!isMenuActive);
   return (
-    <>
-      {" "}
-      {isBrowseDropdownActive || isUserDropdownActive ? (
-        <div
-          className={styles.mobileNavBar__backdrop}
-          onClick={handleResetDropdowns}
-        ></div>
-      ) : null}
-      <nav
-        className={
-          isScrolled || isBrowseDropdownActive || isUserDropdownActive
-            ? styles.mobileNavBar + " " + styles.mobileNavBar__scrolled
-            : styles.mobileNavBar
-        }
-      >
-        <div className={styles.mobileNavBar__logoAndBrowse}>
-          <img
-            className={styles.mobileNavBar__logo}
-            src="/images/logo/netflix-logo-mini.png"
-            alt=""
-          />
-          <button
-            className={styles.mobileNavBar__browseToggle}
-            onClick={handleToggleBrowseDropdown}
-          >
-            Browse<i className="fas fa-sort-down"></i>
-          </button>
-          {isBrowseDropdownActive && (
-            <ul className={styles.mobileNavBar__browseDropdown}>
+    <nav className={styles.mobileNavBar}>
+      <div className={styles.mobileNavBar__barsAndLogo}>
+        <button
+          className={styles.mobileNavBar__barsAndLogo__menuToggle}
+          onClick={handleToggleMenu}
+        >
+          <i className="fas fa-bars"></i>
+        </button>
+        <img
+          className={styles.mobileNavBar__barsAndLogo__logo}
+          src="/images/logo/netflix-logo.png"
+          alt=""
+        />
+      </div>
+
+      <input
+        className={styles.mobileNavBar__search}
+        type="text"
+        placeholder="Search"
+        aria-label="Search for a movie"
+      />
+      {isMenuActive && (
+        <>
+          <div className={styles.mobileNavBar__menu}>
+            <div className={styles.mobileNavBar__menu__user}>
+              <div
+                className={
+                  styles.mobileNavBar__menu__user__profileImgAndUsername
+                }
+              >
+                <img src={profileImg} alt={username} />
+                <p>{username}</p>
+              </div>
+              <div className={styles.mobileNavBar__menu__user__buttons}>
+                <button>Account</button>
+                <button onClick={handleLogout}>Sign out of Netflix</button>
+              </div>
+            </div>
+
+            <ul className={styles.mobileNavBar__menu__links}>
               <li>
                 <Link href="/">Home</Link>
               </li>
               <li>
-                <Link href="/movies">Movies</Link>
-              </li>
-              <li>
                 <Link href="/my-list">My List</Link>
               </li>
+              {filters.map((filter) => {
+                return (
+                  <li key={filter}>
+                    <a href="#">{filter}</a>
+                  </li>
+                );
+              })}
             </ul>
-          )}
-        </div>
-        <button
-          className={styles.mobileNavBar__userToggle}
-          onClick={handleToggleUserDropdown}
-        >
-          <img
-            className={styles.mobileNavBar__user__profileImg}
-            src={profileImg}
-            alt={username}
-          />
-          <i className="fas fa-sort-down"></i>
-        </button>
-        {isUserDropdownActive && (
-          <div className={styles.mobileNavBar__userDropdown}>
-            <button onClick={handleLogout}>Sign out of Netflix</button>
           </div>
-        )}
-      </nav>
-    </>
+
+          <div
+            className={styles.mobileNavBar__menuBackdrop}
+            onClick={handleToggleMenu}
+          ></div>
+        </>
+      )}
+    </nav>
   );
 }
