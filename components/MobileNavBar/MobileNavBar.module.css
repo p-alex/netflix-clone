@@ -8,7 +8,7 @@
   left: 0;
   z-index: 100;
   background: rgba(0, 0, 0, 0.8);
-  padding: 5px 20px;
+  padding: 7px 20px;
 }
 .mobileNavBar__barsAndLogo {
   display: flex;
@@ -22,10 +22,10 @@
 }
 .mobileNavBar__barsAndLogo i {
   color: white;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 }
 .mobileNavBar__barsAndLogo__logo {
-  width: 70px;
+  width: 80px;
 }
 .mobileNavBar__search {
   font-size: 18px;
@@ -37,14 +37,14 @@
 }
 .mobileNavBar__menu {
   position: fixed;
-  top: 43.6px;
+  top: 47.6px;
   width: 50%;
-  height: calc(100vh - 43px);
+  height: calc(100vh - 47.6px);
   z-index: 100;
   left: 0;
   background: #111;
   animation: fromLeft 300ms;
-  font-size: 0.9rem;
+  font-size: 1rem;
   overflow-y: scroll;
 }
 .mobileNavBar__menu__user {
@@ -73,7 +73,7 @@
   background: none;
   color: rgb(196, 196, 196);
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 1rem;
   padding: 5px 0;
 }
 .mobileNavBar__menu__user__buttons button:hover {

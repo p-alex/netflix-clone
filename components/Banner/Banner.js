@@ -12,7 +12,7 @@ export default function Banner({ movies }) {
   useEffect(() => {
     setMovie(movies[Math.floor(Math.random() * movies.length)]);
   }, []);
-  const { nameSlug, description, thisMovieIs, _id } = movie;
+  const { nameSlug, description, thisMovieIs } = movie;
 
   return (
     <>
@@ -34,8 +34,23 @@ export default function Banner({ movies }) {
               />
             </div>
             <div className={styles.banner__content__movie_type}>
-              {thisMovieIs.map((item) => {
-                return <p key={`banner-${item}`}>{item}</p>;
+              {thisMovieIs.map((item, id) => {
+                if (id < 3) {
+                  return (
+                    <p
+                      className={styles.banner__content__movie_type__type}
+                      key={`banner-${item}`}
+                    >
+                      <span
+                        className={
+                          styles.banner__content__movie_type__type__dot
+                        }
+                      ></span>
+                      {item}
+                    </p>
+                  );
+                }
+                return;
               })}
             </div>
             <p className={styles.banner__content__description}>{description}</p>

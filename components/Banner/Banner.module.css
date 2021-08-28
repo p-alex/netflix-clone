@@ -19,15 +19,7 @@
   width: 30vw;
 }
 .banner__content__movie_type {
-  position: relative;
-  width: 100%;
-  height: auto;
   display: none;
-  color: white;
-  margin-bottom: 20px;
-  font-size: 1.2rem;
-  gap: 20px;
-  justify-content: center;
 }
 .banner__content__description {
   color: white;
@@ -63,8 +55,9 @@
 }
 @media screen and (max-width: 800px) {
   .banner {
-    height: 70vh;
+    height: 80vh;
     background-position: center;
+    margin-top: 47.6px;
   }
   .banner__content {
     align-items: center;
@@ -82,13 +75,35 @@
   }
   .banner__content__logo {
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 80%;
     object-fit: cover;
     margin-bottom: 20px;
   }
   .banner__content__movie_type {
+    position: relative;
+    width: 100%;
     display: flex;
+    color: white;
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+  }
+  .banner__content__movie_type__type {
+    display: flex;
+    align-items: center;
+  }
+  .banner__content__movie_type__type:first-child
+    .banner__content__movie_type__type__dot {
+    display: none;
+  }
+  .banner__content__movie_type__type__dot {
+    position: relative;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: red;
+    margin: 0 5px;
   }
   .banner__content__btn_container__btn {
     padding: 10px 20px;
