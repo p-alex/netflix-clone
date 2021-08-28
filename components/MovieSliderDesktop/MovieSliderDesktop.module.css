@@ -1,13 +1,12 @@
 .slider {
   position: relative;
   width: 92%;
+  margin-top: -40px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 180px;
+  margin-bottom: 200px;
 }
-.slider:nth-of-type(1) {
-  margin-top: -80px;
-}
+
 .slider__title {
   position: absolute;
   display: flex;
@@ -66,6 +65,9 @@
   .slider {
     width: 82%;
   }
+  .slider:nth-of-type(1) {
+    margin-top: 80px;
+  }
   .slider__ctrl {
     width: 11%;
   }
@@ -75,7 +77,7 @@
   }
 }
 @media screen and (max-width: 900px) {
-  .slider:first-of-type {
-    margin-top: 0px;
+  .slider {
+    display: none;
   }
 }

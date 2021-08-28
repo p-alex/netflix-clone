@@ -124,12 +124,12 @@
 }
 @media screen and (max-width: 1200px) {
   .card {
-    width: calc(25% - 3px);
+    width: calc(33.3% - 3px);
   }
 }
 @media screen and (max-width: 900px) {
   .card {
-    width: calc(33.3% - 3px);
+    width: calc(29% - 3px);
   }
   .card:hover .card__body {
     display: none;
@@ -149,6 +149,6 @@
 }
 @media screen and (max-width: 675px) {
   .card {
-    width: calc(50% - 2.5px);
+    width: calc(46% - 2.5px);
   }
 }

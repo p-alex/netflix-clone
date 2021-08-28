@@ -3,7 +3,8 @@ import ProjectContext from "../../context/Project-context";
 import styles from "./MovieCard.module.css";
 import AddToListBtn from "../AddToListBtn/AddToListBtn";
 import { useRouter } from "next/router";
-export default function MovieCard({ movie, fromSliderWithId }) {
+export default function MovieCard({ movie, fromSliderWithId, isMouseDown }) {
+  console.log(isMouseDown);
   const context = useContext(ProjectContext);
   const router = useRouter();
   const { handleSelectMovie } = context;
@@ -17,7 +18,9 @@ export default function MovieCard({ movie, fromSliderWithId }) {
       <div className={styles.card__image}>
         <button
           className={styles.card__image__openModalBtn}
-          onClick={() => handleSelectMovie(movie)}
+          onClick={
+            isMouseDown === false ? () => handleSelectMovie(movie) : null
+          }
         >
           {name}
         </button>
