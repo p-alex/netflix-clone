@@ -1,5 +1,4 @@
 import NavBar from "../../components/NavBar/NavBar";
-import ReactPlayer from "react-player/youtube";
 import styles from "../../styles/PlayMovie.module.css";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
@@ -25,6 +24,7 @@ export default function PlayMovie() {
       });
     }
   }, [allMovies]);
+
   return (
     <>
       {isLoading && <FullscreenLoader />}
@@ -43,13 +43,15 @@ export default function PlayMovie() {
         </div>
 
         <div className={styles.movieSection__movie}>
-          <ReactPlayer
-            url={currentMovie.videoUrl + "?rel=0"}
-            playing
-            controls
-            width={"100%"}
-            height={"100%"}
-          />
+          <iframe
+            width="100%"
+            height="100%"
+            src={currentMovie.videoUrl + "?rel=0&autoplay=1"}
+            title={currentMovie.name}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
         </div>
       </section>
     </>
