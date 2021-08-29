@@ -56,10 +56,13 @@ export default function MobileNavBar() {
               <li>
                 <Link href="/my-list">My List</Link>
               </li>
+              <li>
+                <Link href="/movies">Movies</Link>
+              </li>
               {filters.map((filter) => {
                 return (
-                  <li key={filter}>
-                    <a href="#">{filter}</a>
+                  <li key={filter} onClick={handleToggleMenu}>
+                    <Link href={`/genres/${filter}`}>{filter}</Link>
                   </li>
                 );
               })}

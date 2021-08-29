@@ -5,21 +5,19 @@ import styles from "./Modal.module.css";
 import MoreLikeThisSection from "../../containers/MoreLikeThisSection/MoreLikeThisSection";
 import AboutMovieSection from "../../containers/AboutMovieSection/AboutMovieSection";
 import Button from "../Button/Button";
+import Link from "next/link";
 export default function Modal({ movie }) {
   const router = useRouter();
   const [moreLikeThisArray, setMoreLikeThisArray] = useState([]);
   const {
-    name,
     nameSlug,
     description,
     genres,
-    writer,
     cast,
     thisMovieIs,
     duration,
     release,
     maturityRating,
-    directors,
   } = movie;
   const context = useContext(ProjectContext);
   const { handleResetSelectedMovie, allMovies } = context;
@@ -107,30 +105,53 @@ export default function Modal({ movie }) {
                     {cast.map((actor, id) => {
                       if (id < 3) {
                         return (
-                          <a key={`modal-cast-${actor}`} href="#">
-                            {actor},
-                          </a>
+                          <Link
+                            key={`modal-cast-${actor}`}
+                            href={`/actors/${actor}`}
+                          >
+                            {actor}
+                          </Link>
                         );
                       }
                       return;
                     })}
-                    <a href="#">more...</a>
+                    {cast.length > 3 && <a href="#modalAbout">more...</a>}
                   </p>
                   <p className={styles.modal__info__container__genres}>
                     Genres:
-                    {genres.map((genre) => (
-                      <a key={`modal-genre-${genre}`} href="#">
-                        {genre},
-                      </a>
-                    ))}
+                    {genres.map((genre, id) => {
+                      if (id < 3) {
+                        return (
+                          <Link
+                            key={`modal-genre-${genre}`}
+                            href={`/genres/${genre}`}
+                          >
+                            {genre}
+                          </Link>
+                        );
+                      }
+                      return;
+                    })}
+                    {genres.length > 3 && <a href="#modalAbout">more...</a>}
                   </p>
                   <p className={styles.modal__info__container__thisMovieIs}>
                     This movie is:
-                    {thisMovieIs.map((item) => (
-                      <a key={`modal-thisMovieIs-${item}`} href="#">
-                        {item},
-                      </a>
-                    ))}
+                    {thisMovieIs.map((item, id) => {
+                      if (id < 3) {
+                        return (
+                          <Link
+                            key={`modal-thisMovieIs-${item}`}
+                            href={`/this-movie-is/${item}`}
+                          >
+                            {item}
+                          </Link>
+                        );
+                      }
+                      return;
+                    })}
+                    {thisMovieIs.length > 3 && (
+                      <a href="#modalAbout">more...</a>
+                    )}
                   </p>
                 </div>
               </div>
