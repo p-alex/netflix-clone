@@ -35,7 +35,7 @@ export default function MovieFilter({
             onClick={() => setIsDropdownActive(!isDropdownActive)}
           >
             <p>Genres</p>
-            <i class="fas fa-sort-down"></i>
+            <i className="fas fa-sort-down"></i>
           </button>
           {isDropdownActive && (
             <ul className={styles.movieFilter__dropdown}>

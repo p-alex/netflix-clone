@@ -3,13 +3,15 @@
   top: 85px;
   display: flex;
   color: white;
-  height: 60px;
   padding: 0 60px;
   width: 100%;
   align-items: center;
   z-index: 10;
   transition: top 300ms, padding 300ms;
   background: #141414;
+}
+.movieFilter h2 {
+  margin-right: 15px;
 }
 .movieFilter__scrolled {
   top: 64px;
@@ -42,7 +44,7 @@
   left: 0;
   border: solid white 1px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   flex-wrap: wrap;
   width: 300px;
   margin-top: 5px;
@@ -59,8 +61,7 @@
 
 .movieFilter__activeFilter {
   display: flex;
-  color: grey;
-  margin-left: 20px;
+  color: rgb(194, 194, 194);
   align-items: center;
   cursor: pointer;
 }
@@ -75,7 +76,45 @@
 
 @media screen and (max-width: 800px) {
   .movieFilter {
-    top: 64px;
-    padding: 0 30px;
+    top: 47.6px;
+    padding: 5px 20px;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+  }
+  .movieFilter h2 {
+    position: relative;
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+  }
+  .movieFilter__filters {
+    margin-left: 0px;
+  }
+  .movieFilter__filtersToggle {
+    position: relative;
+    display: flex;
+    border: solid white 1px;
+    padding: 5px;
+    align-items: center;
+    cursor: pointer;
+    background: none;
+    color: white;
+    font-size: 1rem;
+  }
+  .movieFilter__dropdown {
+    position: fixed;
+    margin-left: 20px;
+    margin-right: 20px;
+    gap: 5px;
+    width: auto;
+  }
+  .movieFilter__dropdown__filter {
+    cursor: pointer;
+    padding: 7px;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .movieFilter__dropdown {
+    grid-template-columns: repeat(1, 1fr);
   }
 }
