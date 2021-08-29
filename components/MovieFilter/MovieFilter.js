@@ -59,7 +59,7 @@ export default function MovieFilter({
             handleResetActiveFilter();
           }}
         >
-          <i class="fas fa-times"></i>
+          <i className="fas fa-times"></i>
           <p>{activeFilter}</p>
         </div>
       )}

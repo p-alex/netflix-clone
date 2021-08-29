@@ -8,7 +8,7 @@ import MovieSlider from "../components/MovieSlider/MovieSlider";
 import Modal from "../components/Modal/Modal";
 
 import pageWrapperStyles from "../styles/PageWrapperStyles.module.css";
-export default function Home({ username, profileImg }) {
+export default function Home() {
   const context = useContext(ProjectContext);
   const { selectedMovie, allMovies, isLoading, handleGetAllMovies } = context;
   const { movieList } = context.userData;
