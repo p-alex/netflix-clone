@@ -42,10 +42,7 @@ export default function Movies() {
         handleResetActiveFilter={handleResetActiveFilter}
       />
 
-      <MoviesContainer
-        movies={activeFilter ? filterdMovieArray : allMovies}
-        marginTop={"230px"}
-      />
+      <MoviesContainer movies={activeFilter ? filterdMovieArray : allMovies} />
     </>
   );
 }
