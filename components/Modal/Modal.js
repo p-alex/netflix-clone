@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import ProjectContext from "../../context/Project-context";
 import styles from "./Modal.module.css";
 import MoreLikeThisSection from "../../containers/MoreLikeThisSection/MoreLikeThisSection";
+import AboutMovieSection from "../../containers/AboutMovieSection/AboutMovieSection";
 import Button from "../Button/Button";
 export default function Modal({ movie }) {
   const router = useRouter();
@@ -36,6 +37,7 @@ export default function Modal({ movie }) {
       })
     );
     return () => {
+      handleResetSelectedMovie();
       console.log("Modal unmounted");
     };
   }, []);
@@ -139,54 +141,7 @@ export default function Modal({ movie }) {
               )}
 
               {/*------------------ MODAL ABOUT ------------------*/}
-              <div className={styles.modal__about}>
-                <h2 className={styles.modal__about__movieName}>About {name}</h2>
-                <p className={styles.modal__about__director}>
-                  Director:
-                  {directors.map((director) => (
-                    <a key={`modal-about-director-${director}`} href="#">
-                      {director},
-                    </a>
-                  ))}
-                </p>
-                <p className={styles.modal__about__cast}>
-                  Cast:
-                  {cast.map((actor) => (
-                    <a key={`modal-about-cast-${actor}`} href="#">
-                      {actor},
-                    </a>
-                  ))}
-                </p>
-                <p className={styles.modal__about__writer}>
-                  Writer:
-                  {writer.map((author) => (
-                    <a key={`modal-about-writer-${author}`} href="#">
-                      {author},
-                    </a>
-                  ))}
-                </p>
-                <p className={styles.modal__about__genres}>
-                  Genres:
-                  {genres.map((genre) => (
-                    <a key={`modal-about-genres-${genre}`} href="#">
-                      {genre},
-                    </a>
-                  ))}
-                </p>
-
-                <p className={styles.modal__about__thisMovieIs}>
-                  This movie is:
-                  {thisMovieIs.map((item) => (
-                    <a key={`modal-about-thisMovieIs-${item}`} href="#">
-                      {item},
-                    </a>
-                  ))}
-                </p>
-                <p className={styles.modal__about__maturityRating}>
-                  Maturity Rating: {maturityRating}+ Recommended for ages{" "}
-                  {maturityRating} and up
-                </p>
-              </div>
+              <AboutMovieSection movie={movie} />
             </div>
           </div>
         </>

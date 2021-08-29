@@ -6,6 +6,7 @@
   left: 0;
   z-index: 10000;
   overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
 .modal {
@@ -113,10 +114,6 @@
 .modal__info__stats p:nth-child(2) {
   border: solid white 1px;
   padding: 2px;
-}
-
-.modal__about {
-  padding: 20px;
 }
 
 @media screen and (max-width: 800px) {
