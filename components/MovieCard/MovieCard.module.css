@@ -124,10 +124,16 @@
 }
 @media screen and (max-width: 1200px) {
   .card {
+    width: calc(25% - 3px);
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .card {
     width: calc(33.3% - 3px);
   }
 }
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 800px) {
   .card {
     width: calc(29% - 3px);
   }

@@ -30,32 +30,27 @@ export default function MovieSliderDesktop({
     const cards = document.querySelectorAll(`#card${sliderId}`);
     const cardBody = document.querySelectorAll(`#card_body${sliderId}`);
 
-    if (
-      sliderState.cardWidth * movies.length >=
-      sliderState.howManyVisible * movies.length
-    ) {
-      cards.forEach((card) => {
-        card.addEventListener("mouseover", () => {
-          sliderCtrlLeft.style.opacity = "0";
-          sliderCtrlRight.style.opacity = "0";
-        });
-        card.addEventListener("mouseout", () => {
-          sliderCtrlLeft.style.opacity = "1";
-          sliderCtrlRight.style.opacity = "1";
-        });
+    cards.forEach((card) => {
+      card.addEventListener("mouseover", () => {
+        sliderCtrlLeft.style.opacity = "0";
+        sliderCtrlRight.style.opacity = "0";
       });
+      card.addEventListener("mouseout", () => {
+        sliderCtrlLeft.style.opacity = "1";
+        sliderCtrlRight.style.opacity = "1";
+      });
+    });
 
-      cardBody.forEach((body) => {
-        body.addEventListener("mouseover", () => {
-          sliderCtrlLeft.style.opacity = "0";
-          sliderCtrlRight.style.opacity = "0";
-        });
-        body.addEventListener("mouseout", () => {
-          sliderCtrlLeft.style.opacity = "1";
-          sliderCtrlRight.style.opacity = "1";
-        });
+    cardBody.forEach((body) => {
+      body.addEventListener("mouseover", () => {
+        sliderCtrlLeft.style.opacity = "0";
+        sliderCtrlRight.style.opacity = "0";
       });
-    }
+      body.addEventListener("mouseout", () => {
+        sliderCtrlLeft.style.opacity = "1";
+        sliderCtrlRight.style.opacity = "1";
+      });
+    });
 
     return () => {
       console.log("Movie Slider unmounted");
@@ -126,25 +121,21 @@ export default function MovieSliderDesktop({
           <div className={styles.slider__title}>
             <h2>{sliderTitle}</h2>
           </div>
-          {sliderState.cardWidth * movies.length >=
-          sliderState.howManyVisible * movies.length ? (
-            <>
-              <button
-                className={styles.slider__ctrl + " " + styles.left__ctrl}
-                id={`slider_ctrl_left${sliderId}`}
-                onClick={() => moveSlider("left")}
-              >
-                <i className="fas fa-chevron-left"></i>
-              </button>
-              <button
-                className={styles.slider__ctrl + " " + styles.right__ctrl}
-                id={`slider_ctrl_right${sliderId}`}
-                onClick={() => moveSlider("right")}
-              >
-                <i className="fas fa-chevron-right"></i>
-              </button>
-            </>
-          ) : null}
+
+          <button
+            className={styles.slider__ctrl + " " + styles.left__ctrl}
+            id={`slider_ctrl_left${sliderId}`}
+            onClick={() => moveSlider("left")}
+          >
+            <i className="fas fa-chevron-left"></i>
+          </button>
+          <button
+            className={styles.slider__ctrl + " " + styles.right__ctrl}
+            id={`slider_ctrl_right${sliderId}`}
+            onClick={() => moveSlider("right")}
+          >
+            <i className="fas fa-chevron-right"></i>
+          </button>
 
           <div
             className={styles.slider__row}

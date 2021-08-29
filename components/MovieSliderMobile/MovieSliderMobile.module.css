@@ -47,7 +47,7 @@
   gap: 5px;
   transition: transform 700ms;
 }
-@media screen and (min-width: 901px) {
+@media screen and (min-width: 801px) {
   .slider_container {
     display: none;
   }

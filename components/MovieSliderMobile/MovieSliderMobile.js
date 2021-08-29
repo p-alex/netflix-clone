@@ -45,7 +45,6 @@ export default function MovieSliderMobile({
       rowContainer.scrollLeft = scrollLeft - walk;
     });
   }, []);
-  console.log(isMouseDown);
   return (
     <>
       {hasMovies && (

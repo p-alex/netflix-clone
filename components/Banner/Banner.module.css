@@ -55,7 +55,7 @@
 }
 @media screen and (max-width: 800px) {
   .banner {
-    height: 80vh;
+    height: 70vh;
     background-position: center;
     margin-top: 47.6px;
   }
@@ -75,7 +75,7 @@
   }
   .banner__content__logo {
     position: relative;
-    width: 80%;
+    width: 70%;
     object-fit: cover;
     margin-bottom: 20px;
   }

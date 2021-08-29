@@ -4,7 +4,6 @@ import styles from "./MovieCard.module.css";
 import AddToListBtn from "../AddToListBtn/AddToListBtn";
 import { useRouter } from "next/router";
 export default function MovieCard({ movie, fromSliderWithId, isMouseDown }) {
-  console.log(isMouseDown);
   const context = useContext(ProjectContext);
   const router = useRouter();
   const { handleSelectMovie } = context;
