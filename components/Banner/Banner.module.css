@@ -6,6 +6,7 @@
   background-repeat: no-repeat;
   animation: opacity 500ms;
 }
+
 .banner__content {
   display: flex;
   flex-direction: column;

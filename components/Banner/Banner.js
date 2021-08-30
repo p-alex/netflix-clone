@@ -4,6 +4,7 @@ import ProjectContext from "../../context/Project-context";
 import styles from "./Banner.module.css";
 import Image from "next/image";
 import Button from "../Button/Button";
+import BottomFade from "../BottomFade/BottomFade";
 export default function Banner({ movies }) {
   const context = useContext(ProjectContext);
   const router = useRouter();
@@ -24,6 +25,7 @@ export default function Banner({ movies }) {
         url(/movies/${nameSlug}/${nameSlug}-banner.jpg)`,
           }}
         >
+          <BottomFade />
           <div className={styles.banner__content}>
             <div className={styles.banner__content__logo}>
               <Image

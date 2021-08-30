@@ -6,6 +6,7 @@ import MoreLikeThisSection from "../../containers/MoreLikeThisSection/MoreLikeTh
 import AboutMovieSection from "../../containers/AboutMovieSection/AboutMovieSection";
 import Button from "../Button/Button";
 import Link from "next/link";
+import BottomFade from "../BottomFade/BottomFade";
 export default function Modal({ movie }) {
   const router = useRouter();
   const [moreLikeThisArray, setMoreLikeThisArray] = useState([]);
@@ -76,6 +77,7 @@ export default function Modal({ movie }) {
                       func={() => router.push(`/movie/${movie._id}`)}
                     />
                   </div>
+                  <BottomFade />
                 </div>
               </div>
 

@@ -1,0 +1,8 @@
+.bottomFade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to top, #141414, transparent);
+  height: 30%;
+}
