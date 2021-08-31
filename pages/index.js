@@ -79,6 +79,14 @@ export default function Home() {
               sliderTitle={"Horror"}
               hasMovies={allMovies?.length}
             />
+            <MovieSlider
+              movies={allMovies.filter((movie) =>
+                movie.genres.includes("Anime")
+              )}
+              sliderId={"8"}
+              sliderTitle={"Anime"}
+              hasMovies={allMovies?.length}
+            />
           </>
         )}
       </div>
