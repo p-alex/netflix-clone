@@ -77,20 +77,12 @@ export default function MovieSliderDesktop({
 
     let currentIndex = sliderState.currentIndex;
 
-    if (direction === "left") {
-      currentIndex--;
-    } else {
-      currentIndex++;
-    }
+    direction === "left" ? currentIndex-- : currentIndex++;
 
     if (direction === "left") {
-      if (currentIndex < 0) {
-        currentIndex = maxIndex;
-      }
+      if (currentIndex < 0) currentIndex = maxIndex;
     }
-    if (currentIndex > maxIndex) {
-      currentIndex = 0;
-    }
+    if (currentIndex > maxIndex) currentIndex = 0;
 
     let move =
       eval(
