@@ -47,7 +47,7 @@ export default function ModalMovieCard({ movie, isMaxThree }) {
               {release}
             </p>
           </div>
-          <AddToListBtn movie={movie} />
+          <AddToListBtn movie={movie} btnType="rounded" />
         </div>
         <p className={styles.modalMovieCard__cardBody__description}>
           {description}

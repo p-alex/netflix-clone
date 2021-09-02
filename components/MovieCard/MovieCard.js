@@ -34,7 +34,7 @@ export default function MovieCard({ movie, fromSliderWithId, isMouseDown }) {
             >
               <i className="fas fa-play"></i>
             </button>
-            <AddToListBtn movie={movie} />
+            <AddToListBtn movie={movie} btnType="rounded" />
           </div>
 
           <button

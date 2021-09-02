@@ -4,6 +4,7 @@ import ProjectContext from "../../context/Project-context";
 import styles from "./Banner.module.css";
 import Image from "next/image";
 import Button from "../Button/Button";
+import AddToListBtn from "../AddToListBtn/AddToListBtn";
 import BottomFade from "../BottomFade/BottomFade";
 export default function Banner({ movies }) {
   const context = useContext(ProjectContext);
@@ -61,9 +62,24 @@ export default function Banner({ movies }) {
                 value="Play"
                 type="play"
                 func={() => router.push(`/movie/${movie._id}`)}
+                responsive={true}
               />
               <Button
                 value="More Info"
+                type="moreInfo"
+                func={() => handleSelectMovie(movie)}
+                responsive={true}
+              />
+            </div>
+            <div className={styles.banner__content__btn_container__mobileBtns}>
+              <AddToListBtn movie={movie} btnType="regular" />
+              <Button
+                value=""
+                type="play"
+                func={() => router.push(`/movie/${movie._id}`)}
+              />
+              <Button
+                value=""
                 type="moreInfo"
                 func={() => handleSelectMovie(movie)}
               />

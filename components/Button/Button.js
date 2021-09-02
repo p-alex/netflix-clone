@@ -1,13 +1,9 @@
 import styles from "./Button.module.css";
-export default function Button({ type, func, value }) {
+export default function Button({ type, func, value, responsive }) {
   return (
     <>
       <button
-        className={
-          styles.banner__content__btn_container__btn +
-          " " +
-          styles.banner__content__btn_container__play
-        }
+        className={responsive ? styles.btnResponsive : styles.btn}
         onClick={func}
       >
         <i
@@ -16,10 +12,10 @@ export default function Button({ type, func, value }) {
               ? "fas fa-play"
               : type === "moreInfo"
               ? "fas fa-info-circle"
-              : null
+              : type === "addToList"
           }
         ></i>
-        <span>{value}</span>
+        {value && <span>{value}</span>}
       </button>
     </>
   );

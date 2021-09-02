@@ -31,12 +31,14 @@ export default function MovieSliderMobile({
         setIsMouseDown(false);
       }, 150);
     });
+
     rowContainer.addEventListener("mouseup", () => {
       isDown = false;
       setTimeout(() => {
         setIsMouseDown(false);
       }, 150);
     });
+
     rowContainer.addEventListener("mousemove", (e) => {
       if (!isDown) return;
       e.preventDefault();
@@ -45,6 +47,7 @@ export default function MovieSliderMobile({
       rowContainer.scrollLeft = scrollLeft - walk;
     });
   }, []);
+
   return (
     <>
       {hasMovies && (

@@ -90,7 +90,7 @@
 .modal__header__video__btnContainer {
   position: absolute;
   z-index: 5;
-  bottom: 50px;
+  bottom: 40px;
   left: 20px;
   width: 50%;
 }
@@ -101,7 +101,13 @@
 .modal__info__container {
   padding: 20px;
 }
-
+.modal__info__container__nameMobile {
+  display: none;
+}
+.modal__info__container__mobileBtnContainer {
+  display: none;
+  margin-bottom: 20px;
+}
 .modal__info__stats {
   display: flex;
   align-items: center;
@@ -124,9 +130,22 @@
   .modal__header__video__videoImage {
     border-radius: 0;
   }
+  .modal__header__video__btnContainer {
+    display: none;
+  }
+  .modal__info__container__mobileBtnContainer {
+    display: flex;
+  }
   .modal__info {
     display: flex;
     flex-direction: column;
+  }
+  .modal__info__container__nameMobile {
+    display: block;
+    margin-bottom: 30px;
+  }
+  .modal__header__video__movieLogo {
+    display: none;
   }
 }
 

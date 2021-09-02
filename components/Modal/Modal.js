@@ -5,12 +5,14 @@ import styles from "./Modal.module.css";
 import MoreLikeThisSection from "../../containers/MoreLikeThisSection/MoreLikeThisSection";
 import AboutMovieSection from "../../containers/AboutMovieSection/AboutMovieSection";
 import Button from "../Button/Button";
+import AddToListBtn from "../AddToListBtn/AddToListBtn";
 import Link from "next/link";
 import BottomFade from "../BottomFade/BottomFade";
 export default function Modal({ movie }) {
   const router = useRouter();
   const [moreLikeThisArray, setMoreLikeThisArray] = useState([]);
   const {
+    name,
     nameSlug,
     description,
     genres,
@@ -76,6 +78,7 @@ export default function Modal({ movie }) {
                       value="Play"
                       func={() => router.push(`/movie/${movie._id}`)}
                     />
+                    <AddToListBtn movie={movie} btnType="regular" />
                   </div>
                   <BottomFade />
                 </div>
@@ -84,6 +87,22 @@ export default function Modal({ movie }) {
               {/*------------------ MODAL INFO ------------------*/}
               <div className={styles.modal__info}>
                 <div className={styles.modal__info__container}>
+                  <h2 className={styles.modal__info__container__nameMobile}>
+                    {name}
+                  </h2>
+                  <div
+                    className={
+                      styles.modal__info__container__mobileBtnContainer
+                    }
+                  >
+                    <Button
+                      type="play"
+                      value=""
+                      func={() => router.push(`/movie/${movie._id}`)}
+                    />
+                    <AddToListBtn movie={movie} btnType="regular" />
+                  </div>
+
                   <div className={styles.modal__info__stats}>
                     <p className={styles.modal__info__stats__release}>
                       {release}
