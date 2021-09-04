@@ -38,20 +38,3 @@
 .btn i {
   font-size: 1rem;
 }
-@media screen and (max-width: 1200px) {
-  .btn {
-    padding: 7px 15px;
-    font-size: 0.75rem;
-  }
-  .btn i {
-    font-size: 0.75rem;
-  }
-}
-@media screen and (max-width: 800px) {
-  .btn {
-    padding: 0px 20px;
-  }
-  .btn i {
-    font-size: 0.9rem;
-  }
-}
