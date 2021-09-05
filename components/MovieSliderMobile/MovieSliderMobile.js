@@ -16,7 +16,7 @@ export default function MovieSliderMobile({
     let startX;
     let scrollLeft;
 
-    rowContainer.addEventListener("mousedown", (e) => {
+    rowContainer?.addEventListener("mousedown", (e) => {
       isDown = true;
       setTimeout(() => {
         setIsMouseDown(true);
@@ -25,21 +25,21 @@ export default function MovieSliderMobile({
       scrollLeft = rowContainer.scrollLeft;
     });
 
-    rowContainer.addEventListener("mouseleave", () => {
+    rowContainer?.addEventListener("mouseleave", () => {
       isDown = false;
       setTimeout(() => {
         setIsMouseDown(false);
       }, 150);
     });
 
-    rowContainer.addEventListener("mouseup", () => {
+    rowContainer?.addEventListener("mouseup", () => {
       isDown = false;
       setTimeout(() => {
         setIsMouseDown(false);
       }, 150);
     });
 
-    rowContainer.addEventListener("mousemove", (e) => {
+    rowContainer?.addEventListener("mousemove", (e) => {
       if (!isDown) return;
       e.preventDefault();
       let x = e.pageX - rowContainer.offsetLeft;
