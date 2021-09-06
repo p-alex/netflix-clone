@@ -2,12 +2,13 @@ import { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import ProjectContext from "../../context/Project-context";
 import styles from "./Modal.module.css";
-import MoreLikeThisSection from "../../containers/MoreLikeThisSection/MoreLikeThisSection";
-import AboutMovieSection from "../../containers/AboutMovieSection/AboutMovieSection";
+import MoreLikeThisSection from "../../sections/MoreLikeThisSection/MoreLikeThisSection";
+import AboutMovieSection from "../../sections/AboutMovieSection/AboutMovieSection";
 import Button from "../Button/Button";
 import AddToListBtn from "../AddToListBtn/AddToListBtn";
 import Link from "next/link";
 import BottomFade from "../BottomFade/BottomFade";
+import CommentSection from "../../sections/CommentSection/CommentSection";
 export default function Modal({ movie }) {
   const router = useRouter();
   const [moreLikeThisArray, setMoreLikeThisArray] = useState([]);
@@ -184,6 +185,7 @@ export default function Modal({ movie }) {
 
               {/*------------------ MODAL ABOUT ------------------*/}
               <AboutMovieSection movie={movie} />
+              <CommentSection movie={movie} />
             </div>
           </div>
         </>

@@ -14,4 +14,7 @@ export default createContext({
   bannerMovie: {},
   handleSetBannerMovie: () => {},
   filters: [],
+  handleAddNewComment: () => {},
+  handleEditComment: () => {},
+  handleDeleteComment: () => {},
 });

@@ -1,0 +1,88 @@
+.commentBox {
+  position: relative;
+  background: #222;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.commentBox__deleteConfirmationBackdrop {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  left: 0;
+  top: 0;
+  border-radius: 5px;
+}
+.commentBox__deleteConfirmation {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  max-width: 250px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+}
+.commentBox__deleteConfirmation__btns {
+  display: flex;
+  margin-top: 15px;
+  justify-content: center;
+}
+.commentBox__deleteConfirmation__btns button {
+  border-radius: 5px;
+  color: white;
+  font-size: 1rem;
+  padding: 10px 15px;
+  width: auto;
+  display: inline-block;
+}
+.commentBox__deleteConfirmation__btns__deleteBtn {
+  background: #e50914;
+  font-weight: bold;
+}
+.commentBox__deleteConfirmation__btns__cancelBtn {
+  background: none;
+}
+.commentBox:last-of-type {
+  margin-bottom: 0px;
+}
+.commentBox__userAndBtns {
+  display: flex;
+  justify-content: space-between;
+}
+.commentBox__userAndBtns__btns {
+  display: flex;
+}
+.commentBox__userAndBtns__btns button {
+  background: none;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+.commentBox__userAndBtns__btns button i {
+  margin-right: 5px;
+}
+.commentBox__userAndBtns__btns__deleteBtn {
+  color: red;
+}
+.commentBox__userAndBtns__user {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.commentBox__userAndBtns__user__profileImg {
+  width: 40px;
+  margin-right: 10px;
+}
+.commentBox__editBtn {
+  margin-top: 10px;
+}
+.commentBox__textBox {
+  width: 100%;
+  padding: 5px;
+  font-size: 1rem;
+}

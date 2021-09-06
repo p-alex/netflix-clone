@@ -27,6 +27,11 @@ export default function GlobalState({ children }) {
     "Thriller",
   ];
 
+  let url =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://netflix-clone-inky-five.vercel.app";
+
   const [selectedMovie, dispatchSelectedMovie] = useReducer(
     selectedMovieReducer,
     {}
@@ -34,10 +39,7 @@ export default function GlobalState({ children }) {
 
   const handleGetUserData = async () => {
     console.log("get user");
-    let url =
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000"
-        : "https://netflix-clone-inky-five.vercel.app";
+
     const result = await fetch(`${url}/api/user-data`);
     const resultJSON = await result.json();
     if (resultJSON.message !== "Found") {
@@ -54,10 +56,7 @@ export default function GlobalState({ children }) {
   const handleGetAllMovies = async () => {
     console.log("get movie");
     setIsLoading(true);
-    let url =
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000"
-        : "https://netflix-clone-inky-five.vercel.app";
+
     const movieList = await fetch(`${url}/api/movies`);
     const moviesJSON = await movieList.json();
     if (moviesJSON.message !== "allowed") {
@@ -70,10 +69,6 @@ export default function GlobalState({ children }) {
   };
 
   const handleAddMovieToList = async (movie, isAdding) => {
-    let url =
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000"
-        : "https://netflix-clone-inky-five.vercel.app";
     const result = await fetch(`${url}/api/add-movie-to-list`, {
       method: "POST",
       headers: {
@@ -99,6 +94,77 @@ export default function GlobalState({ children }) {
     }
   };
 
+  const handleAddNewComment = async (comment) => {
+    const result = await fetch(`${url}/api/add-comment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ comment }),
+    });
+    const resultJson = await result.json();
+    if (resultJson.ok) {
+      const updatedMoviesArray = allMovies.map((movie) => {
+        if (movie._id === comment.movieId) {
+          const oldCommentsArray = movie.comments;
+          const updatedCommentsArray = [comment, ...oldCommentsArray];
+          movie.comments = updatedCommentsArray;
+        }
+        return movie;
+      });
+      setAllMovies(updatedMoviesArray);
+    }
+  };
+
+  const handleDeleteComment = async (commentId, movieId) => {
+    const commentInfo = { commentId, movieId };
+    const result = await fetch(`${url}/api/delete-comment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ commentInfo }),
+    });
+    const resultJson = await result.json();
+    if (resultJson.ok) {
+      const updatedMoviesArray = allMovies.map((movie) => {
+        if (movie._id === movieId) {
+          movie.comments = movie.comments.filter(
+            (co) => co.commentId !== commentId
+          );
+        }
+        return movie;
+      });
+      setAllMovies(updatedMoviesArray);
+    }
+  };
+
+  const handleEditComment = async (editedComment) => {
+    const result = await fetch(`${url}/api/edit-comment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ editedComment }),
+    });
+    const resultJson = await result.json();
+
+    if (resultJson.ok) {
+      const updatedMoviesArray = allMovies.map((movie) => {
+        if (movie._id === editedComment.movieId) {
+          movie.comments = movie.comments.map((co) => {
+            if (co.commentId === editedComment.commentId) {
+              return editedComment;
+            }
+            return co;
+          });
+        }
+        return movie;
+      });
+      setAllMovies(updatedMoviesArray);
+    }
+  };
+
   const handleSelectMovie = (movie) =>
     dispatchSelectedMovie({ type: "SELECT_MOVIE", payload: movie });
 
@@ -106,10 +172,6 @@ export default function GlobalState({ children }) {
     dispatchSelectedMovie({ type: "RESET" });
 
   const handleLogout = async () => {
-    let url =
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000"
-        : "https://netflix-clone-inky-five.vercel.app";
     const result = await fetch(`${url}/api/auth`, {
       method: "POST",
       headers: {
@@ -139,6 +201,9 @@ export default function GlobalState({ children }) {
         handleAddMovieToList,
         userMovieList: userData.movieList,
         filters,
+        handleAddNewComment,
+        handleEditComment,
+        handleDeleteComment,
       }}
     >
       {children}
