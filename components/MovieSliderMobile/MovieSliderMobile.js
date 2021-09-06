@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./MovieSliderMobile.module.css";
 import { useState, useEffect } from "react";
 import MovieCard from "../MovieCard/MovieCard";

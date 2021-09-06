@@ -62,18 +62,21 @@ export default function MovieSliderDesktop({
     const cards = document.querySelectorAll(`#card${sliderId}`);
     const row = document.querySelector(`#movie_row${sliderId}`);
 
+    let spaceBetweenCards = sliderState.spaceBetweenCards;
     let cardWidth = card.offsetWidth;
+    let totalNumberOfCards = cards.length;
+    let rowWidth = row.offsetWidth;
 
-    let howManyVisible = Math.round(row.offsetWidth / card.offsetWidth);
+    let howManyVisible = Math.round(rowWidth / cardWidth);
 
     let maxMoveBy =
-      card.offsetWidth * cards.length -
-      howManyVisible * card.offsetWidth +
-      sliderState.spaceBetweenCards * (cards.length - howManyVisible);
+      cardWidth * totalNumberOfCards -
+      howManyVisible * cardWidth +
+      spaceBetweenCards * (totalNumberOfCards - howManyVisible);
 
-    let maxIndex = /[0-9].[5-9]/.test(maxMoveBy / row.offsetWidth)
-      ? Math.round(maxMoveBy / row.offsetWidth + 0.4)
-      : Math.round(maxMoveBy / row.offsetWidth);
+    let maxIndex = /[0-9].[5-9]/.test(maxMoveBy / rowWidth)
+      ? Math.round(maxMoveBy / rowWidth + 0.4)
+      : Math.round(maxMoveBy / rowWidth);
 
     let currentIndex = sliderState.currentIndex;
 
@@ -82,18 +85,14 @@ export default function MovieSliderDesktop({
     if (direction === "left") {
       if (currentIndex < 0) currentIndex = maxIndex;
     }
+
     if (currentIndex > maxIndex) currentIndex = 0;
 
     let move =
-      eval(
-        row.offsetWidth * currentIndex +
-          sliderState.spaceBetweenCards * currentIndex
-      ) >= maxMoveBy
+      eval(rowWidth * currentIndex + spaceBetweenCards * currentIndex) >=
+      maxMoveBy
         ? maxMoveBy
-        : eval(
-            row.offsetWidth * currentIndex +
-              sliderState.spaceBetweenCards * currentIndex
-          );
+        : eval(rowWidth * currentIndex + spaceBetweenCards * currentIndex);
 
     setSliderState((prevState) => ({
       ...prevState,
