@@ -68,27 +68,25 @@ export default function GlobalState({ children }) {
     }
   };
 
-  const handleAddMovieToList = async (movie, isAdding) => {
+  const handleAddMovieToList = async (movieId, isAdding) => {
     const result = await fetch(`${url}/api/add-movie-to-list`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ movie }),
+      body: JSON.stringify({ movieId }),
     });
     const resultJSON = await result.json();
-    if (resultJSON.message !== "Something went wrong") {
+    if (resultJSON.ok) {
       if (isAdding) {
         setUserData((prevState) => ({
           ...prevState,
-          movieList: [...prevState.movieList, movie],
+          movieList: [movieId, ...prevState.movieList],
         }));
       } else {
         setUserData((prevState) => ({
           ...prevState,
-          movieList: prevState.movieList.filter(
-            (item) => item._id !== movie._id
-          ),
+          movieList: prevState.movieList.filter((item) => item !== movieId),
         }));
       }
     }

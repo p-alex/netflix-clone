@@ -15,6 +15,19 @@ export default function Home() {
   useEffect(() => {
     if (allMovies.length === 0) handleGetAllMovies();
   }, []);
+  const filterAllMovies = () => {
+    if (allMovies.length && movieList) {
+      const theArray = [];
+      movieList.map((movieId) => {
+        allMovies.map((movie) => {
+          if (movie._id === movieId) {
+            theArray.push(movie);
+          }
+        });
+      });
+      return theArray;
+    }
+  };
   return (
     <div style={{ overflowX: "hidden" }}>
       <div className={selectedMovie.name && pageWrapperStyles.disableScroll}>
@@ -26,7 +39,7 @@ export default function Home() {
           <>
             <Banner movies={allMovies} />
             <MovieSlider
-              movies={movieList}
+              movies={filterAllMovies()}
               sliderId={"1"}
               sliderTitle={"My List"}
               hasMovies={movieList?.length}

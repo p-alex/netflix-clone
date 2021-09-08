@@ -12,13 +12,13 @@ async function addMovieToListHandler(req, res) {
 
       const user = await usersCollection.findOne({ _id: ObjectId(req.userId) });
 
-      const movie = req.body.movie;
+      const movieId = req.body.movieId;
 
-      if (movie._id) {
+      if (movieId) {
         let oldMovieList = user.movieList;
-        if (!oldMovieList.some((item) => item._id === movie._id)) {
+        if (!oldMovieList.some((item) => item === movieId)) {
           // ADDING MOVIE ID TO MOVIE LIST
-          let updatedMovieList = [...oldMovieList, movie];
+          let updatedMovieList = [movieId, ...oldMovieList];
 
           const updateMovieList = await usersCollection.updateOne(
             { _id: ObjectId(req.userId) },
@@ -26,12 +26,12 @@ async function addMovieToListHandler(req, res) {
           );
 
           if (updateMovieList.result.ok) {
-            res.json({ message: "Movie added to list" });
+            res.json({ ok: 1, message: "Movie added to list" });
           }
         } else {
           // REMOVING MOVIE ID FROM MOVIE LIST
           let updatedMovieList = oldMovieList.filter(
-            (item) => item._id !== movie._id
+            (item) => item !== movieId
           );
 
           const updateMovieList = await usersCollection.updateOne(
@@ -40,12 +40,12 @@ async function addMovieToListHandler(req, res) {
           );
 
           if (updateMovieList.result.ok) {
-            res.json({ message: "Movie removed from list" });
+            res.json({ ok: 1, message: "Movie removed from list" });
           }
         }
       }
     } catch (error) {
-      res.json({ message: "Something went wrong" });
+      res.json({ ok: 0, message: "Something went wrong" });
     } finally {
       client.close();
     }

@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import ProjectContext from "../../context/Project-context";
 import styles from "./AddToListBtn.module.css";
-export default function AddToListBtn({ movie, btnType }) {
+export default function AddToListBtn({ movieId, btnType }) {
   const context = useContext(ProjectContext);
   const { userMovieList, handleAddMovieToList } = context;
 
   return (
     <>
-      {userMovieList && userMovieList.some((item) => item._id === movie._id) ? (
+      {userMovieList && userMovieList.some((item) => item === movieId) ? (
         <button
           className={
             btnType === "regular"
@@ -16,7 +16,7 @@ export default function AddToListBtn({ movie, btnType }) {
               ? styles.addToListRoundedBtn + " " + styles.movieIsAdded
               : styles.addToListRegularBtn + " " + styles.movieIsAdded
           }
-          onClick={() => handleAddMovieToList(movie, false)}
+          onClick={() => handleAddMovieToList(movieId, false)}
         >
           <i className="fas fa-check"></i>
         </button>
@@ -29,7 +29,7 @@ export default function AddToListBtn({ movie, btnType }) {
               ? styles.addToListRoundedBtn
               : styles.addToListRegularBtn
           }
-          onClick={() => handleAddMovieToList(movie, true)}
+          onClick={() => handleAddMovieToList(movieId, true)}
         >
           <i className="fas fa-plus"></i>
         </button>

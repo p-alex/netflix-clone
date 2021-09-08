@@ -79,7 +79,7 @@ export default function Modal({ movie }) {
                       value="Play"
                       func={() => router.push(`/movie/${movie._id}`)}
                     />
-                    <AddToListBtn movie={movie} btnType="regular" />
+                    <AddToListBtn movieId={movie._id} btnType="regular" />
                   </div>
                   <BottomFade />
                 </div>
@@ -182,9 +182,9 @@ export default function Modal({ movie }) {
               {moreLikeThisArray.length !== 0 && (
                 <MoreLikeThisSection movies={moreLikeThisArray} />
               )}
-
               {/*------------------ MODAL ABOUT ------------------*/}
               <AboutMovieSection movie={movie} />
+              {/*------------------ COMMENT SECTION ------------------*/}
               <CommentSection movie={movie} />
             </div>
           </div>

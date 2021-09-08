@@ -12,13 +12,26 @@ export default function MyList() {
   useEffect(() => {
     if (allMovies.length === 0) handleGetAllMovies();
   }, []);
+  const filterAllMovies = () => {
+    if (allMovies.length && movieList) {
+      const theArray = [];
+      movieList.map((movieId) => {
+        allMovies.map((movie) => {
+          if (movie._id === movieId) {
+            theArray.push(movie);
+          }
+        });
+      });
+      return theArray;
+    }
+  };
   return (
     <>
       {isLoading && <FullscreenLoader />}
       {selectedMovie?.name ? <Modal movie={selectedMovie} /> : null}
       <NavBar />
       <MobileNavBar />
-      <MoviesContainer movies={movieList} title={"My List"} />
+      <MoviesContainer movies={filterAllMovies()} title={"My List"} />
     </>
   );
 }
