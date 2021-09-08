@@ -101,7 +101,7 @@ export default function Modal({ movie }) {
                       value=""
                       func={() => router.push(`/movie/${movie._id}`)}
                     />
-                    <AddToListBtn movie={movie} btnType="regular" />
+                    <AddToListBtn movieId={movie._id} btnType="regular" />
                   </div>
 
                   <div className={styles.modal__info__stats}>
