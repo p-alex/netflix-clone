@@ -22,6 +22,9 @@ export default function CommentSection({ movie }) {
   const handleSetText = (e) =>
     setComment((prevState) => ({ ...prevState, text: e.target.value }));
 
+  const handleResetCommentState = () =>
+    setComment((prevState) => ({ ...prevState, text: "", stars: 0 }));
+
   const handleSubmit = (comment) => {
     if (comment.stars !== 0) {
       const commentObject = {
@@ -29,11 +32,14 @@ export default function CommentSection({ movie }) {
         commentId: uuidv4(),
       };
       handleAddNewComment(commentObject);
+      handleResetCommentState();
     }
   };
   return (
     <section className={styles.commentSection}>
-      <h2>Comments - {movie.comments.length}</h2>
+      <h2 className={styles.commentSection__header}>
+        Comments - {movie.comments.length}
+      </h2>
       {movie.comments.length ? (
         movie.comments.map((comment) => {
           return (
@@ -51,13 +57,18 @@ export default function CommentSection({ movie }) {
       ) : (
         <p>Be the first to add a comment!</p>
       )}
-      <Stars howManyStars={comment.stars} handleSetStars={handleSetStars} />
-      <textarea
-        type="text"
-        placeholder="Comment...(Optional)"
-        onChange={(e) => handleSetText(e)}
-      />
-      <button onClick={() => handleSubmit(comment)}>Comment</button>
+
+      <div className={styles.commentSection__writeAComment}>
+        <h2>Write a comment</h2>
+        <Stars howManyStars={comment.stars} handleSetStars={handleSetStars} />
+        <textarea
+          type="text"
+          placeholder="Comment...(Optional)"
+          value={comment.text}
+          onChange={(e) => handleSetText(e)}
+        />
+        <button onClick={() => handleSubmit(comment)}>Comment</button>
+      </div>
     </section>
   );
 }

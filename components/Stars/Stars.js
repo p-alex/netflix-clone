@@ -10,6 +10,7 @@ export default function Stars({ howManyStars, handleSetStars }) {
             key={star + "star"}
             className={star <= howManyStars ? "fas fa-star" : "far fa-star"}
             onClick={handleSetStars ? () => handleSetStars(star) : () => {}}
+            style={star > howManyStars ? { color: "grey" } : null}
           ></i>
         );
       })}

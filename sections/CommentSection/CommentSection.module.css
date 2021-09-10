@@ -1,10 +1,22 @@
 .commentSection {
   padding: 20px;
 }
-
+.commentSection__header {
+  margin-bottom: 10px;
+}
 .commentSection textarea {
   padding: 10px;
   width: 100%;
+  font-size: 1rem;
+  background: #2f2f2f;
+  border-radius: 5px;
+  margin: 5px 0;
+  border: none;
+  color: #f3f3f3;
+  height: 100px;
+}
+.commentSection__writeAComment {
+  margin: 40px 0 10px 0;
 }
 .commentSection button {
   width: 100%;

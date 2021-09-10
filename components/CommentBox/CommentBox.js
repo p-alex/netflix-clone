@@ -11,15 +11,18 @@ export default function CommentBox({
   commentId,
 }) {
   const context = useContext(ProjectContext);
+
   const { userData, handleEditComment, handleDeleteComment } = context;
 
   const [isEditMode, setIsEditMode] = useState(false);
+
   const [isDeleteConfirmationActive, setIsDeleteConfirmationActive] =
     useState(false);
+
   const [updatedComment, setUpdatedComment] = useState({
     username,
     profileImg,
-    stars: 0,
+    stars,
     text,
     movieId,
     commentId,
@@ -30,6 +33,7 @@ export default function CommentBox({
   }, [isEditMode]);
 
   const handleToggleEdit = () => setIsEditMode(!isEditMode);
+
   const handleToggleDelete = () =>
     setIsDeleteConfirmationActive(!isDeleteConfirmationActive);
 
@@ -107,7 +111,7 @@ export default function CommentBox({
                 className={styles.commentBox__userAndBtns__btns__deleteBtn}
                 onClick={handleToggleDelete}
               >
-                <i className="fas fa-trash-alt"></i>Delete
+                <i className="fas fa-trash-alt"></i>
               </button>
             )}
             <button onClick={handleToggleEdit}>
@@ -115,7 +119,7 @@ export default function CommentBox({
                 "Cancel"
               ) : (
                 <span>
-                  <i className="far fa-edit"></i>Edit
+                  <i className="far fa-edit"></i>
                 </span>
               )}
             </button>
@@ -139,7 +143,7 @@ export default function CommentBox({
           className={styles.commentBox__textBox}
         />
       ) : (
-        <p className={styles.commentBox__text}>{text}</p>
+        <p className={styles.commentBox__commentText}>{text}</p>
       )}
       {isEditMode && (
         <button
