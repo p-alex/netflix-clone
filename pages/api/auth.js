@@ -2,7 +2,7 @@ import { MongoClient } from "mongodb";
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import sgMail from "@sendgrid/mail";
+//import sgMail from "@sendgrid/mail";
 export default async function authHandler(req, res) {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -15,56 +15,56 @@ export default async function authHandler(req, res) {
     const { authType } = req.body;
     try {
       if (authType === "register") {
-        //-----------REGISTER-----------
-        const { username, email, password, confirmPassword, date } = req.body;
+        // //-----------REGISTER-----------
+        // const { username, email, password, confirmPassword, date } = req.body;
 
-        const userWithEmail = await collection.findOne({ email });
+        // const userWithEmail = await collection.findOne({ email });
 
-        const userWithUsername = await collection.findOne({ username });
+        // const userWithUsername = await collection.findOne({ username });
 
-        if (!username || !email || !password || !confirmPassword)
-          return res.json({ message: "Please fill in all fields" });
+        // if (!username || !email || !password || !confirmPassword)
+        //   return res.json({ message: "Please fill in all fields" });
 
-        if (userWithUsername)
-          return res.json({
-            message: "A user with that username already exists",
-          });
+        // if (userWithUsername)
+        //   return res.json({
+        //     message: "A user with that username already exists",
+        //   });
 
-        if (userWithEmail)
-          return res.json({ message: "A user with that email already exists" });
+        // if (userWithEmail)
+        //   return res.json({ message: "A user with that email already exists" });
 
-        if (password !== confirmPassword)
-          return res.json({ message: "Passwords must match" });
+        // if (password !== confirmPassword)
+        //   return res.json({ message: "Passwords must match" });
 
-        const hashedPassword = await bcrypt.hash(password, 12);
+        // const hashedPassword = await bcrypt.hash(password, 12);
 
-        const result = await collection.insertOne({
-          username,
-          email,
-          password: hashedPassword,
-          isVerified: false,
-          date: new Date(date),
-          profileImg: `/images/default-profile-pictures/image-${Math.floor(
-            Math.random() * 6
-          )}.jpg`,
-          movieList: [],
-        });
+        // const result = await collection.insertOne({
+        //   username,
+        //   email,
+        //   password: hashedPassword,
+        //   isVerified: false,
+        //   date: new Date(date),
+        //   profileImg: `/images/default-profile-pictures/image-${Math.floor(
+        //     Math.random() * (7 - 1) + 1
+        //   )}.jpg`,
+        //   movieList: [],
+        // });
 
-        const token = await jwt.sign(
-          { id: result.ops[0]._id },
-          process.env.SECRET,
-          {
-            expiresIn: "25m",
-          }
-        );
+        // const token = await jwt.sign(
+        //   { id: result.ops[0]._id },
+        //   process.env.SECRET,
+        //   {
+        //     expiresIn: "25m",
+        //   }
+        // );
 
         // sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 
         // const msg = {
         //   to: email,
         //   from: "netflixclonepalex@gmail.com",
-        //   subject: "Verification code",
-        //   text: "This is your code",
+        //   subject: "Verification link",
+        //   text: "Click the button below to verify your account",
         //   html: `<div style='text-align:center;position:relative; width:400px;padding:40px;margin:0 auto;background-color:black;color:white;'><h1>Click the link to verify your account.</h1><br/><br/><a style='display:inline-block;text-decoration:none;background-color:#e50914;padding:15px;color:white;border-radius:5px;font-weight:bold;font-family:Helvetica, sans-serif;' href="http://localhost:3000/user/verify/${token}">Confirm account</a></div>`,
         // };
 
@@ -75,11 +75,15 @@ export default async function authHandler(req, res) {
         //   })
         //   .catch((error) => {
         //     console.error(error);
-        //     return res.json({message: 'Something went wrong! Please try again later.'})
+        //     return res.json({
+        //       message: "Something went wrong! Please try again later.",
+        //     });
         //   });
 
-        console.log(`http://localhost:3000/user/verify/${token}`);
-        res.json({ message: "Registered successfuly!" });
+        //console.log(`http://localhost:3000/user/verify/${token}`);
+        res.json({
+          message: "Creating new account is disabled for now unitl i fix stuff",
+        });
       }
       if (authType === "login") {
         //-----------LOGIN-----------
@@ -143,6 +147,12 @@ export default async function authHandler(req, res) {
           })
         );
         res.json({ message: "Logged out" });
+      }
+
+      if (authType === "disabled") {
+        res.json({
+          message: "Creating accounts is disabled until i fix stuff",
+        });
       }
     } catch (error) {
       console.log(error);
