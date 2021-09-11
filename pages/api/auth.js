@@ -82,7 +82,7 @@ export default async function authHandler(req, res) {
 
         //console.log(`http://localhost:3000/user/verify/${token}`);
         res.json({
-          message: "Creating new account is disabled for now unitl i fix stuff",
+          message: "Creating new account is disabled for now",
         });
       }
       if (authType === "login") {
