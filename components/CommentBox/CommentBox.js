@@ -48,7 +48,7 @@ export default function CommentBox({
   const handleEditSubmit = async () => {
     if (updatedComment.stars !== 0) {
       console.time("replace comment time in ms");
-      await handleEditComment(updatedComment);
+      handleEditComment(updatedComment);
       console.timeEnd("replace comment time in ms");
       handleToggleEdit();
     }
@@ -56,7 +56,7 @@ export default function CommentBox({
 
   const handleDeleteSubmit = async () => {
     console.time("delete comment time in ms");
-    await handleDeleteComment(commentId, movieId);
+    handleDeleteComment(commentId, movieId);
     console.timeEnd("delete comment time in ms");
   };
 

@@ -6,10 +6,10 @@
   border-radius: 50%;
   background: none;
   color: white;
-  border: solid grey 3px;
-  width: 40px;
-  height: 40px;
-  font-size: 16px;
+  border: solid grey 2px;
+  width: 38px;
+  height: 38px;
+  font-size: 14px;
 }
 .addToListRegularBtn {
   display: inline-block;
@@ -26,4 +26,11 @@
 .movieIsAdded {
   background: grey;
   color: white;
+}
+
+@media screen and (max-width: 800px) {
+  .addToListRoundedBtn {
+    width: 40px;
+    height: 40px;
+  }
 }

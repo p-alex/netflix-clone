@@ -1,4 +1,3 @@
-import React from "react";
 import MovieSliderMobile from "../MovieSliderMobile/MovieSliderMobile";
 import MovieSliderDesktop from "../MovieSliderDesktop/MovieSliderDesktop";
 export default function MovieSlider({

@@ -14,12 +14,13 @@ async function addMovieToListHandler(req, res) {
 
       const movieId = req.body.movieId;
 
-      if (movieId) {
+      if (movieId && user.username) {
         let oldMovieList = user.movieList;
+
         if (!oldMovieList.some((item) => item === movieId)) {
           // ADDING MOVIE ID TO MOVIE LIST
           let updatedMovieList = [movieId, ...oldMovieList];
-
+          console.log("here");
           const updateMovieList = await usersCollection.updateOne(
             { _id: ObjectId(req.userId) },
             { $set: { movieList: updatedMovieList } }
@@ -43,6 +44,8 @@ async function addMovieToListHandler(req, res) {
             res.json({ ok: 1, message: "Movie removed from list" });
           }
         }
+      } else {
+        res.json({ ok: 0, message: "Something went wrong" });
       }
     } catch (error) {
       res.json({ ok: 0, message: "Something went wrong" });

@@ -1,4 +1,4 @@
-import { useState, useReducer, useEffect } from "react";
+import { useState, useReducer } from "react";
 import { useRouter } from "next/router";
 import ProjectContext from "./Project-context";
 import { selectedMovieReducer } from "./reducers";
@@ -48,6 +48,7 @@ export default function GlobalState({ children }) {
       setUserData({
         username: resultJSON.username,
         profileImg: resultJSON.profileImg,
+        isVerified: resultJSON.isVerified,
         movieList: resultJSON.movieList,
       });
     }
@@ -63,12 +64,23 @@ export default function GlobalState({ children }) {
       setIsLoading(false);
       router.push("/login");
     } else {
-      setAllMovies(moviesJSON.movies);
+      setAllMovies(moviesJSON.movies.reverse());
       setIsLoading(false);
     }
   };
 
   const handleAddMovieToList = async (movieId, isAdding) => {
+    if (isAdding) {
+      setUserData((prevState) => ({
+        ...prevState,
+        movieList: [movieId, ...prevState.movieList],
+      }));
+    } else {
+      setUserData((prevState) => ({
+        ...prevState,
+        movieList: prevState.movieList.filter((item) => item !== movieId),
+      }));
+    }
     const result = await fetch(`${url}/api/add-movie-to-list`, {
       method: "POST",
       headers: {
@@ -77,22 +89,18 @@ export default function GlobalState({ children }) {
       body: JSON.stringify({ movieId }),
     });
     const resultJSON = await result.json();
-    if (resultJSON.ok) {
-      if (isAdding) {
-        setUserData((prevState) => ({
-          ...prevState,
-          movieList: [movieId, ...prevState.movieList],
-        }));
-      } else {
-        setUserData((prevState) => ({
-          ...prevState,
-          movieList: prevState.movieList.filter((item) => item !== movieId),
-        }));
-      }
-    }
   };
 
   const handleAddNewComment = async (comment) => {
+    const updatedMoviesArray = allMovies.map((movie) => {
+      if (movie._id === comment.movieId) {
+        const oldCommentsArray = movie.comments;
+        const updatedCommentsArray = [comment, ...oldCommentsArray];
+        movie.comments = updatedCommentsArray;
+      }
+      return movie;
+    });
+    setAllMovies(updatedMoviesArray);
     const result = await fetch(`${url}/api/add-comment`, {
       method: "POST",
       headers: {
@@ -101,21 +109,20 @@ export default function GlobalState({ children }) {
       body: JSON.stringify({ comment }),
     });
     const resultJson = await result.json();
-    if (resultJson.ok) {
-      const updatedMoviesArray = allMovies.map((movie) => {
-        if (movie._id === comment.movieId) {
-          const oldCommentsArray = movie.comments;
-          const updatedCommentsArray = [comment, ...oldCommentsArray];
-          movie.comments = updatedCommentsArray;
-        }
-        return movie;
-      });
-      setAllMovies(updatedMoviesArray);
-    }
   };
 
   const handleDeleteComment = async (commentId, movieId) => {
     const commentInfo = { commentId, movieId };
+    const updatedMoviesArray = allMovies.map((movie) => {
+      if (movie._id === movieId) {
+        movie.comments = movie.comments.filter(
+          (co) => co.commentId !== commentId
+        );
+      }
+      return movie;
+    });
+    setAllMovies(updatedMoviesArray);
+
     const result = await fetch(`${url}/api/delete-comment`, {
       method: "POST",
       headers: {
@@ -124,20 +131,21 @@ export default function GlobalState({ children }) {
       body: JSON.stringify({ commentInfo }),
     });
     const resultJson = await result.json();
-    if (resultJson.ok) {
-      const updatedMoviesArray = allMovies.map((movie) => {
-        if (movie._id === movieId) {
-          movie.comments = movie.comments.filter(
-            (co) => co.commentId !== commentId
-          );
-        }
-        return movie;
-      });
-      setAllMovies(updatedMoviesArray);
-    }
   };
 
   const handleEditComment = async (editedComment) => {
+    const updatedMoviesArray = allMovies.map((movie) => {
+      if (movie._id === editedComment.movieId) {
+        movie.comments = movie.comments.map((co) => {
+          if (co.commentId === editedComment.commentId) {
+            return editedComment;
+          }
+          return co;
+        });
+      }
+      return movie;
+    });
+    setAllMovies(updatedMoviesArray);
     const result = await fetch(`${url}/api/edit-comment`, {
       method: "POST",
       headers: {
@@ -146,21 +154,6 @@ export default function GlobalState({ children }) {
       body: JSON.stringify({ editedComment }),
     });
     const resultJson = await result.json();
-
-    if (resultJson.ok) {
-      const updatedMoviesArray = allMovies.map((movie) => {
-        if (movie._id === editedComment.movieId) {
-          movie.comments = movie.comments.map((co) => {
-            if (co.commentId === editedComment.commentId) {
-              return editedComment;
-            }
-            return co;
-          });
-        }
-        return movie;
-      });
-      setAllMovies(updatedMoviesArray);
-    }
   };
 
   const handleSelectMovie = (movie) =>
