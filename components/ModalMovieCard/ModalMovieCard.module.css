@@ -6,7 +6,7 @@
   cursor: pointer;
 }
 .modalMovieCard_maxWidth {
-  width: 300px;
+  width: 373px;
 }
 .modalMovieCard__cardHeader {
   position: relative;
@@ -23,20 +23,20 @@
 }
 .modalMovieCard__cardHeader__playBtn {
   position: absolute;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  border: solid grey 3px;
+  border: solid grey 1px;
   display: none;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.6);
   left: 0;
   right: 0;
   margin: auto;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 18px;
+  font-size: 1rem;
 }
 .modalMovieCard:hover .modalMovieCard__cardHeader__playBtn {
   display: flex;
@@ -60,9 +60,10 @@
   align-items: center;
 }
 .modalMovieCard__cardBody__infoAndAdd__info__maturityRating {
-  border: solid white 1px;
-  padding: 2px;
+  border: solid grey 1px;
+  padding: 2px 5px;
   margin-right: 10px;
+  font-size: 1rem;
 }
 .modalMovieCard__cardBody__infoAndAdd__add {
   display: flex;
@@ -75,6 +76,11 @@
   width: 40px;
   height: 40px;
   font-size: 16px;
+}
+.modalMovieCard__cardBody__description {
+  color: #d2d2d2;
+  line-height: 22px;
+  font-size: 1rem;
 }
 @media screen and (max-width: 800px) {
   .modalMovieCard_maxWidth {

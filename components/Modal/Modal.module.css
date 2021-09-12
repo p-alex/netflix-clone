@@ -8,10 +8,9 @@
   overflow-y: scroll;
   scroll-behavior: smooth;
 }
-
 .modal {
   position: relative;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
   left: 0;
   right: 0;
@@ -31,10 +30,6 @@
   left: 0;
   z-index: 9000;
   animation: scale 500ms;
-}
-.modal a {
-  color: red;
-  margin-left: 10px;
 }
 .modal a:hover {
   text-decoration: underline;
@@ -101,6 +96,7 @@
 .modal__info__container {
   padding: 20px;
 }
+
 .modal__info__container__nameMobile {
   display: none;
 }
@@ -116,12 +112,38 @@
 .modal__info__stats p {
   margin-right: 10px;
 }
-
-.modal__info__stats p:nth-child(2) {
-  border: solid white 1px;
-  padding: 2px;
+.modal__info__stats__maturityRating {
+  border: solid grey 1px;
+  padding: 2px 5px;
 }
-
+.modal__info__container__right {
+  min-width: 350px;
+}
+.modal__info__container__right p {
+  margin-bottom: 20px;
+}
+.modal__info__container__right span {
+  color: grey;
+  margin-right: 5px;
+}
+.modal__info__container__right p:last-child {
+  margin-bottom: 0px;
+}
+.modal__info__container__right a {
+  color: white;
+  margin-right: 10px;
+  padding: 2px 0;
+  display: inline-block;
+}
+.modal__info__container__right a::after {
+  content: ",";
+}
+.modal__info__container__right a:last-child::after {
+  content: "";
+}
+.modal__info__description {
+  font-size: 1.3rem;
+}
 @media screen and (max-width: 800px) {
   .modal {
     top: 0;
@@ -146,6 +168,9 @@
   }
   .modal__header__video__movieLogo {
     display: none;
+  }
+  .modal__info__container__right {
+    min-width: 100%;
   }
 }
 

@@ -116,14 +116,20 @@ export default function Modal({ movie }) {
                     </p>
                   </div>
                   <div className={styles.modal__info__description}>
-                    <p className={styles.modal__info__description__description}>
+                    <p className={styles.modal__info__description__text}>
                       {description}
                     </p>
                   </div>
                 </div>
-                <div className={styles.modal__info__container}>
+                <div
+                  className={
+                    styles.modal__info__container +
+                    " " +
+                    styles.modal__info__container__right
+                  }
+                >
                   <p className={styles.modal__info__container__cast}>
-                    Cast:
+                    <span>Cast:</span>
                     {cast.map((actor, id) => {
                       if (id < 3) {
                         return (
@@ -140,7 +146,7 @@ export default function Modal({ movie }) {
                     {cast.length > 3 && <a href="#modalAbout">more...</a>}
                   </p>
                   <p className={styles.modal__info__container__genres}>
-                    Genres:
+                    <span>Genres:</span>
                     {genres.map((genre, id) => {
                       if (id < 3) {
                         return (
@@ -157,7 +163,7 @@ export default function Modal({ movie }) {
                     {genres.length > 3 && <a href="#modalAbout">more...</a>}
                   </p>
                   <p className={styles.modal__info__container__thisMovieIs}>
-                    This movie is:
+                    <span>This movie is:</span>
                     {thisMovieIs.map((item, id) => {
                       if (id < 3) {
                         return (
