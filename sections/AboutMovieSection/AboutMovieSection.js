@@ -7,7 +7,7 @@ export default function AboutMovieSection({ movie }) {
     <div className={styles.modal__about} id="modalAbout">
       <h2 className={styles.modal__about__movieName}>About {name}</h2>
       <p className={styles.modal__about__director}>
-        Director:
+        <span>Director:</span>
         {directors.map((director) => (
           <Link
             key={`modal-about-director-${director}`}
@@ -18,26 +18,29 @@ export default function AboutMovieSection({ movie }) {
         ))}
       </p>
       <p className={styles.modal__about__cast}>
-        Cast:
+        <span>Cast:</span>
         {cast.map((actor) => (
           <Link key={`modal-about-cast-${actor}`} href={`/actors/${actor}`}>
             {actor}
           </Link>
         ))}
       </p>
-      <p className={styles.modal__about__writer}>
-        Writer:
-        {writer.map((author) => (
-          <Link
-            key={`modal-about-writer-${author}`}
-            href={`/writers/${author}`}
-          >
-            {author}
-          </Link>
-        ))}
-      </p>
+      {writer[0] !== "" && (
+        <p className={styles.modal__about__writer}>
+          <span>Writer:</span>
+          {writer.map((author) => (
+            <Link
+              key={`modal-about-writer-${author}`}
+              href={`/writers/${author}`}
+            >
+              {author}
+            </Link>
+          ))}
+        </p>
+      )}
+
       <p className={styles.modal__about__genres}>
-        Genres:
+        <span>Genres:</span>
         {genres.map((genre) => (
           <Link key={`modal-about-genres-${genre}`} href={`/genres/${genre}`}>
             {genre}
@@ -46,7 +49,7 @@ export default function AboutMovieSection({ movie }) {
       </p>
 
       <p className={styles.modal__about__thisMovieIs}>
-        This movie is:
+        <span>This movie is:</span>
         {thisMovieIs.map((item) => (
           <Link
             key={`modal-about-thisMovieIs-${item}`}
@@ -57,8 +60,8 @@ export default function AboutMovieSection({ movie }) {
         ))}
       </p>
       <p className={styles.modal__about__maturityRating}>
-        Maturity Rating: {maturityRating}+ Recommended for ages {maturityRating}{" "}
-        and up
+        <span>Maturity Raiting: </span> {maturityRating}+ Recommended for ages{" "}
+        {maturityRating} and up
       </p>
     </div>
   );

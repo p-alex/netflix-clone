@@ -8,11 +8,16 @@
 .moreLikeThis__movieContainer {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
 }
 .maxThree {
   display: flex;
+}
+@media screen and (min-width: 1921px) {
+  .moreLikeThis__movieContainer {
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  }
 }
 @media screen and (max-width: 520px) {
   .maxThree {
