@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import ProjectContext from "../../context/Project-context";
 import MovieCard from "../MovieCard/MovieCard";
 import styles from "./MovieSliderDesktop.module.css";
 
@@ -8,10 +9,13 @@ export default function MovieSliderDesktop({
   sliderTitle,
   hasMovies,
 }) {
+  const context = useContext(ProjectContext);
+  const { movieList } = context.userData;
+  const [isCtrlBtnDisabled, setIsControlBtnDisabled] = useState(false);
   const [sliderState, setSliderState] = useState({
     cardWidth: 0,
     currentIndex: 0,
-    howManyVisible: 0,
+    howManyCardsVisible: 0,
     spaceBetweenCards: 5,
     maxMoveBy: 0,
     maxIndex: 0,
@@ -55,7 +59,7 @@ export default function MovieSliderDesktop({
     return () => {
       console.log("Movie Slider unmounted");
     };
-  }, []);
+  }, [movieList]);
 
   function moveSlider(direction) {
     const card = document.querySelector(`#card${sliderId}`);
@@ -67,12 +71,12 @@ export default function MovieSliderDesktop({
     let totalNumberOfCards = cards.length;
     let rowWidth = row.offsetWidth;
 
-    let howManyVisible = Math.round(rowWidth / cardWidth);
+    let howManyCardsVisible = Math.round(rowWidth / cardWidth);
 
     let maxMoveBy =
       cardWidth * totalNumberOfCards -
-      howManyVisible * cardWidth +
-      spaceBetweenCards * (totalNumberOfCards - howManyVisible);
+      howManyCardsVisible * cardWidth +
+      spaceBetweenCards * (totalNumberOfCards - howManyCardsVisible);
 
     let maxIndex = /[0-9].[5-9]/.test(maxMoveBy / rowWidth)
       ? Math.round(maxMoveBy / rowWidth + 0.4)
@@ -80,11 +84,13 @@ export default function MovieSliderDesktop({
 
     let currentIndex = sliderState.currentIndex;
 
-    direction === "left" ? currentIndex-- : currentIndex++;
-
     if (direction === "left") {
-      if (currentIndex < 0) currentIndex = maxIndex;
+      currentIndex--;
+    } else {
+      currentIndex++;
     }
+
+    if (currentIndex < 0) currentIndex = maxIndex;
 
     if (currentIndex > maxIndex) currentIndex = 0;
 
@@ -97,7 +103,7 @@ export default function MovieSliderDesktop({
     setSliderState((prevState) => ({
       ...prevState,
       cardWidth,
-      howManyVisible,
+      howManyCardsVisible,
       maxMoveBy,
       maxIndex,
       currentIndex,
@@ -113,20 +119,25 @@ export default function MovieSliderDesktop({
             <h2>{sliderTitle}</h2>
           </div>
 
-          <button
-            className={styles.slider__ctrl + " " + styles.left__ctrl}
-            id={`slider_ctrl_left${sliderId}`}
-            onClick={() => moveSlider("left")}
-          >
-            <i className="fas fa-chevron-left"></i>
-          </button>
-          <button
-            className={styles.slider__ctrl + " " + styles.right__ctrl}
-            id={`slider_ctrl_right${sliderId}`}
-            onClick={() => moveSlider("right")}
-          >
-            <i className="fas fa-chevron-right"></i>
-          </button>
+          {!isCtrlBtnDisabled && (
+            <button
+              className={styles.slider__ctrl + " " + styles.left__ctrl}
+              id={`slider_ctrl_left${sliderId}`}
+              onClick={() => moveSlider("left")}
+            >
+              <i className="fas fa-chevron-left"></i>
+            </button>
+          )}
+
+          {!isCtrlBtnDisabled && (
+            <button
+              className={styles.slider__ctrl + " " + styles.right__ctrl}
+              id={`slider_ctrl_right${sliderId}`}
+              onClick={() => moveSlider("right")}
+            >
+              <i className="fas fa-chevron-right"></i>
+            </button>
+          )}
 
           <div
             className={styles.slider__row}

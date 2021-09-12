@@ -4,9 +4,8 @@
   margin-top: -40px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 200px;
+  margin-bottom: 230px;
 }
-
 .slider__title {
   position: absolute;
   display: flex;
@@ -15,23 +14,8 @@
   width: 100%;
   margin-bottom: 20px;
   transform: translateY(-150%);
-}
-.slider__title h2 {
   color: white;
   font-size: 2rem;
-}
-.slider__index {
-  display: flex;
-}
-.index {
-  width: 10px;
-  height: 3px;
-  background: grey;
-  margin-left: 2px;
-  color: white;
-}
-.index.activeIndex {
-  background: white;
 }
 .slider__ctrl {
   position: absolute;
@@ -40,7 +24,7 @@
   color: white;
   padding: 0 10px;
   z-index: 9;
-  width: 4.5%;
+  width: 4.4%;
   border: none;
   transition: opacity 200ms;
   font-size: 21px;
