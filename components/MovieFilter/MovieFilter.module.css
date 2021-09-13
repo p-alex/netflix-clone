@@ -1,9 +1,9 @@
 .movieFilter {
   position: fixed;
-  top: 85px;
+  top: 90px;
   display: flex;
   color: white;
-  padding: 0 60px;
+  padding: 10px 60px;
   width: 100%;
   align-items: center;
   z-index: 10;
@@ -76,7 +76,7 @@
 
 @media screen and (max-width: 800px) {
   .movieFilter {
-    top: 47.6px;
+    top: 47.5px;
     padding: 5px 20px;
     align-items: center;
     background: rgba(0, 0, 0, 0.8);
