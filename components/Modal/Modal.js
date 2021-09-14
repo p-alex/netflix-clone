@@ -79,7 +79,7 @@ export default function Modal({ movie }) {
                       value="Play"
                       func={() => router.push(`/movie/${movie._id}`)}
                     />
-                    <AddToListBtn movieId={movie._id} btnType="regular" />
+                    <AddToListBtn movieId={movie._id} btnType="rounded" />
                   </div>
                   <BottomFade />
                 </div>
@@ -101,7 +101,7 @@ export default function Modal({ movie }) {
                       value=""
                       func={() => router.push(`/movie/${movie._id}`)}
                     />
-                    <AddToListBtn movieId={movie._id} btnType="regular" />
+                    <AddToListBtn movieId={movie._id} btnType="rounded" />
                   </div>
 
                   <div className={styles.modal__info__stats}>

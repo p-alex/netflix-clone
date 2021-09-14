@@ -79,14 +79,15 @@
   position: absolute;
   z-index: 5;
   bottom: 120px;
-  left: 20px;
+  left: 40px;
   width: 50%;
 }
 .modal__header__video__btnContainer {
   position: absolute;
+  display: flex;
   z-index: 5;
   bottom: 40px;
-  left: 20px;
+  left: 40px;
   width: 50%;
 }
 .modal__info {
@@ -94,7 +95,7 @@
 }
 
 .modal__info__container {
-  padding: 20px;
+  padding: 40px;
 }
 
 .modal__info__container__nameMobile {
