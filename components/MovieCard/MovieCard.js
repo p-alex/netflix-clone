@@ -3,6 +3,7 @@ import ProjectContext from "../../context/Project-context";
 import styles from "./MovieCard.module.css";
 import AddToListBtn from "../AddToListBtn/AddToListBtn";
 import { useRouter } from "next/router";
+import MoreInfoBtn from "../MoreInfoBtn/MoreInfoBtn";
 export default function MovieCard({ movie, fromSliderWithId, isMouseDown }) {
   const context = useContext(ProjectContext);
   const router = useRouter();
@@ -16,14 +17,22 @@ export default function MovieCard({ movie, fromSliderWithId, isMouseDown }) {
     >
       <div className={styles.card__image}>
         <button
-          className={styles.card__image__openModalBtn}
-          onClick={
-            isMouseDown === false ? () => handleSelectMovie(movie) : null
-          }
+          className={styles.card__image__openModalMobileBtn}
+          onClick={!isMouseDown ? () => handleSelectMovie(movie) : null}
         >
           {name}
         </button>
-        <img src={`/movies/${nameSlug}/${nameSlug}-mini.jpg`} alt={name} />
+        <button
+          className={styles.card__image__openModalDesktopBtn}
+          onClick={() => handleSelectMovie(movie)}
+        >
+          {name}
+        </button>
+        <img
+          className={styles.card__image__mini}
+          src={`/movies/${nameSlug}/${nameSlug}-mini.jpg`}
+          alt={name}
+        />
       </div>
       <div className={styles.card__body} id={`card_body${fromSliderWithId}`}>
         <div className={styles.card__body__controls}>
@@ -36,13 +45,7 @@ export default function MovieCard({ movie, fromSliderWithId, isMouseDown }) {
             </button>
             <AddToListBtn movieId={movie._id} btnType="rounded" />
           </div>
-
-          <button
-            className={styles.card__body__controls__moreInfo}
-            onClick={() => handleSelectMovie(movie)}
-          >
-            <i className="fas fa-angle-down"></i>
-          </button>
+          <MoreInfoBtn movie={movie} />
         </div>
 
         <div className={styles.card__body__stats}>
