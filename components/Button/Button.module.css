@@ -20,7 +20,7 @@
 }
 /* Static button */
 .btn {
-  display: inline-block;
+  display: block;
   padding: 10px 20px;
   font-size: 1rem;
   border-radius: 5px;
@@ -31,9 +31,6 @@
 }
 .btn:hover {
   opacity: 0.7;
-}
-.btn:last-of-type {
-  margin-right: 0;
 }
 .btn i {
   font-size: 1rem;
