@@ -111,7 +111,7 @@ export default function CommentBox({
                 className={styles.commentBox__userAndBtns__btns__deleteBtn}
                 onClick={handleToggleDelete}
               >
-                <i className="fas fa-trash-alt"></i>
+                <i className="fas fa-trash-alt"></i>Delete
               </button>
             )}
             <button onClick={handleToggleEdit}>
@@ -119,7 +119,7 @@ export default function CommentBox({
                 "Cancel"
               ) : (
                 <span>
-                  <i className="far fa-edit"></i>
+                  <i className="far fa-edit"></i>Edit
                 </span>
               )}
             </button>
