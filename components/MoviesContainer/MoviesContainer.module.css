@@ -3,7 +3,7 @@
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   padding: 0 60px;
-  margin-top: 200px;
+  margin-top: 250px;
   color: white;
   overflow-y: visible;
   gap: 130px 5px;
