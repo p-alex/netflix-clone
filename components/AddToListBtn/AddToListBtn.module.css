@@ -1,3 +1,39 @@
+.infoPopup {
+  display: none;
+  position: absolute;
+  transform: translateY(-45px);
+  z-index: 1;
+}
+.infoPopup p {
+  font-weight: bold;
+  padding: 5px 10px;
+  background: white;
+  border-radius: 5px;
+  color: black;
+  white-space: nowrap;
+}
+.infoPopup__triangle {
+  width: 0;
+  height: 0;
+  position: absolute;
+  border-top: 10px solid white;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transform: translateY(90%);
+}
+.btnContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.btnContainer:hover .infoPopup {
+  display: block;
+  animation: opacity 200ms;
+}
 .addToListRoundedBtn {
   position: relative;
   display: flex;
@@ -11,15 +47,20 @@
   height: 38px;
   font-size: 14px;
 }
+
 .addToListRegularBtn {
-  display: inline-block;
+  position: relative;
+  display: flex;
+  justify-content: center;
   padding: 10px 20px;
   font-size: 1rem;
   border-radius: 5px;
   margin-right: 20px;
   background: white;
 }
-.addToListRoundedBtn:hover,
+.addToListRoundedBtn:hover {
+  border: solid white 2px;
+}
 .addToListRegularBtn:hover {
   opacity: 0.7;
 }
