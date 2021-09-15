@@ -1,5 +1,5 @@
 import { MongoClient } from "mongodb";
-//import sgMail from "@sendgrid/mail";
+import sgMail from "@sendgrid/mail";
 import jwt from "jsonwebtoken";
 export default async function passwordResetSendEmailHandler(req, res) {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
@@ -7,7 +7,7 @@ export default async function passwordResetSendEmailHandler(req, res) {
     useUnifiedTopology: true,
   });
   const collection = await client.db().collection("users");
-  //sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+  sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
   if (req.method === "POST") {
     try {
       const { email } = req.body;
@@ -21,7 +21,7 @@ export default async function passwordResetSendEmailHandler(req, res) {
           //   to: user.email,
           //   from: "netflixclonepalex@gmail.com",
           //   subject: "Password Reset",
-          //   text: "Reset your passwordddd",
+          //   text: "Reset your password",
           //   html: `<div style='text-align:center;position:relative; width:400px;padding:40px;margin:0 auto;background-color:black;color:white;'><h1>Click the link to reset your password.</h1><br/><br/><a style='display:inline-block;text-decoration:none;background-color:#e50914;padding:15px;color:white;border-radius:5px;font-weight:bold;font-family:Helvetica, sans-serif;' href="http://localhost:3000/user/reset-password/${user._id}/${token}" rel=”noopener”>Reset password</a></div>`,
           // };
 
