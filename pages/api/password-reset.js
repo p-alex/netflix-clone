@@ -29,6 +29,8 @@ export default async function passwordReset(req, res) {
     } catch (error) {
       console.log(error);
       res.json({ message: error });
+    } finally {
+      client.close();
     }
   }
 }
