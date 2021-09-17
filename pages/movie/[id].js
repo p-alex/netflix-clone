@@ -30,30 +30,42 @@ export default function PlayMovie() {
       {isLoading && <FullscreenLoader />}
       <NavBar />
       <MobileNavBar />
-      <section className={styles.movieSection}>
-        <button
-          className={styles.movieSection__backBtn}
-          onClick={() => router.back()}
-        >
-          {`<`} Go Back
-        </button>
-        <div className={styles.movieSection__info}>
-          <h1>{currentMovie.name}</h1>
-          <h2>{currentMovie.maturityRating}+</h2>
-        </div>
+      {currentMovie.name ? (
+        <section className={styles.movieSection}>
+          <button
+            className={styles.movieSection__backBtn}
+            onClick={() => router.back()}
+          >
+            {`<`} Go Back
+          </button>
+          <div className={styles.movieSection__info}>
+            <h1>{currentMovie.name}</h1>
+            <h2>{currentMovie.maturityRating}+</h2>
+          </div>
 
-        <div className={styles.movieSection__movie}>
-          <iframe
-            width="100%"
-            height="100%"
-            src={currentMovie.videoUrl + "?rel=0&autoplay=1"}
-            title={currentMovie.name}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </div>
-      </section>
+          <div className={styles.movieSection__movie}>
+            <iframe
+              width="100%"
+              height="100%"
+              src={currentMovie.videoUrl + "?rel=0&autoplay=1"}
+              title={currentMovie.name}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </section>
+      ) : (
+        <section className={styles.movieSection}>
+          <button
+            className={styles.movieSection__backBtn}
+            onClick={() => router.back()}
+          >
+            {`<`} Go Back
+          </button>
+          <p style={{ color: "white" }}>This movie doesn't exist.</p>
+        </section>
+      )}
     </>
   );
 }
