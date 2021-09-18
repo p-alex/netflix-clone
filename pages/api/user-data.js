@@ -14,6 +14,7 @@ const userDataHandler = async (req, res) => {
           message: "Found",
           username: user.username,
           profileImg: user.profileImg,
+          isVerified: user.isVerified,
           movieList: user.movieList,
         });
       }
