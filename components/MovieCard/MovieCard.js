@@ -24,7 +24,7 @@ export default function MovieCard({ movie, fromSliderWithId, isMouseDown }) {
         </button>
         <button
           className={styles.card__image__openModalDesktopBtn}
-          onClick={() => handleSelectMovie(movie)}
+          onClick={() => router.push(`/movie/${_id}`)}
         >
           {name}
         </button>
