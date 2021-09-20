@@ -1,19 +1,30 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Button from "../../components/Button/Button";
 import Link from "next/link";
 import styles from "./Profile.module.css";
-export default function Profile({ userData }) {
-  const { username, profileImg, date } = userData;
-  const imagesArray = Array.from(Array(22).keys());
+import ProjectContext from "../../context/Project-context";
+export default function Profile() {
+  const context = useContext(ProjectContext);
+  const { username, profileImg, date } = context.userData;
+  const { handleChangeProfileImage } = context;
+  const [imageChangerState, setImageChangerState] = useState({
+    imagesArray: Array.from(Array(22).keys()),
+    selectedImage: "",
+    currentProfileImage: "",
+  });
+  const { imagesArray, selectedImage, currentProfileImage } = imageChangerState;
   const [formatedDate, setFormatedDate] = useState("");
-  const [selectedImage, setSelectedImage] = useState("");
-  const [currentProfileImage, setCurrentProfileImage] = useState("");
   useEffect(() => {
     if (profileImg) {
-      setCurrentProfileImage(profileImg.replace(/\D/g, ""));
-      setSelectedImage(profileImg.replace(/\D/g, ""));
+      const profileImgNumber = profileImg.replace(/\D/g, "");
+      setImageChangerState((prevState) => ({
+        ...prevState,
+        selectedImage: profileImgNumber,
+        currentProfileImage: profileImgNumber,
+      }));
     }
-  }, [profileImg]);
+  }, [context.userData]);
+  console.log(imageChangerState);
 
   const monthNames = [
     "January",
@@ -37,7 +48,11 @@ export default function Profile({ userData }) {
     setFormatedDate(`${dayJoined} ${monthNames[mounthJoined]} ${yearJoined}`);
   }, [date]);
 
-  const handleSelectProfileImage = (image) => setSelectedImage(image);
+  const handleSelectProfileImage = (image) =>
+    setImageChangerState((prevState) => ({
+      ...prevState,
+      selectedImage: image,
+    }));
 
   return (
     <main className={styles.profile}>
@@ -48,7 +63,7 @@ export default function Profile({ userData }) {
         </div>
         <div className={styles.profile__info__usernameAndDate}>
           <h1>{username}'s Profile</h1>
-          <p>Date joined: {formatedDate}</p>
+          <p>Account created: {formatedDate}</p>
         </div>
       </div>
 
@@ -92,6 +107,11 @@ export default function Profile({ userData }) {
         <Button
           value={"Save changes"}
           isDisabled={selectedImage === currentProfileImage}
+          func={() =>
+            handleChangeProfileImage(
+              `/images/default-profile-pictures/image-${selectedImage}.jpg`
+            )
+          }
         />
       </div>
 

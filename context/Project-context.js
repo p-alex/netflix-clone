@@ -17,4 +17,5 @@ export default createContext({
   handleAddNewComment: () => {},
   handleEditComment: () => {},
   handleDeleteComment: () => {},
+  handleChangeProfileImage: () => {},
 });

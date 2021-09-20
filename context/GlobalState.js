@@ -163,6 +163,22 @@ export default function GlobalState({ children }) {
   const handleResetSelectedMovie = () =>
     dispatchSelectedMovie({ type: "RESET" });
 
+  const handleChangeProfileImage = async (image) => {
+    setUserData((prevState) => ({
+      ...prevState,
+      profileImg: image,
+    }));
+    const result = await fetch(`${url}/api/change-profile-image`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ image }),
+    });
+    const resultJson = await result.json();
+    console.log(resultJson.message);
+  };
+
   const handleLogout = async () => {
     const result = await fetch(`${url}/api/auth`, {
       method: "POST",
@@ -196,6 +212,7 @@ export default function GlobalState({ children }) {
         handleAddNewComment,
         handleEditComment,
         handleDeleteComment,
+        handleChangeProfileImage,
       }}
     >
       {children}
