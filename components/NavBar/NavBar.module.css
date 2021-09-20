@@ -41,7 +41,7 @@
   margin: 0 10px;
 }
 
-.navbar__user ul li:first-child {
+.navbar__user ul li:first-of-type {
   display: flex;
   align-items: center;
   padding: 15px 0;
@@ -59,11 +59,14 @@
   display: none;
   width: 150px;
 }
-
-.navbar__user ul li ul li button {
+.navbar__user ul li ul li button,
+.navbar__user ul li ul li a {
   background: transparent;
   text-decoration: underline;
   color: white;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
 }
 
 .navbar__user ul li:hover ul {

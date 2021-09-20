@@ -16,6 +16,7 @@ const userDataHandler = async (req, res) => {
           profileImg: user.profileImg,
           isVerified: user.isVerified,
           movieList: user.movieList,
+          date: user.date,
         });
       }
       return res.json({ message: "That user doesn't exist" });

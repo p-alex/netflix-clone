@@ -66,6 +66,9 @@ export default function NavBar() {
               <i className="fas fa-caret-down"></i>
               <ul>
                 <li>
+                  <Link href="/profile">Account</Link>
+                </li>
+                <li>
                   <button onClick={handleLogout}>Sign out of Netflix</button>
                 </li>
               </ul>

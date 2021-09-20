@@ -50,6 +50,7 @@ export default function GlobalState({ children }) {
         profileImg: resultJSON.profileImg,
         isVerified: resultJSON.isVerified,
         movieList: resultJSON.movieList,
+        date: resultJSON.date,
       });
     }
   };

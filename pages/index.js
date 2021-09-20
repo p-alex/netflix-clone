@@ -15,6 +15,7 @@ export default function Home() {
   useEffect(() => {
     if (allMovies.length === 0) handleGetAllMovies();
   }, []);
+
   const filterAllMovies = () => {
     if (allMovies.length && movieList) {
       const theArray = [];
@@ -38,6 +39,7 @@ export default function Home() {
         {allMovies.length !== 0 && (
           <>
             <Banner movies={allMovies} />
+
             <MovieSlider
               movies={filterAllMovies()}
               sliderId={"1"}

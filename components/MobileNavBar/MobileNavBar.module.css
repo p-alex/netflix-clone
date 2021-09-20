@@ -67,7 +67,8 @@
   font-weight: bold;
   color: rgb(196, 196, 196);
 }
-.mobileNavBar__menu__user__buttons button {
+.mobileNavBar__menu__user__buttons button,
+.mobileNavBar__menu__user__buttons a {
   display: flex;
   flex-direction: column;
   background: none;
@@ -76,7 +77,8 @@
   font-size: 1rem;
   padding: 5px 0;
 }
-.mobileNavBar__menu__user__buttons button:hover {
+.mobileNavBar__menu__user__buttons button:hover,
+.mobileNavBar__menu__user__buttons a:hover {
   text-decoration: underline;
 }
 .mobileNavBar__menuBackdrop {
