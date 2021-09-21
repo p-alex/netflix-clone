@@ -4,6 +4,7 @@ import styles from "./MovieCard.module.css";
 import AddToListBtn from "../AddToListBtn/AddToListBtn";
 import { useRouter } from "next/router";
 import MoreInfoBtn from "../MoreInfoBtn/MoreInfoBtn";
+import Image from "next/image";
 export default function MovieCard({ movie, fromSliderWithId, isMouseDown }) {
   const context = useContext(ProjectContext);
   const router = useRouter();
@@ -28,10 +29,13 @@ export default function MovieCard({ movie, fromSliderWithId, isMouseDown }) {
         >
           {name}
         </button>
-        <img
+        <Image
           className={styles.card__image__mini}
           src={`/movies/${nameSlug}/${nameSlug}-mini.jpg`}
           alt={name}
+          width="341"
+          height="192"
+          layout="responsive"
         />
       </div>
       <div className={styles.card__body} id={`card_body${fromSliderWithId}`}>

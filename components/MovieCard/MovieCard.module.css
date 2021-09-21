@@ -6,6 +6,7 @@
   display: inline-block;
   flex-shrink: 0;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  background: grey;
 }
 .card:hover {
   transform: scale(1.2) translateY(-25%);
