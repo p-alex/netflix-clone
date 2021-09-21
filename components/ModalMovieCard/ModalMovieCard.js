@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import styles from "./ModalMovieCard.module.css";
 import AddToListBtn from "../AddToListBtn/AddToListBtn";
+import Image from "next/image";
 export default function ModalMovieCard({ movie, isMaxThree }) {
   const { nameSlug, maturityRating, release, description, duration, _id } =
     movie;
@@ -23,9 +24,12 @@ export default function ModalMovieCard({ movie, isMaxThree }) {
         <div className={styles.modalMovieCard__cardHeader__playBtn}>
           <i className="fas fa-play"></i>
         </div>
-        <img
+        <Image
           className={styles.modalMovieCard__cardHeader__image}
           src={`/movies/${nameSlug}/${nameSlug}-mini.jpg`}
+          width="341"
+          height="192"
+          layout="responsive"
         />
       </div>
 
