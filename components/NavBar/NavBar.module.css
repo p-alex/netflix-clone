@@ -6,6 +6,7 @@
   justify-content: space-between;
   padding: 10px 60px;
   width: 100%;
+  height: 90px;
   top: 0;
   left: 0;
   z-index: 30;
@@ -14,6 +15,7 @@
 .navbar.navbar_active {
   background: #141414;
   padding: 0px 60px;
+  height: auto;
 }
 .navbar__links {
   flex-grow: 1;
