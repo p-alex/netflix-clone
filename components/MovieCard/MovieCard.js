@@ -17,6 +17,7 @@ export default function MovieCard({ movie, fromSliderWithId, isMouseDown }) {
       style={fromSliderWithId ? null : { width: "auto" }}
     >
       <div className={styles.card__image}>
+        <span className={styles.card__image__fallback}>{name}</span>
         <button
           className={styles.card__image__openModalMobileBtn}
           onClick={!isMouseDown ? () => handleSelectMovie(movie) : null}
@@ -26,8 +27,10 @@ export default function MovieCard({ movie, fromSliderWithId, isMouseDown }) {
         <button
           className={styles.card__image__openModalDesktopBtn}
           onClick={() => router.push(`/movie/${_id}`)}
+          name={name}
+          ariaLabel={name}
         >
-          <span>{name}</span>
+          {name}
         </button>
         <Image
           className={styles.card__image__mini}
