@@ -6,11 +6,11 @@
   display: inline-block;
   flex-shrink: 0;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-  background: grey;
+  background: #222;
 }
 .card:hover {
   transform: scale(1.2) translateY(-25%);
-  z-index: 1;
+  z-index: 2;
 }
 .card__image {
   position: relative;
@@ -20,6 +20,7 @@
   width: 100%;
   border-radius: 2px;
   display: flex;
+  z-index: 1;
 }
 .card:hover .card__image img {
   border-bottom-left-radius: 0;
@@ -35,9 +36,14 @@
   left: 0;
   z-index: 1;
   background: none;
-  color: transparent;
   width: 100%;
   height: 100%;
+}
+.card__image__openModalDesktopBtn span {
+  position: relative;
+  z-index: 0;
+  font-size: 1rem;
+  color: #f3f3f3;
 }
 .card__body {
   position: absolute;
