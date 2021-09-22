@@ -80,6 +80,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
 .profile__imageOptions__imageContainer__selectedImage {
   border: solid 4px white;

@@ -3,6 +3,7 @@ import Button from "../../components/Button/Button";
 import Link from "next/link";
 import styles from "./Profile.module.css";
 import ProjectContext from "../../context/Project-context";
+import Image from "next/image";
 export default function Profile() {
   const context = useContext(ProjectContext);
   const { username, profileImg, date } = context.userData;
@@ -57,15 +58,23 @@ export default function Profile() {
   return (
     <main className={styles.profile}>
       {/* Profile Info Section */}
-      <div className={styles.profile__info + " " + styles.profile__section}>
-        <div className={styles.profile__info__userImage}>
-          <img src={profileImg} alt={username} />
+      {context.userData.profileImg && (
+        <div className={styles.profile__info + " " + styles.profile__section}>
+          <div className={styles.profile__info__userImage}>
+            <Image
+              src={profileImg}
+              alt={username}
+              width="149"
+              height="150"
+              loading="eager"
+            />
+          </div>
+          <div className={styles.profile__info__usernameAndDate}>
+            <h1>{username}'s Profile</h1>
+            <p>Account created: {formatedDate}</p>
+          </div>
         </div>
-        <div className={styles.profile__info__usernameAndDate}>
-          <h1>{username}'s Profile</h1>
-          <p>Account created: {formatedDate}</p>
-        </div>
-      </div>
+      )}
 
       {/* Change Profile Image Section */}
       <div
@@ -96,9 +105,13 @@ export default function Profile() {
                   </div>
                 )}
 
-                <img
+                <Image
                   src={`/images/default-profile-pictures/image-${image}.jpg`}
                   alt=""
+                  width="149"
+                  height="150"
+                  layout="responsive"
+                  loading="eager"
                 />
               </button>
             );
