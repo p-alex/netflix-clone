@@ -1,0 +1,38 @@
+.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  background: none;
+  padding: 5px;
+  border: none;
+}
+.searchActive {
+  background: black;
+  border: solid white 1px;
+}
+.search button {
+  background: none;
+  color: white;
+}
+.search__input {
+  background: none;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  margin: 0 5px;
+  outline: none;
+}
+
+.search__inputAndClear {
+  transform-origin: right;
+}
+
+@keyframes scale {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}

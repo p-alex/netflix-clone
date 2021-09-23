@@ -4,6 +4,7 @@ import ProjectContext from "../../context/Project-context";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./NavBar.module.css";
+import Search from "../Search/Search";
 export default function NavBar() {
   const context = useContext(ProjectContext);
   const { username, profileImg } = context.userData;
@@ -55,11 +56,12 @@ export default function NavBar() {
         </li>
       </ul>
       {userData.username && (
-        <div className={styles.navbar__user}>
+        <div className={styles.navbar__searchAndUser}>
+          <Search />
           <ul>
             <li>
               <p>{username}</p>
-              <div className={styles.navbar__user__profileImage}>
+              <div className={styles.navbar__searchAndUser__profileImage}>
                 <Image src={profileImg} alt="" width="300px" height="300px" />
               </div>
 

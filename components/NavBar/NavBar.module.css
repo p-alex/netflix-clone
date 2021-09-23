@@ -28,32 +28,32 @@
 .navbar__links li a {
   color: white;
 }
-.navbar__user {
+.navbar__searchAndUser {
   position: relative;
   display: flex;
   align-items: center;
   color: white;
 }
-.navbar__user p:last-child {
+.navbar__searchAndUser p:last-child {
   cursor: pointer;
 }
-.navbar__user__profileImage {
+.navbar__searchAndUser__profileImage {
   position: relative;
   width: 30px;
   margin: 0 10px;
   border-radius: 5px;
 }
 
-.navbar__user ul li:first-of-type {
+.navbar__searchAndUser ul li:first-of-type {
   display: flex;
   align-items: center;
   padding: 15px 0;
   cursor: pointer;
 }
-.navbar__user ul li:first-child i {
+.navbar__searchAndUser ul li:first-child i {
   transition: transform 200ms ease-in-out;
 }
-.navbar__user ul li ul {
+.navbar__searchAndUser ul li ul {
   position: absolute;
   top: 60px;
   background: black;
@@ -62,8 +62,8 @@
   display: none;
   width: 150px;
 }
-.navbar__user ul li ul li button,
-.navbar__user ul li ul li a {
+.navbar__searchAndUser ul li ul li button,
+.navbar__searchAndUser ul li ul li a {
   background: transparent;
   text-decoration: underline;
   color: white;
@@ -72,12 +72,16 @@
   padding: 0;
 }
 
-.navbar__user ul li:hover ul {
+.navbar__searchAndUser ul li:hover ul {
   display: block;
 }
 
-.navbar__user ul li:first-child:hover i {
+.navbar__searchAndUser ul li:first-child:hover i {
   transform: rotate(180deg);
+}
+
+.navbar__search {
+  margin-right: 20px;
 }
 
 @media screen and (max-width: 800px) {
