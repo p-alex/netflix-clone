@@ -30,6 +30,9 @@
   border-radius: 5px;
   margin-right: 20px;
 }
+.btn:last-of-type {
+  margin-right: 0;
+}
 .btn:hover {
   opacity: 0.7;
 }
