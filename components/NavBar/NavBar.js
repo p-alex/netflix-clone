@@ -24,7 +24,13 @@ export default function NavBar() {
       }
     });
     return () => {
-      window.removeEventListener("scroll", () => {});
+      window.removeEventListener("scroll", () => {
+        if (window.scrollY > 0) {
+          setIsScrolled(true);
+        } else {
+          setIsScrolled(false);
+        }
+      });
     };
   }, []);
 
@@ -68,7 +74,7 @@ export default function NavBar() {
               <i className="fas fa-caret-down"></i>
               <ul>
                 <li>
-                  <Link href="/profile">Account</Link>
+                  <Link href="/profile">Profile</Link>
                 </li>
                 <li>
                   <button onClick={handleLogout}>Sign out of Netflix</button>
