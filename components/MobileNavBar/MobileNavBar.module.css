@@ -8,7 +8,8 @@
   left: 0;
   z-index: 10;
   background: rgba(0, 0, 0, 0.8);
-  padding: 10px 20px;
+  padding: 0 20px;
+  height: 52px;
 }
 .mobileNavBar__barsAndLogo {
   display: flex;
@@ -37,7 +38,7 @@
 }
 .mobileNavBar__menu {
   position: fixed;
-  top: 52.81px;
+  top: 52px;
   width: 50%;
   height: calc(100vh - 47.6px);
   z-index: 100;
@@ -83,7 +84,7 @@
 }
 .mobileNavBar__menuBackdrop {
   position: fixed;
-  top: 52.81px;
+  top: 51.15px;
   left: 0;
   width: 100%;
   height: calc(100vh - 43.6px);

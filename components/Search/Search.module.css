@@ -10,12 +10,17 @@
 }
 .searchActive {
   background: black;
-  border: solid white 1px;
+  outline: solid white 1px;
 }
 .search i:first-child {
   cursor: pointer;
   font-size: 1.2rem;
+  border: solid 1px transparent;
 }
+.searchActive i:first-child {
+  border: none;
+}
+
 .search button {
   background: none;
   color: white;
