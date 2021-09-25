@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import ProjectContext from "../../context/Project-context";
 import styles from "./MobileNavBar.module.css";
 import Link from "next/link";
+import Search from "../Search/Search";
 export default function MobileNavBar() {
   const context = useContext(ProjectContext);
   const { handleLogout, filters } = context;
@@ -25,12 +26,7 @@ export default function MobileNavBar() {
         />
       </div>
 
-      <input
-        className={styles.mobileNavBar__search}
-        type="text"
-        placeholder="Search"
-        aria-label="Search for a movie"
-      />
+      <Search />
       {isMenuActive && (
         <>
           <div className={styles.mobileNavBar__menu}>
@@ -44,7 +40,7 @@ export default function MobileNavBar() {
                 <p>{username}</p>
               </div>
               <div className={styles.mobileNavBar__menu__user__buttons}>
-                <Link href="/profile">Account</Link>
+                <Link href="/profile">Profile</Link>
                 <button onClick={handleLogout}>Sign out of Netflix</button>
               </div>
             </div>

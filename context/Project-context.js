@@ -18,4 +18,10 @@ export default createContext({
   handleEditComment: () => {},
   handleDeleteComment: () => {},
   handleChangeProfileImage: () => {},
+  handleChangeSearchQuery: () => {},
+  searchQuery: "",
+  handleToggleSearchBar: () => {},
+  handleClearSearchQuery: () => {},
+  handleToggleOffSearchBar: () => {},
+  setSearchBarState: () => {},
 });

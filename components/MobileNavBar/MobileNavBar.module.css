@@ -6,7 +6,7 @@
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 10;
   background: rgba(0, 0, 0, 0.8);
   padding: 7px 20px;
 }
@@ -37,7 +37,7 @@
 }
 .mobileNavBar__menu {
   position: fixed;
-  top: 47.6px;
+  top: 39.82px;
   width: 50%;
   height: calc(100vh - 47.6px);
   z-index: 100;
@@ -75,7 +75,7 @@
   color: rgb(196, 196, 196);
   font-weight: bold;
   font-size: 1rem;
-  padding: 5px 0;
+  padding: 8px 0;
 }
 .mobileNavBar__menu__user__buttons button:hover,
 .mobileNavBar__menu__user__buttons a:hover {
@@ -83,7 +83,7 @@
 }
 .mobileNavBar__menuBackdrop {
   position: fixed;
-  top: 43.6px;
+  top: 39.82px;
   left: 0;
   width: 100%;
   height: calc(100vh - 43.6px);
@@ -100,7 +100,7 @@
   color: rgb(196, 196, 196);
   font-weight: bold;
   text-decoration: none;
-  padding: 5px 0;
+  padding: 8px 0;
 }
 .mobileNavBar__menu__links a:hover {
   text-decoration: underline;

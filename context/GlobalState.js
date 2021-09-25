@@ -7,6 +7,23 @@ export default function GlobalState({ children }) {
   const [userData, setUserData] = useState({});
   const [allMovies, setAllMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchBarActive, setIsSearchBarActive] = useState(false);
+
+  const handleChangeSearchQuery = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  // const handleToggleSearchBar = () =>
+  //   setSearchBarState((prevState) => ({
+  //     ...prevState,
+  //     toggleSearchBar: !prevState.toggleSearchBar,
+  //   }));
+
+  const handleClearSearchQuery = () => setSearchQuery("");
+
+  const handleToggleOffSearchBar = () => setIsSearchBarActive(false);
+
   const filters = [
     "Action & Adventure",
     "Anime",
@@ -14,7 +31,7 @@ export default function GlobalState({ children }) {
     "Children & Family Movies",
     "Classic",
     "Comedies",
-    "Crime",
+    "Crime Movies",
     "Documentaries",
     "Dramas",
     "Fantasy Movie",
@@ -214,6 +231,14 @@ export default function GlobalState({ children }) {
         handleEditComment,
         handleDeleteComment,
         handleChangeProfileImage,
+        searchQuery,
+        isSearchBarActive,
+        setIsSearchBarActive,
+        handleChangeSearchQuery,
+        //handleToggleSearchBar,
+        handleClearSearchQuery,
+        handleToggleOffSearchBar,
+        //setSearchBarState,
       }}
     >
       {children}

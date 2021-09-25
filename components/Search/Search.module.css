@@ -6,14 +6,22 @@
   background: none;
   padding: 5px;
   border: none;
+  z-index: 100;
+  color: white;
 }
 .searchActive {
   background: black;
   border: solid white 1px;
 }
+.search i:first-child {
+  cursor: pointer;
+}
 .search button {
   background: none;
   color: white;
+}
+.search a {
+  color: none;
 }
 .search__input {
   background: none;
@@ -26,6 +34,12 @@
 
 .search__inputAndClear {
   transform-origin: right;
+}
+.search__link {
+  border: solid red 1px;
+}
+.search__link:hover {
+  cursor: pointer;
 }
 
 @keyframes scale {
