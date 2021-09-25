@@ -26,6 +26,7 @@ export default function Search() {
   useEffect(() => {
     if (currentPath === "/search") {
       handleToggleSearchBar();
+      handleClearSearchQuery();
     } else {
       handleToggleOffSearchBar();
     }

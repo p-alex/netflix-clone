@@ -80,9 +80,6 @@
 .card__body__controls__container {
   display: flex;
 }
-.card__body__controls__container button {
-  margin-right: 10px;
-}
 .card__body__controls__container button:last-child {
   margin-right: 0px;
 }
