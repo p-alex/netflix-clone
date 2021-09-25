@@ -45,6 +45,39 @@ export default function MovieSliderMobile({
       let walk = (x - startX) * 1.5;
       rowContainer.scrollLeft = scrollLeft - walk;
     });
+
+    return () => {
+      rowContainer?.removeEventListener("mousedown", (e) => {
+        isDown = true;
+        setTimeout(() => {
+          setIsMouseDown(true);
+        }, 150);
+        startX = e.pageX - rowContainer.offsetLeft;
+        scrollLeft = rowContainer.scrollLeft;
+      });
+
+      rowContainer?.removeEventListener("mouseleave", () => {
+        isDown = false;
+        setTimeout(() => {
+          setIsMouseDown(false);
+        }, 150);
+      });
+
+      rowContainer?.removeEventListener("mouseup", () => {
+        isDown = false;
+        setTimeout(() => {
+          setIsMouseDown(false);
+        }, 150);
+      });
+
+      rowContainer?.removeEventListener("mousemove", (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        let x = e.pageX - rowContainer.offsetLeft;
+        let walk = (x - startX) * 1.5;
+        rowContainer.scrollLeft = scrollLeft - walk;
+      });
+    };
   }, []);
 
   return (

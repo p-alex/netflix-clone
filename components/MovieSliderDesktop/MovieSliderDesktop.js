@@ -58,6 +58,26 @@ export default function MovieSliderDesktop({
 
     return () => {
       console.log("Movie Slider unmounted");
+      cards.forEach((card) => {
+        card.removeEventListener("mouseover", () => {
+          sliderCtrlLeft.style.opacity = "0";
+          sliderCtrlRight.style.opacity = "0";
+        });
+        card.removeEventListener("mouseout", () => {
+          sliderCtrlLeft.style.opacity = "1";
+          sliderCtrlRight.style.opacity = "1";
+        });
+      });
+      cardBody.forEach((body) => {
+        body.removeEventListener("mouseover", () => {
+          sliderCtrlLeft.style.opacity = "0";
+          sliderCtrlRight.style.opacity = "0";
+        });
+        body.removeEventListener("mouseout", () => {
+          sliderCtrlLeft.style.opacity = "1";
+          sliderCtrlRight.style.opacity = "1";
+        });
+      });
     };
   }, [movieList]);
 
