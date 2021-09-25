@@ -58,6 +58,6 @@
 
 @media screen and (max-width: 800px) {
   .search__input {
-    max-width: 120px;
+    max-width: 100px;
   }
 }

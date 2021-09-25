@@ -29,7 +29,6 @@ export default function Search() {
     } else {
       handleToggleOffSearchBar();
     }
-    searchInput?.current?.focus();
   }, [currentPath]);
   console.count("Reload");
   return (
@@ -57,6 +56,7 @@ export default function Search() {
             value={searchQuery}
             onChange={(e) => handleChangeSearchQuery(e)}
             ref={searchInput}
+            autoFocus
           />
           <button
             className={styles.search__clear}
