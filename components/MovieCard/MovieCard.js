@@ -28,7 +28,7 @@ export default function MovieCard({ movie, fromSliderWithId, isMouseDown }) {
           className={styles.card__image__openModalDesktopBtn}
           onClick={() => router.push(`/movie/${_id}`)}
           name={name}
-          ariaLabel={name}
+          aria-label={name}
         >
           {name}
         </button>
