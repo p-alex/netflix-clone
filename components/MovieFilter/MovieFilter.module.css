@@ -14,7 +14,7 @@
   margin-right: 15px;
 }
 .movieFilter__scrolled {
-  top: 64px;
+  top: 64.17px;
 }
 .movieFilter__filters {
   position: relative;
@@ -76,7 +76,7 @@
 
 @media screen and (max-width: 800px) {
   .movieFilter {
-    top: 47.5px;
+    top: 52px;
     padding: 5px 20px;
     align-items: center;
     background: rgba(0, 0, 0, 0.8);
