@@ -79,27 +79,46 @@ export default function MovieSliderMobile({
       });
     };
   }, []);
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  useEffect(() => {
+    const firstSlider = document.querySelector(`#mobileSlider${sliderId}`);
+    const options = {
+      rootMargin: "0px",
+    };
+    const observer = new IntersectionObserver(function (entries, observer) {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+        console.log(entry.isIntersecting);
+        setIsIntersecting(entry.isIntersecting);
+        observer.unobserve(entry.target);
+      });
+    }, options);
+    observer.observe(firstSlider);
+  }, []);
 
   return (
     <>
       {hasMovies && (
-        <div className={styles.slider_container}>
+        <div className={styles.slider_container} id={`mobileSlider${sliderId}`}>
           <div className={styles.slider__title}>
             <h2>{sliderTitle}</h2>
           </div>
 
           <div className={styles.slider} id={`slider${sliderId}`}>
             <div className={styles.slider__row} id={`movie_row${sliderId}`}>
-              {movies.map((movie) => {
-                return (
-                  <MovieCard
-                    key={`movie-card-${movie.name}-${sliderId}`}
-                    movie={movie}
-                    fromSliderWithId={sliderId}
-                    isMouseDown={isMouseDown}
-                  />
-                );
-              })}
+              {isIntersecting &&
+                movies.map((movie) => {
+                  return (
+                    <MovieCard
+                      key={`movie-card-${movie.name}-${sliderId}`}
+                      movie={movie}
+                      fromSliderWithId={sliderId}
+                      isMouseDown={isMouseDown}
+                    />
+                  );
+                })}
             </div>
           </div>
         </div>

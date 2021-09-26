@@ -21,7 +21,24 @@ export default function MovieSliderDesktop({
     maxIndex: 0,
     move: 0,
   });
-
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  useEffect(() => {
+    const firstSlider = document.querySelector(`#slider${sliderId}`);
+    const options = {
+      rootMargin: "0px",
+    };
+    const observer = new IntersectionObserver(function (entries, observer) {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+        console.log(entry.isIntersecting);
+        setIsIntersecting(entry.isIntersecting);
+        observer.unobserve(entry.target);
+      });
+    }, options);
+    observer.observe(firstSlider);
+  }, []);
   useEffect(() => {
     console.log("Movie Slider mounted");
     const sliderCtrlLeft = document.querySelector(
@@ -134,7 +151,7 @@ export default function MovieSliderDesktop({
   return (
     <>
       {hasMovies && (
-        <div className={styles.slider}>
+        <div className={styles.slider} id={`slider` + sliderId}>
           <div className={styles.slider__title}>
             <h2>{sliderTitle}</h2>
           </div>
@@ -164,15 +181,20 @@ export default function MovieSliderDesktop({
             id={`movie_row${sliderId}`}
             style={{ transform: `translateX(-${sliderState.move}px)` }}
           >
-            {movies.map((movie) => {
-              return (
-                <MovieCard
-                  key={`movie-card-${movie.name}-${sliderId}`}
-                  movie={movie}
-                  fromSliderWithId={sliderId}
-                />
-              );
-            })}
+            {isIntersecting &&
+              movies.map((movie, id) => {
+                if (id < 12) {
+                  return (
+                    <MovieCard
+                      key={`movie-card-${movie.name}-${sliderId}`}
+                      movie={movie}
+                      fromSliderWithId={sliderId}
+                    />
+                  );
+                } else {
+                  return;
+                }
+              })}
           </div>
         </div>
       )}
