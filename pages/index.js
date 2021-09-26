@@ -72,14 +72,6 @@ export default function Home() {
             />
             <MovieSlider
               movies={allMovies.filter((movie) =>
-                movie.genres.includes("Children & Family Movies")
-              )}
-              sliderId={"5"}
-              sliderTitle={"Children & Family"}
-              hasMovies={allMovies?.length}
-            />
-            <MovieSlider
-              movies={allMovies.filter((movie) =>
                 movie.thisMovieIs.includes("Romantic")
               )}
               sliderId={"6"}
@@ -92,14 +84,6 @@ export default function Home() {
               )}
               sliderId={"7"}
               sliderTitle={"Horror"}
-              hasMovies={allMovies?.length}
-            />
-            <MovieSlider
-              movies={allMovies.filter((movie) =>
-                movie.genres.includes("Anime")
-              )}
-              sliderId={"8"}
-              sliderTitle={"Anime"}
               hasMovies={allMovies?.length}
             />
           </>
