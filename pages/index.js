@@ -6,6 +6,7 @@ import Banner from "../components/Banner/Banner";
 import FullscreenLoader from "../components/FullscreenLoader/FullscreenLoader";
 import MovieSlider from "../components/MovieSlider/MovieSlider";
 import Modal from "../components/Modal/Modal";
+import Head from "next/head";
 
 import pageWrapperStyles from "../styles/PageWrapperStyles.module.css";
 export default function Home() {
@@ -30,65 +31,80 @@ export default function Home() {
     }
   };
   return (
-    <div style={{ overflowX: "hidden" }}>
-      <div className={selectedMovie.name && pageWrapperStyles.disableScroll}>
-        {isLoading && <FullscreenLoader />}
-        {selectedMovie?.name ? <Modal movie={selectedMovie} /> : null}
-        <NavBar />
-        <MobileNavBar />
-        {allMovies.length !== 0 && (
-          <>
-            <Banner movies={allMovies} />
+    <>
+      <Head>
+        <title>Netflix Clone made by Alex Daniel</title>
+      </Head>
+      <div style={{ overflowX: "hidden" }}>
+        <div className={selectedMovie.name && pageWrapperStyles.disableScroll}>
+          {isLoading && <FullscreenLoader />}
+          {selectedMovie?.name ? <Modal movie={selectedMovie} /> : null}
+          <NavBar />
+          <MobileNavBar />
+          {allMovies.length !== 0 && (
+            <>
+              <Banner movies={allMovies} />
 
-            <MovieSlider
-              movies={filterAllMovies()}
-              sliderId={"1"}
-              sliderTitle={"My List"}
-              hasMovies={movieList?.length}
-            />
-            <MovieSlider
-              movies={allMovies.filter((movie) =>
-                movie.genres.includes("Action & Adventure")
-              )}
-              sliderId={"2"}
-              sliderTitle={"Action & Adventure"}
-              hasMovies={allMovies?.length}
-            />
-            <MovieSlider
-              movies={allMovies.filter((movie) =>
-                movie.genres.includes("Dramas")
-              )}
-              sliderId={"3"}
-              sliderTitle={"Dramas"}
-              hasMovies={allMovies?.length}
-            />
-            <MovieSlider
-              movies={allMovies
-                .filter((movie) => movie.genres.includes("Sci-Fi Movies"))
-                .reverse()}
-              sliderId={"4"}
-              sliderTitle={"Sci-Fi"}
-              hasMovies={allMovies?.length}
-            />
-            <MovieSlider
-              movies={allMovies.filter((movie) =>
-                movie.thisMovieIs.includes("Romantic")
-              )}
-              sliderId={"6"}
-              sliderTitle={"Romantic"}
-              hasMovies={allMovies?.length}
-            />
-            <MovieSlider
-              movies={allMovies.filter((movie) =>
-                movie.genres.includes("Horror")
-              )}
-              sliderId={"7"}
-              sliderTitle={"Horror"}
-              hasMovies={allMovies?.length}
-            />
-          </>
-        )}
+              <MovieSlider
+                movies={filterAllMovies()}
+                sliderId={"1"}
+                sliderTitle={"My List"}
+                hasMovies={movieList?.length}
+              />
+              <MovieSlider
+                movies={allMovies.filter((movie) =>
+                  movie.genres.includes("Action & Adventure")
+                )}
+                sliderId={"2"}
+                sliderTitle={"Action & Adventure"}
+                hasMovies={allMovies?.length}
+              />
+              <MovieSlider
+                movies={allMovies.filter((movie) =>
+                  movie.genres.includes("Dramas")
+                )}
+                sliderId={"3"}
+                sliderTitle={"Dramas"}
+                hasMovies={allMovies?.length}
+              />
+              <MovieSlider
+                movies={allMovies
+                  .filter((movie) => movie.genres.includes("Sci-Fi Movies"))
+                  .reverse()}
+                sliderId={"4"}
+                sliderTitle={"Sci-Fi"}
+                hasMovies={allMovies?.length}
+              />
+              <MovieSlider
+                movies={allMovies
+                  .filter((movie) => movie.genres.includes("Horror"))
+                  .reverse()}
+                sliderId={"5"}
+                sliderTitle={"Horror"}
+                hasMovies={allMovies?.length}
+              />
+              <MovieSlider
+                movies={allMovies
+                  .filter((movie) =>
+                    movie.genres.includes("Children & Family Movies")
+                  )
+                  .reverse()}
+                sliderId={"6"}
+                sliderTitle={"Children & Family"}
+                hasMovies={allMovies?.length}
+              />
+              <MovieSlider
+                movies={allMovies
+                  .filter((movie) => movie.genres.includes("Anime"))
+                  .reverse()}
+                sliderId={"7"}
+                sliderTitle={"Anime"}
+                hasMovies={allMovies?.length}
+              />
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
