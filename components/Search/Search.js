@@ -62,6 +62,7 @@ export default function Search() {
           <button
             className={styles.search__clear}
             onClick={handleClearSearchQuery}
+            name="clearSearchQueryBtn"
           >
             <i className="fas fa-times"></i>
           </button>

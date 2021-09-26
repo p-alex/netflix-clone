@@ -105,11 +105,10 @@ export default function MovieSliderMobile({
           <div className={styles.slider__title}>
             <h2>{sliderTitle}</h2>
           </div>
-
-          <div className={styles.slider} id={`slider${sliderId}`}>
-            <div className={styles.slider__row} id={`movie_row${sliderId}`}>
-              {isIntersecting &&
-                movies.map((movie) => {
+          {isIntersecting && (
+            <div className={styles.slider} id={`slider${sliderId}`}>
+              <div className={styles.slider__row} id={`movie_row${sliderId}`}>
+                {movies.map((movie) => {
                   return (
                     <MovieCard
                       key={`movie-card-${movie.name}-${sliderId}`}
@@ -119,8 +118,9 @@ export default function MovieSliderMobile({
                     />
                   );
                 })}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
     </>

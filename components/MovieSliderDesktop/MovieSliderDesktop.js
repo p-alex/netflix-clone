@@ -161,6 +161,7 @@ export default function MovieSliderDesktop({
               className={styles.slider__ctrl + " " + styles.left__ctrl}
               id={`slider_ctrl_left${sliderId}`}
               onClick={() => moveSlider("left")}
+              name={`slider_ctrl_left`}
             >
               <i className="fas fa-chevron-left"></i>
             </button>
@@ -171,6 +172,7 @@ export default function MovieSliderDesktop({
               className={styles.slider__ctrl + " " + styles.right__ctrl}
               id={`slider_ctrl_right${sliderId}`}
               onClick={() => moveSlider("right")}
+              name={`slider_ctrl_right`}
             >
               <i className="fas fa-chevron-right"></i>
             </button>

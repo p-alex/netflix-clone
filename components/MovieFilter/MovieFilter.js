@@ -33,6 +33,7 @@ export default function MovieFilter({
           <button
             className={styles.movieFilter__filtersToggle}
             onClick={() => setIsDropdownActive(!isDropdownActive)}
+            name="filterMenuToggleBtn"
           >
             <p>Genres</p>
             <i className="fas fa-sort-down"></i>

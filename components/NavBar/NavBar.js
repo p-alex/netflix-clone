@@ -77,7 +77,9 @@ export default function NavBar() {
                   <Link href="/profile">Profile</Link>
                 </li>
                 <li>
-                  <button onClick={handleLogout}>Sign out of Netflix</button>
+                  <button onClick={handleLogout} name="signOutBtn">
+                    Sign out of Netflix
+                  </button>
                 </li>
               </ul>
             </li>

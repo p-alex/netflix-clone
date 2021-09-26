@@ -17,6 +17,7 @@ export default function MobileNavBar() {
         <button
           className={styles.mobileNavBar__barsAndLogo__menuToggle}
           onClick={handleToggleMenu}
+          name="openMenuBtn"
         >
           <i className="fas fa-bars"></i>
         </button>
@@ -44,7 +45,9 @@ export default function MobileNavBar() {
               </div>
               <div className={styles.mobileNavBar__menu__user__buttons}>
                 <Link href="/profile">Profile</Link>
-                <button onClick={handleLogout}>Sign out of Netflix</button>
+                <button onClick={handleLogout} name="signOutBtn">
+                  Sign out of Netflix
+                </button>
               </div>
             </div>
 

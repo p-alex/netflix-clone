@@ -6,6 +6,7 @@ export default function Button({ type, func, value, responsive, isDisabled }) {
         className={responsive ? styles.btnResponsive : styles.btn}
         onClick={func}
         disabled={isDisabled ? true : false}
+        name={value}
       >
         {type && (
           <i
