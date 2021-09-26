@@ -3,6 +3,7 @@ import ProjectContext from "../../context/Project-context";
 import styles from "./MobileNavBar.module.css";
 import Link from "next/link";
 import Search from "../Search/Search";
+import Image from "next/image";
 export default function MobileNavBar() {
   const context = useContext(ProjectContext);
   const { handleLogout, filters } = context;
@@ -19,10 +20,12 @@ export default function MobileNavBar() {
         >
           <i className="fas fa-bars"></i>
         </button>
-        <img
+        <Image
           className={styles.mobileNavBar__barsAndLogo__logo}
           src="/images/logo/netflix-logo.png"
           alt=""
+          width="100"
+          height="25"
         />
       </div>
 
