@@ -167,6 +167,9 @@
   .card {
     width: calc(29% - 3px);
   }
+  .card__body {
+    display: none;
+  }
   .card:hover .card__body {
     display: none;
     animation: none;
