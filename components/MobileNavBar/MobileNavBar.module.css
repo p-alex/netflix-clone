@@ -12,6 +12,7 @@
   height: 52px;
 }
 .mobileNavBar__barsAndLogo {
+  position: relative;
   display: flex;
   align-items: center;
 }

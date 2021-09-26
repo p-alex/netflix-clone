@@ -72,7 +72,11 @@ export default function Banner({ movies }) {
               />
             </div>
             <div className={styles.banner__content__btn_container__mobileBtns}>
-              <AddToListBtn movieId={movie._id} btnType="regular" />
+              <AddToListBtn
+                movieId={movie._id}
+                btnType="regular"
+                margin="0 0 0 0"
+              />
               <Button
                 value=""
                 type="play"
