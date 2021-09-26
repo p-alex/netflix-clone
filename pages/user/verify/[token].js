@@ -4,10 +4,13 @@ import FullscreenWrapper from "../../../components/FullscreenWrapper/FullscreenW
 import Logo from "../../../components/Logo/Logo";
 
 import styles from "../../../styles/Verify.module.css";
-
+import Head from "next/head";
 export default function verify({ message }) {
   return (
     <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.jpg)"}>
+      <Head>
+        <title>Netflix Clone | Verify Email</title>
+      </Head>
       <main className={styles.container}>
         <Logo type="big" margin="0 auto 50px auto" maxWidth="160px" />
         <p>{message}</p>

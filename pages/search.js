@@ -4,6 +4,7 @@ import MobileNavBar from "../components/MobileNavBar/MobileNavBar";
 import ProjectContext from "../context/Project-context";
 import MoviesContainer from "../components/MoviesContainer/MoviesContainer";
 import Modal from "../components/Modal/Modal";
+import Head from "next/head";
 export default function search() {
   const context = useContext(ProjectContext);
   const { searchQuery, allMovies, handleGetAllMovies, selectedMovie } = context;
@@ -23,6 +24,9 @@ export default function search() {
   }, [allMovies, searchQuery]);
   return (
     <>
+      <Head>
+        <title>Netflix Clone | Search</title>
+      </Head>
       {selectedMovie?.name ? <Modal movie={selectedMovie} /> : null}
       <NavBar />
       <MobileNavBar />

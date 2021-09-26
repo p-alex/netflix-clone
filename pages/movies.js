@@ -6,6 +6,7 @@ import MovieFilter from "../components/MovieFilter/MovieFilter";
 import MoviesContainer from "../components/MoviesContainer/MoviesContainer";
 import FullscreenLoader from "../components/FullscreenLoader/FullscreenLoader";
 import MobileNavBar from "../components/MobileNavBar/MobileNavBar";
+import Head from "next/head";
 export default function Movies() {
   const context = useContext(ProjectContext);
 
@@ -32,6 +33,9 @@ export default function Movies() {
 
   return (
     <>
+      <Head>
+        <title>Netflix Clone | All movies</title>
+      </Head>
       {isLoading && <FullscreenLoader />}
       {selectedMovie?.name ? <Modal movie={selectedMovie} /> : null}
       <NavBar />

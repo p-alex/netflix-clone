@@ -7,7 +7,7 @@ import Form from "../components/Form/Form";
 import InputGroup from "../components/InputGroup/InputGroup";
 import SubmitButton from "../components/SubmitButton/SubmitButton";
 import Logo from "../components/Logo/Logo";
-
+import Head from "next/head";
 export default function register() {
   const [inputs, setInputs] = useState({
     username: "",
@@ -82,6 +82,9 @@ export default function register() {
 
   return (
     <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.jpg)"}>
+      <Head>
+        <title>Netflix Clone | Register</title>
+      </Head>
       <main>
         <Form submitFunc={handleSubmit}>
           <Logo type="big" margin="0 auto 50px auto" maxWidth="160px" />

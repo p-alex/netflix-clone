@@ -5,7 +5,7 @@ import Form from "../../components/Form/Form";
 import InputGroup from "../../components/InputGroup/InputGroup";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Logo from "../../components/Logo/Logo";
-
+import Head from "next/head";
 export default function resetPasswordEmailCheck() {
   const [feedback, setFeedback] = useState("");
   const [inputs, setInputs] = useState({
@@ -40,6 +40,9 @@ export default function resetPasswordEmailCheck() {
 
   return (
     <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.jpg)"}>
+      <Head>
+        <title>Netflix Clone | Reset password</title>
+      </Head>
       <main>
         <Form submitFunc={handleSubmit}>
           <Logo type="big" margin="0 auto 50px auto" maxWidth="160px" />

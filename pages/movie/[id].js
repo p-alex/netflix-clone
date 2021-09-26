@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import ProjectContext from "../../context/Project-context";
 import FullscreenLoader from "../../components/FullscreenLoader/FullscreenLoader";
 import MobileNavBar from "../../components/MobileNavBar/MobileNavBar";
+import Head from "next/head";
 export default function PlayMovie() {
   const router = useRouter();
   const context = useContext(ProjectContext);
@@ -27,6 +28,9 @@ export default function PlayMovie() {
 
   return (
     <>
+      <Head>
+        <title>Netflix Clone | {currentMovie.name}</title>
+      </Head>
       {isLoading && <FullscreenLoader />}
       <NavBar />
       <MobileNavBar />

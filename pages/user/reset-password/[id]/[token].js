@@ -7,7 +7,7 @@ import InputGroup from "../../../../components/InputGroup/InputGroup";
 import SubmitButton from "../../../../components/SubmitButton/SubmitButton";
 import Logo from "../../../../components/Logo/Logo";
 import Link from "next/link";
-
+import Head from "next/head";
 export default function resetPassword() {
   const router = useRouter();
 
@@ -43,6 +43,9 @@ export default function resetPassword() {
   };
   return (
     <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.jpg)"}>
+      <Head>
+        <title>Netflix Clone | Reset Password</title>
+      </Head>
       <main>
         <Form submitFunc={handleSubmit}>
           <Logo type="big" margin="0 auto 50px auto" maxWidth="160px" />

@@ -6,7 +6,7 @@ import Modal from "../../components/Modal/Modal";
 import MoviesContainer from "../../components/MoviesContainer/MoviesContainer";
 import NavBar from "../../components/NavBar/NavBar";
 import ProjectContext from "../../context/Project-context";
-
+import Head from "next/head";
 export default function ThisMovieIsMovies() {
   const router = useRouter();
   const context = useContext(ProjectContext);
@@ -24,6 +24,9 @@ export default function ThisMovieIsMovies() {
   }, [allMovies, router.query.genre]);
   return (
     <>
+      <Head>
+        <title>Netflix Clone | {router.query.genre}</title>
+      </Head>
       {isLoading && <FullscreenLoader />}
       {selectedMovie?.name ? <Modal movie={selectedMovie} /> : null}
       <NavBar />
