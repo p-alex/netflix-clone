@@ -2,7 +2,7 @@
   position: relative;
   transition: transform 250ms;
   cursor: pointer;
-  width: 16.48%;
+  width: calc(16.66% - 4px);
   display: inline-block;
   flex-shrink: 0;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
@@ -55,6 +55,10 @@
   font-size: 1rem;
   color: #f3f3f3;
 }
+.card:hover .card__body {
+  display: block;
+  animation: transition 200ms forwards;
+}
 .card__body {
   position: absolute;
   padding: 20px;
@@ -68,10 +72,7 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
   z-index: 10;
 }
-.card:hover .card__body {
-  display: block;
-  animation: transition 200ms forwards;
-}
+
 .card__body__controls {
   margin-bottom: 15px;
   display: flex;
@@ -146,18 +147,18 @@
 }
 @media screen and (max-width: 1400px) {
   .card {
-    width: calc(20% - 5px);
+    width: calc(20% - 4px);
   }
 }
 @media screen and (max-width: 1200px) {
   .card {
-    width: calc(25% - 3px);
+    width: calc(25% - 4px);
   }
 }
 
 @media screen and (max-width: 1000px) {
   .card {
-    width: calc(33.3% - 3px);
+    width: calc(33.333333% - 3px);
   }
   .card__body__thisMovieIs p:nth-child(3) {
     display: none;
