@@ -2,7 +2,8 @@
   position: relative;
   margin: 0 auto;
   margin-top: 84px;
-  width: 94%;
+  width: 100%;
+  padding: 0 60px;
 }
 .movieSection__backBtn {
   padding: 10px 0px;
@@ -44,6 +45,9 @@
 }
 
 @media screen and (max-width: 800px) {
+  .movieSection {
+    padding: 0 20px;
+  }
   .movieSection__movie {
     position: relative;
     display: block;
