@@ -1,5 +1,5 @@
 .commentSection {
-  padding: 40px;
+  padding: 0 60px 60px 60px;
 }
 .commentSection__header {
   margin-bottom: 10px;
@@ -22,4 +22,10 @@
   width: 100%;
   padding: 10px;
   text-align: center;
+}
+
+@media screen and (max-width: 800px) {
+  .commentSection {
+    padding: 20px 20px 60px 20px;
+  }
 }

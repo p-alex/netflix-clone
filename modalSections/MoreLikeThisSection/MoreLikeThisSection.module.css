@@ -1,6 +1,6 @@
 .moreLikeThis {
   position: relative;
-  padding: 40px;
+  padding: 0 60px 60px 60px;
 }
 .moreLikeThis__sectionName {
   margin-bottom: 20px;
@@ -17,6 +17,11 @@
 @media screen and (min-width: 1921px) {
   .moreLikeThis__movieContainer {
     grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  }
+}
+@media screen and (max-width: 800px) {
+  .moreLikeThis {
+    padding: 20px 20px 60px 20px;
   }
 }
 @media screen and (max-width: 520px) {

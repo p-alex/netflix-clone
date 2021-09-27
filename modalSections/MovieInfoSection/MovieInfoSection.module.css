@@ -1,0 +1,77 @@
+.modal__info {
+  display: flex;
+}
+
+.modal__info__container {
+  padding: 60px 60px 60px 60px;
+}
+
+.modal__info__container__nameMobile {
+  display: none;
+}
+.modal__info__container__mobileBtnContainer {
+  display: none;
+  margin-bottom: 20px;
+}
+.modal__info__stats {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.modal__info__stats p {
+  margin-right: 10px;
+}
+.modal__info__stats__maturityRating {
+  border: solid grey 1px;
+  padding: 2px 5px;
+}
+.modal__info__container__right {
+  min-width: 350px;
+}
+.modal__info__container__right p {
+  margin-bottom: 20px;
+}
+.modal__info__container__right span {
+  color: grey;
+  margin-right: 5px;
+}
+.modal__info__container__right p:last-child {
+  margin-bottom: 0px;
+}
+.modal__info__container__right a {
+  color: white;
+  margin-right: 10px;
+  padding: 2px 0;
+  display: inline-block;
+}
+.modal__info__container__right a::after {
+  content: ",";
+}
+.modal__info__container__right a:last-child::after {
+  content: "";
+}
+.modal__info__description {
+  font-size: 1.3rem;
+}
+@media screen and (max-width: 800px) {
+  .modal__info__container {
+    padding: 20px 20px 60px 20px;
+  }
+  .modal__info__container__mobileBtnContainer {
+    display: flex;
+  }
+  .modal__info {
+    display: flex;
+    flex-direction: column;
+  }
+  .modal__info__container__nameMobile {
+    display: block;
+    margin-bottom: 30px;
+  }
+  .modal__header__video__movieLogo {
+    display: none;
+  }
+  .modal__info__container__right {
+    min-width: 100%;
+  }
+}

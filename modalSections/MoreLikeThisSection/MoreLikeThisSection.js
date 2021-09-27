@@ -13,6 +13,7 @@ export default function MoreLikeThisSection({ movies }) {
   return (
     <section className={styles.moreLikeThis}>
       <h2 className={styles.moreLikeThis__sectionName}>More like this</h2>
+
       <div
         className={
           isMaxThree

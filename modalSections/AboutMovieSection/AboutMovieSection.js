@@ -6,6 +6,7 @@ export default function AboutMovieSection({ movie }) {
   return (
     <div className={styles.modal__about} id="modalAbout">
       <h2 className={styles.modal__about__movieName}>About {name}</h2>
+
       <p className={styles.modal__about__director}>
         <span>Director:</span>
         {directors.map((director) => (
@@ -17,6 +18,7 @@ export default function AboutMovieSection({ movie }) {
           </Link>
         ))}
       </p>
+
       <p className={styles.modal__about__cast}>
         <span>Cast:</span>
         {cast.map((actor) => (
@@ -25,6 +27,7 @@ export default function AboutMovieSection({ movie }) {
           </Link>
         ))}
       </p>
+
       {writer[0] !== "" && (
         <p className={styles.modal__about__writer}>
           <span>Writer:</span>
@@ -59,6 +62,7 @@ export default function AboutMovieSection({ movie }) {
           </Link>
         ))}
       </p>
+
       <p className={styles.modal__about__maturityRating}>
         <span>Maturity Raiting: </span> {maturityRating}+ Recommended for ages{" "}
         {maturityRating} and up

@@ -40,6 +40,7 @@ export default function CommentSection({ movie }) {
       <h2 className={styles.commentSection__header}>
         Comments - {movie.comments.length}
       </h2>
+
       {movie.comments.length ? (
         movie.comments.map((comment) => {
           return (
@@ -60,13 +61,16 @@ export default function CommentSection({ movie }) {
 
       <div className={styles.commentSection__writeAComment}>
         <h2>Write a comment</h2>
+
         <Stars howManyStars={comment.stars} handleSetStars={handleSetStars} />
+
         <textarea
           type="text"
           placeholder="Comment...(Optional)"
           value={comment.text}
           onChange={(e) => handleSetText(e)}
         />
+
         <button onClick={() => handleSubmit(comment)}>Comment</button>
       </div>
     </section>

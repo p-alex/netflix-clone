@@ -1,5 +1,5 @@
 .modal__about {
-  padding: 40px;
+  padding: 0 60px 60px 60px;
 }
 .modal__about__movieName {
   margin-bottom: 20px;
@@ -25,4 +25,9 @@
 }
 .modal__about a:last-child::after {
   content: "";
+}
+@media screen and (max-width: 800px) {
+  .modal__about {
+    padding: 20px 20px 60px 20px;
+  }
 }
