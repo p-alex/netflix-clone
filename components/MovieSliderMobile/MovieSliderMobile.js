@@ -9,6 +9,24 @@ export default function MovieSliderMobile({
   hasMovies,
 }) {
   const [isMouseDown, setIsMouseDown] = useState(false);
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  useEffect(() => {
+    const firstSlider = document.querySelector(`#mobileSlider${sliderId}`);
+    const options = {
+      rootMargin: "0px",
+    };
+    const observer = new IntersectionObserver(function (entries, observer) {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+        console.log(entry.isIntersecting);
+        setIsIntersecting(entry.isIntersecting);
+        observer.unobserve(entry.target);
+      });
+    }, options);
+    observer.observe(firstSlider);
+  }, []);
   useEffect(() => {
     const rowContainer = document.querySelector(`#slider${sliderId}`);
     let isDown = false;
@@ -78,25 +96,7 @@ export default function MovieSliderMobile({
         rowContainer.scrollLeft = scrollLeft - walk;
       });
     };
-  }, []);
-  const [isIntersecting, setIsIntersecting] = useState(false);
-  useEffect(() => {
-    const firstSlider = document.querySelector(`#mobileSlider${sliderId}`);
-    const options = {
-      rootMargin: "0px",
-    };
-    const observer = new IntersectionObserver(function (entries, observer) {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
-        console.log(entry.isIntersecting);
-        setIsIntersecting(entry.isIntersecting);
-        observer.unobserve(entry.target);
-      });
-    }, options);
-    observer.observe(firstSlider);
-  }, []);
+  }, [isIntersecting]);
 
   return (
     <>

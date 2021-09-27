@@ -96,7 +96,7 @@ export default function MovieSliderDesktop({
         });
       });
     };
-  }, [movieList]);
+  }, [movieList, isIntersecting]);
 
   function moveSlider(direction) {
     const card = document.querySelector(`#card${sliderId}`);
