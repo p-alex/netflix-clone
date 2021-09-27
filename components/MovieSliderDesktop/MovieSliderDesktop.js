@@ -23,7 +23,7 @@ export default function MovieSliderDesktop({
   });
   const [isIntersecting, setIsIntersecting] = useState(false);
   useEffect(() => {
-    const firstSlider = document.querySelector(`#slider${sliderId}`);
+    const slider = document.querySelector(`#slider${sliderId}`);
     const options = {
       rootMargin: "0px",
     };
@@ -37,7 +37,9 @@ export default function MovieSliderDesktop({
         observer.unobserve(entry.target);
       });
     }, options);
-    observer.observe(firstSlider);
+    if (slider) {
+      observer.observe(slider);
+    }
   }, []);
   useEffect(() => {
     console.log("Movie Slider mounted");
