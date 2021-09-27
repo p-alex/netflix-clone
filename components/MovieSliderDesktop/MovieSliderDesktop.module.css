@@ -1,10 +1,11 @@
 .slider {
   position: relative;
-  width: 92%;
+  width: 100%;
   margin-top: -40px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 230px;
+  padding: 0 60px;
 }
 .slider__title {
   position: absolute;
@@ -24,7 +25,7 @@
   color: white;
   padding: 0 10px;
   z-index: 9;
-  width: 4.4%;
+  width: 60px;
   border: none;
   transition: opacity 200ms;
   font-size: 21px;
@@ -32,11 +33,9 @@
 }
 .left__ctrl {
   left: 0;
-  transform: translateX(-100%);
 }
 .right__ctrl {
   right: 0;
-  transform: translateX(100%);
 }
 .slider__row {
   position: relative;
@@ -46,14 +45,8 @@
   transition: transform 700ms;
 }
 @media screen and (max-width: 1200px) {
-  .slider {
-    width: 82%;
-  }
   .slider:nth-of-type(1) {
     margin-top: 80px;
-  }
-  .slider__ctrl {
-    width: 11%;
   }
   .slider__titleAndSliderIndex h2 {
     color: white;
