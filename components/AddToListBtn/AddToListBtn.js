@@ -28,7 +28,7 @@ export default function AddToListBtn({ movieId, btnType, margin }) {
           </button>
         </div>
       ) : (
-        <div className={styles.btnContainer}>
+        <div className={styles.btnContainer} style={{ margin }}>
           <div className={styles.infoPopup}>
             <p>Add to My List</p>
             <div className={styles.infoPopup__triangle}></div>
