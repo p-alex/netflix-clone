@@ -11,7 +11,7 @@ export default function MovieSliderMobile({
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isIntersecting, setIsIntersecting] = useState(false);
   useEffect(() => {
-    const firstSlider = document.querySelector(`#mobileSlider${sliderId}`);
+    const slider = document.querySelector(`#mobileSlider${sliderId}`);
     const options = {
       rootMargin: "0px",
     };
@@ -25,7 +25,9 @@ export default function MovieSliderMobile({
         observer.unobserve(entry.target);
       });
     }, options);
-    observer.observe(firstSlider);
+    if (slider) {
+      observer.observe(slider);
+    }
   }, []);
   useEffect(() => {
     const rowContainer = document.querySelector(`#slider${sliderId}`);
