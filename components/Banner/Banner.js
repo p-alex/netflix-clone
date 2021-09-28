@@ -23,7 +23,7 @@ export default function Banner({ movies }) {
           className={styles.banner}
           style={{
             backgroundImage: `linear-gradient(to top, rgba(0,0,0,0.35), transparent),
-        url(/movies/${nameSlug}/${nameSlug}-banner.jpg)`,
+        url(/movies/${nameSlug}/${nameSlug}-banner.webp)`,
           }}
         >
           <BottomFade />
