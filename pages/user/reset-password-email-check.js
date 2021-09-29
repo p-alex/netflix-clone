@@ -6,6 +6,8 @@ import InputGroup from "../../components/InputGroup/InputGroup";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import Logo from "../../components/Logo/Logo";
 import Head from "next/head";
+import Link from "next/link";
+import styles from "../../styles/ResetPasswordEmailCheck.module.css";
 export default function resetPasswordEmailCheck() {
   const [feedback, setFeedback] = useState("");
   const [inputs, setInputs] = useState({
@@ -39,11 +41,11 @@ export default function resetPasswordEmailCheck() {
   };
 
   return (
-    <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.jpg)"}>
+    <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.webp)"}>
       <Head>
         <title>Netflix Clone | Reset password</title>
       </Head>
-      <main>
+      <main className={styles.resetPasswordEmailCheck}>
         <Form submitFunc={handleSubmit}>
           <Logo type="big" margin="0 auto 50px auto" maxWidth="160px" />
           <p>{feedback}</p>
@@ -56,6 +58,9 @@ export default function resetPasswordEmailCheck() {
             handleChangeFunc={handleChange}
           />
           <SubmitButton>Send email</SubmitButton>
+          <p>
+            <Link href="/login">Go Back</Link>
+          </p>
         </Form>
       </main>
     </FullscreenWrapper>

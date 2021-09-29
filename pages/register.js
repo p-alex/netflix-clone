@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Link from "next/link";
 
@@ -8,6 +8,7 @@ import InputGroup from "../components/InputGroup/InputGroup";
 import SubmitButton from "../components/SubmitButton/SubmitButton";
 import Logo from "../components/Logo/Logo";
 import Head from "next/head";
+import styles from "../styles/Register.module.css";
 export default function register() {
   const [inputs, setInputs] = useState({
     username: "",
@@ -70,22 +71,18 @@ export default function register() {
 
       const resultJSON = await result.json();
 
-      resultJSON.message === "Registered successfuly!"
-        ? setFeedback(
-            "We sent you an email to verify your account! Check your email"
-          )
-        : setFeedback(resultJSON.message);
+      setFeedback(resultJSON.message);
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.jpg)"}>
+    <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.webp)"}>
       <Head>
         <title>Netflix Clone | Register</title>
       </Head>
-      <main>
+      <main className={styles.register}>
         <Form submitFunc={handleSubmit}>
           <Logo type="big" margin="0 auto 50px auto" maxWidth="160px" />
           {feedback && <p>{feedback}</p>}
@@ -93,6 +90,9 @@ export default function register() {
             return (
               <InputGroup
                 key={input.label}
+                inputFor={"register"}
+                usernameForValidation={inputs.username}
+                passwordForValidation={inputs.password}
                 setId={input.setNameId}
                 setType={input.type}
                 setPlaceholder={input.placeholder}

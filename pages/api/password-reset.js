@@ -10,9 +10,21 @@ export default async function passwordReset(req, res) {
   if (req.method === "POST") {
     try {
       const { password, confirmPassword, id } = req.body;
+      const passwordRegex =
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*-]).{8,}$/.test(
+          password
+        );
+      if (!passwordRegex)
+        return res.json({
+          ok: 0,
+          message: `
+                Not a valid password.
+              `,
+        });
+
       console.log("id: " + ObjectId(req.body.id));
       if (password !== confirmPassword)
-        return res.json({ message: "Passwords must match you fokin idiot" });
+        return res.json({ message: "Passwords must match." });
       const user = await collection.findOne({ _id: ObjectId(id) });
       if (user?._id) {
         const hashedPassword = await bcrypt.hash(password, 12);

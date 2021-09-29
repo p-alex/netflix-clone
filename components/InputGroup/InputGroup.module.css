@@ -39,3 +39,25 @@
   transform: translateY(0);
   font-size: 12px;
 }
+
+.input__validation {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.input__validation__field {
+  margin-bottom: 30px;
+}
+.input__validation__field__title {
+  margin-bottom: 15px;
+  color: white;
+}
+.input__validation__field__list {
+  list-style-type: circle;
+}
+.input__validation__field__list__item {
+  color: red;
+}
+.input__validation__field__list__item_valid {
+  color: green;
+}

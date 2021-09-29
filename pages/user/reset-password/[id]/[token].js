@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import FullscreenWrapper from "../../../../components/FullscreenWrapper/FullscreenWrapper";
@@ -8,6 +8,7 @@ import SubmitButton from "../../../../components/SubmitButton/SubmitButton";
 import Logo from "../../../../components/Logo/Logo";
 import Link from "next/link";
 import Head from "next/head";
+import styles from "../../../../styles/ResetPassword.module.css";
 export default function resetPassword() {
   const router = useRouter();
 
@@ -16,6 +17,13 @@ export default function resetPassword() {
   const [inputs, setInputs] = useState({
     password: "",
     confirmPassword: "",
+  });
+
+  const [passwordValidation, setPasswordValidation] = useState({
+    passwordAtLeastOneUppercaseAndLowercase: false,
+    passwordAtLeastOneNumber: false,
+    passwordAtLeastOneSpecial: false,
+    passwordAtLeastEightCharacters: false,
   });
 
   const handleChange = (e) => {
@@ -41,18 +49,21 @@ export default function resetPassword() {
     const resultJSON = await result.json();
     setFeedback(resultJSON.message);
   };
+
   return (
-    <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.jpg)"}>
+    <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.webp)"}>
       <Head>
         <title>Netflix Clone | Reset Password</title>
       </Head>
-      <main>
+      <main className={styles.resetPassword}>
         <Form submitFunc={handleSubmit}>
           <Logo type="big" margin="0 auto 50px auto" maxWidth="160px" />
           <p>{feedback && feedback}</p>
           {feedback === "Success" && <Link href="/login">Login</Link>}
           <InputGroup
             setId="password"
+            inputFor="resetPassword"
+            passwordForValidation={inputs.password}
             setLabel="New password"
             setName="password"
             setPlaceholder=" "

@@ -15,48 +15,91 @@ export default async function authHandler(req, res) {
     const { authType } = req.body;
     try {
       if (authType === "register") {
-        // //-----------REGISTER-----------
-        // const { username, email, password, confirmPassword, date } = req.body;
+        //-----------REGISTER-----------
+        const { username, email, password, confirmPassword, date } = req.body;
 
-        // const userWithEmail = await collection.findOne({ email });
+        if (!username || !email || !password || !confirmPassword)
+          return res.json({ message: "Please fill in all fields" });
 
-        // const userWithUsername = await collection.findOne({ username });
+        //idk if i need this or not but im doing it anyway :)
+        if (
+          typeof username !== "string" ||
+          typeof email !== "string" ||
+          typeof password !== "string"
+        ) {
+          return res.json({ ok: 0, message: "Bruh...." });
+        }
 
-        // if (!username || !email || !password || !confirmPassword)
-        //   return res.json({ message: "Please fill in all fields" });
+        //checks if the username is between 5 and 12 characters long
+        const usernameRegexTest = /^[a-zA-Z0-9]{5,12}$/.test(username);
 
-        // if (userWithUsername)
-        //   return res.json({
-        //     message: "A user with that username already exists",
-        //   });
+        //checks if the email looks like this: example@example.example
+        const emailRegexTest = /^([a-zA-Z0-9]*)@([a-z]*)\.([a-z]+)$/.test(
+          email
+        );
 
-        // if (userWithEmail)
-        //   return res.json({ message: "A user with that email already exists" });
+        //checks for at least one lowercase and one uppercase letter, at least one number, at least one special character, at least 8 characters long
+        const passwordRegexTest =
+          /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*-]).{8,}$/.test(
+            password
+          );
 
-        // if (password !== confirmPassword)
-        //   return res.json({ message: "Passwords must match" });
+        if (!usernameRegexTest) {
+          return res.json({
+            ok: 0,
+            message: "Not a valid username.",
+          });
+        }
+        if (!emailRegexTest) {
+          return res.json({
+            ok: 0,
+            message: "Please enter a valid email address.",
+          });
+        }
+        if (!passwordRegexTest)
+          return res.json({
+            ok: 0,
+            message: `
+                Not a valid password.
+              `,
+          });
 
-        // const hashedPassword = await bcrypt.hash(password, 12);
+        const userWithEmail = await collection.findOne({ email });
 
-        // const result = await collection.insertOne({
-        //   username,
-        //   email,
-        //   password: hashedPassword,
-        //   isVerified: false,
-        //   date: new Date(date),
-        //   profileImg: `/images/default-profile-pictures/image-${Math.floor(
-        //     Math.random() * (7 - 1) + 1
-        //   )}.jpg`,
-        //   movieList: [],
-        // });
+        const userWithUsername = await collection.findOne({ username });
 
-        // const token = await jwt.sign(
-        //   { id: result.ops[0]._id },
-        //   process.env.SECRET,
-        //   {
-        //     expiresIn: "25m",
-        //   }
-        // );
+        if (userWithUsername)
+          return res.json({
+            message: "A user with that username already exists",
+          });
+
+        if (userWithEmail)
+          return res.json({ message: "A user with that email already exists" });
+
+        if (password !== confirmPassword)
+          return res.json({ message: "Passwords must match" });
+
+        const hashedPassword = await bcrypt.hash(password, 12);
+
+        const result = await collection.insertOne({
+          username,
+          email,
+          password: hashedPassword,
+          isVerified: false,
+          date: new Date(date),
+          profileImg: `/images/default-profile-pictures/image-${Math.floor(
+            Math.random() * (7 - 1) + 1
+          )}.jpg`,
+          movieList: [],
+        });
+
+        const token = await jwt.sign(
+          { id: result.ops[0]._id },
+          process.env.SECRET,
+          {
+            expiresIn: "25m",
+          }
+        );
 
         // sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 
@@ -72,17 +115,25 @@ export default async function authHandler(req, res) {
         //   .send(msg)
         //   .then(() => {
         //     console.log("Email sent");
+        //     return res.json({
+        //       ok: 1,
+        //       message:
+        //         "We sent you an email to verify your account! Please check your email.",
+        //     });
         //   })
         //   .catch((error) => {
         //     console.error(error);
         //     return res.json({
+        //       ok: 0,
         //       message: "Something went wrong! Please try again later.",
         //     });
         //   });
 
-        //console.log(`http://localhost:3000/user/verify/${token}`);
-        res.json({
-          message: "Creating new account is disabled for now",
+        console.log(`http://localhost:3000/user/verify/${token}`);
+        return res.json({
+          ok: 1,
+          message:
+            "Success! We sent you an email to verify your account! Please check your email.",
         });
       }
       if (authType === "login") {

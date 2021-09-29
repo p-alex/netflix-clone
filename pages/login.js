@@ -9,7 +9,7 @@ import InputGroup from "../components/InputGroup/InputGroup";
 import SubmitButton from "../components/SubmitButton/SubmitButton";
 import Logo from "../components/Logo/Logo";
 import Head from "next/head";
-
+import styles from "../styles/Login.module.css";
 export default function login() {
   const router = useRouter();
 
@@ -65,11 +65,11 @@ export default function login() {
   };
 
   return (
-    <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.jpg)"}>
+    <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.webp)"}>
       <Head>
         <title>Netflix Clone | Login</title>
       </Head>
-      <main>
+      <main className={styles.login}>
         <Form submitFunc={handleSubmit}>
           <Logo type="big" margin="0 auto 50px auto" maxWidth="160px" />
 

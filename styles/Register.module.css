@@ -1,0 +1,34 @@
+.register {
+  position: absolute;
+  max-width: 400px;
+  display: flex;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.register__validation {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  margin-left: 5px;
+}
+.register__validation__field {
+  margin-bottom: 30px;
+}
+.register__validation__field__title {
+  margin-bottom: 15px;
+  color: white;
+}
+.register__validation__field__list {
+  list-style-type: circle;
+}
+.register__validation__field__list__item {
+  color: red;
+}
+.register__validation__field__list__item_valid {
+  color: green;
+}
