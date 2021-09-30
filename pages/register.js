@@ -51,6 +51,14 @@ export default function register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setInputs((prevState) => ({
+      ...prevState,
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      isRegister: true,
+    }));
     let url =
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000"
@@ -70,14 +78,7 @@ export default function register() {
       });
 
       const resultJSON = await result.json();
-      setInputs((prevState) => ({
-        ...prevState,
-        username: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        isRegister: true,
-      }));
+
       setFeedback(resultJSON.message);
     } catch (error) {
       console.log(error);
