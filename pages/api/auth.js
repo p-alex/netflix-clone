@@ -111,7 +111,7 @@ export default async function authHandler(req, res) {
           from: "netflixclonepalex@gmail.com",
           subject: "Verification link",
           text: "Click the button below to verify your account",
-          html: `<div style='text-align:center;position:relative; width:400px;padding:40px;margin:0 auto;background-color:black;color:white;'><h1>Click the link to verify your account.</h1><br/><br/><a style='display:inline-block;text-decoration:none;background-color:#e50914;padding:15px;color:white;border-radius:5px;font-weight:bold;font-family:Helvetica, sans-serif;' href="http://localhost:3000/user/verify/${token}">Confirm account</a></div>`,
+          html: `<div style='text-align:center;position:relative; width:400px;padding:40px;margin:0 auto;background-color:black;color:white;'><h1>Click the link to verify your account.</h1><br/><br/><a style='display:inline-block;text-decoration:none;background-color:#e50914;padding:15px;color:white;border-radius:5px;font-weight:bold;font-family:Helvetica, sans-serif;' href="https://netflix-clone-inky-five.vercel.app/user/verify/${token}">Confirm account</a></div>`,
         };
 
         sgMail
