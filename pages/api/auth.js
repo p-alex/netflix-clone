@@ -117,7 +117,7 @@ export default async function authHandler(req, res) {
         sgMail
           .send(msg)
           .then(() => {
-            console.log("Email sent");
+            //console.log("Email sent");
             return res.json({
               ok: 1,
               message:
