@@ -56,6 +56,7 @@ export default function resetPasswordEmailCheck() {
             setPlaceholder=" "
             setType="email"
             handleChangeFunc={handleChange}
+            autoFocus={true}
           />
           <SubmitButton>Send email</SubmitButton>
           <p>

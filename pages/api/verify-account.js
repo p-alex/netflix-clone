@@ -6,7 +6,10 @@ export default async function verifyAccountHandler(req, res) {
     useUnifiedTopology: true,
   });
 
-  const collection = await client.db().collection("users");
+  const usersCollection = await client.db().collection("users");
+  const nonVerifiedUsersCollection = await client
+    .db()
+    .collection("non-verified-users");
 
   if (req.method === "POST") {
     try {
@@ -18,21 +21,25 @@ export default async function verifyAccountHandler(req, res) {
 
       if (!decoded.id) return res.json({ message: "Invalid token" });
 
-      let user = await collection.findOne({ _id: ObjectId(decoded.id) });
+      let user = await nonVerifiedUsersCollection.findOne({
+        _id: ObjectId(decoded.id),
+      });
 
-      if (!user) {
+      if (!user.username) {
         return res.json({ message: "That user doesn't exist" });
       }
 
       if (user.isVerified)
         return res.json({ message: "Your account is already verified!" });
 
-      await collection.updateOne(
-        { _id: ObjectId(decoded.id) },
-        { $set: { isVerified: true } }
-      );
+      let updatedUser = { ...user, isVerified: true };
 
-      res.json({ message: "Verification Successful!" });
+      const theResult = await usersCollection.insertOne(updatedUser);
+      const deleteNonVerifiedUserVersion =
+        await nonVerifiedUsersCollection.deleteOne({ _id: ObjectId(user._id) });
+      if (theResult && deleteNonVerifiedUserVersion) {
+        res.json({ message: "Verification Successful!" });
+      }
     } catch (error) {
       res.json({ message: "Something went wrong" });
     } finally {

@@ -9,7 +9,10 @@ export default async function authHandler(req, res) {
     useUnifiedTopology: true,
   });
 
-  const collection = client.db().collection("users");
+  const usersCollection = client.db().collection("users");
+  const nonVerifiedUsersCollection = client
+    .db()
+    .collection("non-verified-users");
 
   if (req.method === "POST") {
     const { authType } = req.body;
@@ -64,9 +67,9 @@ export default async function authHandler(req, res) {
               `,
           });
 
-        const userWithEmail = await collection.findOne({ email });
+        const userWithEmail = await usersCollection.findOne({ email });
 
-        const userWithUsername = await collection.findOne({ username });
+        const userWithUsername = await usersCollection.findOne({ username });
 
         if (userWithUsername)
           return res.json({
@@ -81,7 +84,7 @@ export default async function authHandler(req, res) {
 
         const hashedPassword = await bcrypt.hash(password, 12);
 
-        const result = await collection.insertOne({
+        const result = await nonVerifiedUsersCollection.insertOne({
           username,
           email,
           password: hashedPassword,
@@ -143,7 +146,7 @@ export default async function authHandler(req, res) {
         if (!email || !password)
           return res.json({ message: "Please fill in all fields" });
 
-        const user = await collection.findOne({ email });
+        const user = await usersCollection.findOne({ email });
 
         if (!user)
           return res.json({

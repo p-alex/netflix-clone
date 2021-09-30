@@ -69,6 +69,7 @@ export default function resetPassword() {
             setPlaceholder=" "
             setType="password"
             handleChangeFunc={handleChange}
+            autoFocus={true}
           />
           <InputGroup
             setId="confirmPassword"

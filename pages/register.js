@@ -86,7 +86,7 @@ export default function register() {
         <Form submitFunc={handleSubmit}>
           <Logo type="big" margin="0 auto 50px auto" maxWidth="160px" />
           {feedback && <p>{feedback}</p>}
-          {inputList.map((input) => {
+          {inputList.map((input, id) => {
             return (
               <InputGroup
                 key={input.label}
@@ -99,6 +99,7 @@ export default function register() {
                 setName={input.setNameId}
                 setLabel={input.label}
                 handleChangeFunc={handleChange}
+                autoFocus={id === 0 && true}
               />
             );
           })}
