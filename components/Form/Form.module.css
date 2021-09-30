@@ -13,3 +13,9 @@
 .form p a {
   color: #e50914;
 }
+
+@media screen and (max-width: 800px) {
+  .form {
+    margin: 20px;
+  }
+}

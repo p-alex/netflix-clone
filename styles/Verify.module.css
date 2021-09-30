@@ -18,3 +18,14 @@
 .container a {
   color: #e50914;
 }
+
+@media screen and (max-width: 800px) {
+  .container {
+    position: relative;
+    max-width: none;
+    width: 100%;
+    flex-direction: row;
+    top: 0;
+    transform: translateY(0);
+  }
+}

@@ -32,3 +32,13 @@
 .register__validation__field__list__item_valid {
   color: green;
 }
+@media screen and (max-width: 800px) {
+  .register {
+    position: relative;
+    max-width: none;
+    width: 100%;
+    display: flex;
+    top: 0;
+    transform: translateY(0);
+  }
+}
