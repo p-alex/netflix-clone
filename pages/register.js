@@ -70,7 +70,14 @@ export default function register() {
       });
 
       const resultJSON = await result.json();
-
+      setInputs((prevState) => ({
+        ...prevState,
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        isRegister: true,
+      }));
       setFeedback(resultJSON.message);
     } catch (error) {
       console.log(error);
