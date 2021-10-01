@@ -4,19 +4,16 @@ import { sanitizeInput } from "../../sanitizeInput";
 
 const cleanComment = (comment) => {
   const { username, profileImg, text, stars, movieId, commentId } = comment;
-  if (
-    typeof username === "string" &&
-    typeof profileImg === "string" &&
-    typeof text === "string" &&
-    typeof stars === "number" &&
-    typeof movieId === "string" &&
-    typeof commentId === "string"
-  ) {
-    let clean = comment;
-    return clean;
-  } else {
-    return null;
-  }
+  let clean = {
+    ...comment,
+    username: sanitizeInput(username),
+    profileImg: `${profileImg}`,
+    text: `${text}`,
+    stars: Number(stars),
+    movieId: `${sanitizeInput(movieId)}`,
+    commentId: `${sanitizeInput(commentId)}`,
+  };
+  return clean;
 };
 
 const addCommentHandler = async (req, res) => {
