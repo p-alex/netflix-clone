@@ -12,7 +12,7 @@ async function addMovieToListHandler(req, res) {
 
       const user = await usersCollection.findOne({ _id: ObjectId(req.userId) });
 
-      const movieId = req.body.movieId;
+      const movieId = `${req.body.movieId}`;
 
       if (movieId && user.username) {
         let oldMovieList = user.movieList;
