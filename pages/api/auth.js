@@ -2,6 +2,7 @@ import { MongoClient } from "mongodb";
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import sanitize from "mongo-sanitize";
 //import sgMail from "@sendgrid/mail";
 export default async function authHandler(req, res) {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
@@ -14,11 +15,13 @@ export default async function authHandler(req, res) {
     .collection("non-verified-users");
 
   if (req.method === "POST") {
-    const { authType } = req.body;
+    const { authType } = sanitize(req.body);
     try {
       if (authType === "register") {
         //-----------REGISTER-----------
-        const { username, email, password, confirmPassword } = req.body;
+        const { username, email, password, confirmPassword, date } = sanitize(
+          req.body
+        );
         if (!username || !email || !password || !confirmPassword)
           return res.json({ message: "Please fill in all fields" });
 
@@ -144,7 +147,7 @@ export default async function authHandler(req, res) {
       }
       if (authType === "login") {
         //-----------LOGIN-----------
-        const { email, password } = req.body;
+        const { email, password } = sanitize(req.body);
 
         if (!email || !password)
           return res.json({ message: "Please fill in all fields" });

@@ -1,20 +1,12 @@
 import { MongoClient, ObjectId } from "mongodb";
 import withProtect from "../../middleware/withProtect";
-const cleanCommentInfo = (commentInfo) => {
-  const { movieId, commentId } = commentInfo;
-  let clean = {
-    ...commentInfo,
-    movieId: `${movieId}`,
-    commentId: `${commentId}`,
-  };
-  return clean;
-};
+import sanitize from "mongo-sanitize";
 const deleteCommentHanlder = async (req, res) => {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  const commentInfo = cleanCommentInfo(req.body);
+  const commentInfo = sanitize(req.body);
   try {
     if (req.method === "POST") {
       const usersCollection = client.db().collection("users");

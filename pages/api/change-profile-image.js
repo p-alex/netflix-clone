@@ -1,12 +1,13 @@
 import { MongoClient, ObjectId } from "mongodb";
 import withProtect from "../../middleware/withProtect";
+import sanitize from "mongo-sanitize";
 
 const changeProfilePictureHandler = async (req, res) => {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  const { image } = req.body;
+  const image = sanitize(req.body);
   if (req.method === "POST") {
     try {
       const userCollection = await client.db().collection("users");

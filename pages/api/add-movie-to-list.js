@@ -1,5 +1,6 @@
 import { MongoClient, ObjectId } from "mongodb";
 import withProtect from "../../middleware/withProtect";
+import sanitize from "mongo-sanitize";
 async function addMovieToListHandler(req, res) {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -7,12 +8,13 @@ async function addMovieToListHandler(req, res) {
   });
 
   if (req.method === "POST") {
+    console.log(req.body);
     try {
       const usersCollection = client.db().collection("users");
 
       const user = await usersCollection.findOne({ _id: ObjectId(req.userId) });
 
-      const movieId = `${req.body.movieId}`;
+      const movieId = sanitize(req.body.movieId);
 
       if (movieId && user.username) {
         let oldMovieList = user.movieList;

@@ -25,7 +25,6 @@ export default function Profile() {
       }));
     }
   }, [context.userData]);
-  console.log(imageChangerState);
 
   const monthNames = [
     "January",

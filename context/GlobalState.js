@@ -118,7 +118,7 @@ export default function GlobalState({ children }) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ comment }),
+      body: JSON.stringify(comment),
     });
     const resultJson = await result.json();
   };
@@ -180,7 +180,7 @@ export default function GlobalState({ children }) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ image }),
+      body: JSON.stringify(image),
     });
     const resultJson = await result.json();
     if (resultJson.ok) {

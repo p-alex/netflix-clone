@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import sanitize from "mongo-sanitize";
 //import sgMail from "@sendgrid/mail";
 import jwt from "jsonwebtoken";
 export default async function passwordResetSendEmailHandler(req, res) {
@@ -10,8 +11,8 @@ export default async function passwordResetSendEmailHandler(req, res) {
   //sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
   if (req.method === "POST") {
     try {
-      const { email } = req.body;
-      const user = await usersCollection.findOne({ email: email });
+      const { email } = sanitize(req.body);
+      const user = await usersCollection.findOne({ email });
       if (user?.email) {
         let token = await jwt.sign({ id: user._id }, process.env.SECRET, {
           expiresIn: "15m",

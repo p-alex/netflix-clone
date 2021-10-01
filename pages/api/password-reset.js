@@ -1,15 +1,6 @@
 import { MongoClient, ObjectId } from "mongodb";
 import bcrypt from "bcryptjs";
-const cleanPasswordsAndId = (passwordsAndId) => {
-  const { password, confirmPassword, id } = passwordsAndId;
-  let clean = {
-    ...passwordsAndId,
-    password: `${password}`,
-    confirmPassword: `${confirmPassword}`,
-    id: `${id}`,
-  };
-  return clean;
-};
+import sanitize from "mongo-sanitize";
 export default async function passwordReset(req, res) {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -19,7 +10,7 @@ export default async function passwordReset(req, res) {
   const collection = client.db().collection("users");
   if (req.method === "POST") {
     try {
-      const { password, confirmPassword, id } = cleanPasswordsAndId(req.body);
+      const { password, confirmPassword, id } = sanitize(req.body);
       const passwordRegex =
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*-]).{8,}$/.test(
           password

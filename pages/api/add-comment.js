@@ -1,26 +1,13 @@
 import { MongoClient, ObjectId } from "mongodb";
 import withProtect from "../../middleware/withProtect";
-
-const cleanComment = (comment) => {
-  const { username, profileImg, text, stars, movieId, commentId } = comment;
-  let clean = {
-    ...comment,
-    username: `${username}`,
-    profileImg: `${profileImg}`,
-    text: `${text}`,
-    stars: Number(stars),
-    movieId: `${movieId}`,
-    commentId: `${commentId}`,
-  };
-  return clean;
-};
+import sanitize from "mongo-sanitize";
 
 const addCommentHandler = async (req, res) => {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  const comment = cleanComment(req.body.comment);
+  const comment = sanitize(req.body);
   if (comment === null)
     return res.json({ ok: 0, message: "Something is wrong with the comment" });
 
