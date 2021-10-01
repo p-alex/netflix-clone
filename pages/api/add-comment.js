@@ -1,15 +1,29 @@
 import { MongoClient, ObjectId } from "mongodb";
 import withProtect from "../../middleware/withProtect";
 import sanitize from "mongo-sanitize";
-
+const commentSanitize = (comment) => {
+  const { username, profileImg, text, stars, movieId, commentId } = comment;
+  if (
+    typeof username !== "string" ||
+    typeof profileImg !== "string" ||
+    typeof text !== "string" ||
+    typeof stars !== "number" ||
+    typeof movieId !== "string" ||
+    typeof commentId !== "string"
+  ) {
+    return null;
+  } else {
+    return sanitize(comment);
+  }
+};
 const addCommentHandler = async (req, res) => {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  const comment = sanitize(req.body);
+  const comment = commentSanitize(req.body);
   if (comment === null)
-    return res.json({ ok: 0, message: "Something is wrong with the comment" });
+    return res.json({ ok: 0, message: "PATHETIC! GET REKT MR. HACKER!!!!" });
 
   if (req.method === "POST") {
     try {
@@ -27,7 +41,7 @@ const addCommentHandler = async (req, res) => {
 
         const theResult = await moviesCollection.updateOne(
           {
-            _id: ObjectId(sanitizeInput(comment.movieId)),
+            _id: ObjectId(comment.movieId),
           },
           { $set: { comments: updatedCommentsArray } }
         );
