@@ -203,7 +203,7 @@ export default async function authHandler(req, res) {
               maxAge: 259200,
             })
           );
-          res.json({
+          return res.json({
             message: "Logged in!",
             user: {
               username: user.username,
@@ -215,6 +215,7 @@ export default async function authHandler(req, res) {
 
       if (authType === "logout") {
         //-----------LOGOUT-----------
+        console.log("here");
         res.setHeader(
           "Set-Cookie",
           cookie.serialize("token", "", {
@@ -227,12 +228,8 @@ export default async function authHandler(req, res) {
         );
         res.json({ message: "Logged out" });
       }
-      if (!authType || authType !== "string") {
-        res.json({ ok: 0, message: "authType is required" });
-      }
     } catch (error) {
       console.log(error);
-
       res.json({ message: "Something went wrong..." });
     } finally {
       client.close();
