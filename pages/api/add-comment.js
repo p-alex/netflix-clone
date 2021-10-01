@@ -1,5 +1,6 @@
 import { MongoClient, ObjectId } from "mongodb";
 import withProtect from "../../middleware/withProtect";
+import { sanitizeInput } from "../../sanitizeInput";
 const addCommentHandler = async (req, res) => {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -21,7 +22,7 @@ const addCommentHandler = async (req, res) => {
         console.log(updatedCommentsArray);
         const theResult = await moviesCollection.updateOne(
           {
-            _id: ObjectId(req.body.comment.movieId),
+            _id: ObjectId(sanitizeInput(req.body.comment.movieId)),
           },
           { $set: { comments: updatedCommentsArray } }
         );
