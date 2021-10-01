@@ -12,7 +12,7 @@ const cleanComment = (comment) => {
     typeof movieId === "string" &&
     typeof commentId === "string"
   ) {
-    let clean = { ...comment, text: sanitizeInput(text), stars: Number(stars) };
+    let clean = comment;
     return clean;
   } else {
     return null;
