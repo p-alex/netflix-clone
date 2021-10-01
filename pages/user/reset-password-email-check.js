@@ -36,8 +36,7 @@ export default function resetPasswordEmailCheck() {
     });
     const resultJSON = await result.json();
 
-    if (resultJSON.message === "Sent")
-      setFeedback("We sent you an email if the account exists");
+    setFeedback("We sent you an email if the account exists");
   };
 
   return (

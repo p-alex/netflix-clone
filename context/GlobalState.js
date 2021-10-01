@@ -14,12 +14,6 @@ export default function GlobalState({ children }) {
     setSearchQuery(e.target.value);
   };
 
-  // const handleToggleSearchBar = () =>
-  //   setSearchBarState((prevState) => ({
-  //     ...prevState,
-  //     toggleSearchBar: !prevState.toggleSearchBar,
-  //   }));
-
   const handleClearSearchQuery = () => setSearchQuery("");
 
   const handleToggleOffSearchBar = () => setIsSearchBarActive(false);
@@ -146,7 +140,7 @@ export default function GlobalState({ children }) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ commentInfo }),
+      body: JSON.stringify(commentInfo),
     });
     const resultJson = await result.json();
   };
@@ -169,7 +163,7 @@ export default function GlobalState({ children }) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ editedComment }),
+      body: JSON.stringify(editedComment),
     });
     const resultJson = await result.json();
   };

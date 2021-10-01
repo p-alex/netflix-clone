@@ -1,17 +1,16 @@
 import { MongoClient, ObjectId } from "mongodb";
 import withProtect from "../../middleware/withProtect";
-import { sanitizeInput } from "../../sanitizeInput";
 
 const cleanComment = (comment) => {
   const { username, profileImg, text, stars, movieId, commentId } = comment;
   let clean = {
     ...comment,
-    username: sanitizeInput(username),
+    username: `${username}`,
     profileImg: `${profileImg}`,
     text: `${text}`,
     stars: Number(stars),
-    movieId: `${sanitizeInput(movieId)}`,
-    commentId: `${sanitizeInput(commentId)}`,
+    movieId: `${movieId}`,
+    commentId: `${commentId}`,
   };
   return clean;
 };
@@ -41,7 +40,7 @@ const addCommentHandler = async (req, res) => {
 
         const theResult = await moviesCollection.updateOne(
           {
-            _id: ObjectId(sanitizeInput(commentcomment.movieId)),
+            _id: ObjectId(sanitizeInput(comment.movieId)),
           },
           { $set: { comments: updatedCommentsArray } }
         );

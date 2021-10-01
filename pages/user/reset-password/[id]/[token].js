@@ -19,13 +19,6 @@ export default function resetPassword() {
     confirmPassword: "",
   });
 
-  const [passwordValidation, setPasswordValidation] = useState({
-    passwordAtLeastOneUppercaseAndLowercase: false,
-    passwordAtLeastOneNumber: false,
-    passwordAtLeastOneSpecial: false,
-    passwordAtLeastEightCharacters: false,
-  });
-
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,

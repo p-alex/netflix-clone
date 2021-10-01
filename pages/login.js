@@ -50,11 +50,6 @@ export default function login() {
       if (resultJSON.message === "Logged in!") {
         router.push("/");
       } else {
-        setInputs((prevState) => ({
-          ...prevState,
-          email: "",
-          password: "",
-        }));
         setFeedback(resultJSON.message);
       }
     } catch {

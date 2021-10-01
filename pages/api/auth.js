@@ -2,13 +2,12 @@ import { MongoClient } from "mongodb";
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import sgMail from "@sendgrid/mail";
+//import sgMail from "@sendgrid/mail";
 export default async function authHandler(req, res) {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-
   const usersCollection = client.db().collection("users");
   const nonVerifiedUsersCollection = client
     .db()
@@ -19,16 +18,16 @@ export default async function authHandler(req, res) {
     try {
       if (authType === "register") {
         //-----------REGISTER-----------
-        const { username, email, password, confirmPassword, date } = req.body;
-
+        const { username, email, password, confirmPassword } = req.body;
         if (!username || !email || !password || !confirmPassword)
           return res.json({ message: "Please fill in all fields" });
 
-        //idk if i need this or not but im doing it anyway :)
         if (
           typeof username !== "string" ||
           typeof email !== "string" ||
-          typeof password !== "string"
+          typeof password !== "string" ||
+          typeof confirmPassword !== "string" ||
+          typeof authType !== "string"
         ) {
           return res.json({ ok: 0, message: "Bruh...." });
         }
@@ -136,7 +135,7 @@ export default async function authHandler(req, res) {
         //     });
         //   });
 
-        //console.log(`http://localhost:3000/user/verify/${token}`);
+        console.log(`http://localhost:3000/user/verify/${token}`);
         return res.json({
           ok: 1,
           message:
@@ -149,6 +148,10 @@ export default async function authHandler(req, res) {
 
         if (!email || !password)
           return res.json({ message: "Please fill in all fields" });
+
+        if (typeof email !== "string" || typeof password !== "string") {
+          return res.json({ ok: 0, message: "Bruh...." });
+        }
 
         const user = await usersCollection.findOne({ email });
 

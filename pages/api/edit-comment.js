@@ -1,5 +1,19 @@
 import { MongoClient, ObjectId } from "mongodb";
 import withProtect from "../../middleware/withProtect";
+const cleanEditedComment = (editedComment) => {
+  const { username, profileImg, text, stars, movieId, commentId } =
+    editedComment;
+  let clean = {
+    ...editedComment,
+    username: `${username}`,
+    profileImg: `${profileImg}`,
+    text: `${text}`,
+    stars: Number(stars),
+    movieId: `${movieId}`,
+    commentId: `${commentId}`,
+  };
+  return clean;
+};
 const editCommentHandler = async (req, res) => {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -10,20 +24,20 @@ const editCommentHandler = async (req, res) => {
       const usersCollection = client.db().collection("users");
       const moviesCollection = client.db().collection("movies");
       const user = await usersCollection.findOne({ _id: ObjectId(req.userId) });
-
-      if (user.username && req.body.editedComment.commentId) {
+      const editedComment = cleanEditedComment(req.body);
+      if (user.username && editedComment.commentId) {
         const movieToEditComment = await moviesCollection.findOne({
-          _id: ObjectId(req.body.editedComment.movieId),
+          _id: ObjectId(editedComment.movieId),
         });
         const oldCommentsArray = movieToEditComment.comments;
         const updatedCommentsArray = oldCommentsArray.map((comment) => {
-          if (comment.commentId === req.body.editedComment.commentId) {
-            return req.body.editedComment;
+          if (comment.commentId === editedComment.commentId) {
+            return editedComment;
           }
           return comment;
         });
         const theResult = await moviesCollection.updateOne(
-          { _id: ObjectId(req.body.editedComment.movieId) },
+          { _id: ObjectId(editedComment.movieId) },
           { $set: { comments: updatedCommentsArray } }
         );
         if (theResult.result.ok) {

@@ -7,7 +7,7 @@ import FullscreenLoader from "../components/FullscreenLoader/FullscreenLoader";
 import MovieSlider from "../components/MovieSlider/MovieSlider";
 import Modal from "../components/Modal/Modal";
 import Head from "next/head";
-
+import DOMPurify from "dompurify";
 import pageWrapperStyles from "../styles/PageWrapperStyles.module.css";
 export default function Home() {
   const context = useContext(ProjectContext);
@@ -16,7 +16,6 @@ export default function Home() {
   useEffect(() => {
     if (allMovies.length === 0) handleGetAllMovies();
   }, []);
-
   const filterAllMovies = () => {
     if (allMovies.length && movieList) {
       const theArray = [];

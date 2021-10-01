@@ -1,18 +1,26 @@
 import { MongoClient, ObjectId } from "mongodb";
 import withProtect from "../../middleware/withProtect";
-
+const cleanCommentInfo = (commentInfo) => {
+  const { movieId, commentId } = commentInfo;
+  let clean = {
+    ...commentInfo,
+    movieId: `${movieId}`,
+    commentId: `${commentId}`,
+  };
+  return clean;
+};
 const deleteCommentHanlder = async (req, res) => {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  const { commentId, movieId } = req.body.commentInfo;
+  const commentInfo = cleanCommentInfo(req.body);
   try {
     if (req.method === "POST") {
       const usersCollection = client.db().collection("users");
       const moviesCollection = client.db().collection("movies");
       const user = await usersCollection.findOne({ _id: ObjectId(req.userId) });
-      if (user?.username && req.body?.commentInfo) {
+      if (user.username && commentInfo) {
         const deleteCommentFromMovie = await moviesCollection.findOne({
           _id: ObjectId(movieId),
         });
@@ -21,7 +29,7 @@ const deleteCommentHanlder = async (req, res) => {
           (co) => co.commentId !== commentId
         );
         const theResult = await moviesCollection.updateOne(
-          { _id: ObjectId(movieId) },
+          { _id: ObjectId(commentInfo.movieId) },
           { $set: { comments: updatedCommentsArray } }
         );
         if (theResult.result.ok) {

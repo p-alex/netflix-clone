@@ -45,7 +45,7 @@ export default function CommentBox({
     setUpdatedComment((prevState) => ({ ...prevState, stars: value }));
   };
 
-  const handleEditSubmit = async () => {
+  const handleSubmit = async () => {
     if (updatedComment.stars !== 0) {
       console.time("replace comment time in ms");
       handleEditComment(updatedComment);
@@ -146,10 +146,7 @@ export default function CommentBox({
         <p className={styles.commentBox__commentText}>{text}</p>
       )}
       {isEditMode && (
-        <button
-          className={styles.commentBox__editBtn}
-          onClick={handleEditSubmit}
-        >
+        <button className={styles.commentBox__editBtn} onClick={handleSubmit}>
           Edit
         </button>
       )}
