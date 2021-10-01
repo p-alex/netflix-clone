@@ -13,7 +13,7 @@ const commentSanitize = (comment) => {
   ) {
     return null;
   } else {
-    return sanitize(comment);
+    return sanitize({ ...comment });
   }
 };
 const addCommentHandler = async (req, res) => {
