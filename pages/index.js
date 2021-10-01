@@ -7,8 +7,8 @@ import FullscreenLoader from "../components/FullscreenLoader/FullscreenLoader";
 import MovieSlider from "../components/MovieSlider/MovieSlider";
 import Modal from "../components/Modal/Modal";
 import Head from "next/head";
-import DOMPurify from "dompurify";
 import pageWrapperStyles from "../styles/PageWrapperStyles.module.css";
+import sanitize from "mongo-sanitize";
 export default function Home() {
   const context = useContext(ProjectContext);
   const { selectedMovie, allMovies, isLoading, handleGetAllMovies } = context;
@@ -29,7 +29,6 @@ export default function Home() {
       return theArray;
     }
   };
-
   return (
     <>
       <Head>

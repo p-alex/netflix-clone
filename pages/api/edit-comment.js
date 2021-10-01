@@ -14,7 +14,7 @@ const commentSanitize = (editedComment) => {
   ) {
     return null;
   } else {
-    return sanitize(editedComment);
+    return sanitize({ ...editedComment });
   }
 };
 const editCommentHandler = async (req, res) => {

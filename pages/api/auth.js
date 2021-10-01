@@ -16,12 +16,24 @@ export default async function authHandler(req, res) {
 
   if (req.method === "POST") {
     const { authType } = sanitize(req.body);
+    if (authType === null)
+      return res.json({
+        ok: 0,
+        message: "authType is expected to be a string",
+      });
     try {
       if (authType === "register") {
         //-----------REGISTER-----------
-        const { username, email, password, confirmPassword, date } = sanitize(
-          req.body
-        );
+        const {
+          username,
+          email,
+          password,
+          confirmPassword,
+          date,
+          movieList,
+          isRegister,
+        } = sanitize(req.body);
+        console.log(typeof req.body.movieList);
         if (!username || !email || !password || !confirmPassword)
           return res.json({ message: "Please fill in all fields" });
 
@@ -30,7 +42,10 @@ export default async function authHandler(req, res) {
           typeof email !== "string" ||
           typeof password !== "string" ||
           typeof confirmPassword !== "string" ||
-          typeof authType !== "string"
+          typeof authType !== "string" ||
+          typeof date !== "number" ||
+          typeof movieList !== "object" ||
+          typeof isRegister !== "boolean"
         ) {
           return res.json({ ok: 0, message: "Bruh...." });
         }
@@ -212,11 +227,8 @@ export default async function authHandler(req, res) {
         );
         res.json({ message: "Logged out" });
       }
-
-      if (authType === "disabled") {
-        res.json({
-          message: "Creating accounts is disabled until i fix stuff",
-        });
+      if (!authType || authType !== "string") {
+        res.json({ ok: 0, message: "authType is required" });
       }
     } catch (error) {
       console.log(error);

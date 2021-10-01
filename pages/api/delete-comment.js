@@ -6,7 +6,7 @@ const commentSanitize = (commentToDelete) => {
   if (typeof movieId !== "string" || typeof commentId !== "string") {
     return null;
   } else {
-    return sanitize(commentToDelete);
+    return sanitize({ ...commentToDelete });
   }
 };
 const deleteCommentHanlder = async (req, res) => {

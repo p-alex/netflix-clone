@@ -1,13 +1,24 @@
 import { MongoClient, ObjectId } from "mongodb";
 import withProtect from "../../middleware/withProtect";
 import sanitize from "mongo-sanitize";
-
+const cleanImage = (imgUrl) => {
+  if (typeof imgUrl !== "string") {
+    return null;
+  } else if (
+    /(\/images\/default-profile-pictures\/image-)([0-9]{1,2}).jpg/g.test(imgUrl)
+  ) {
+    return sanitize(imgUrl);
+  } else {
+    return null;
+  }
+};
 const changeProfilePictureHandler = async (req, res) => {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  const image = sanitize(req.body);
+  const image = cleanImage(req.body);
+  if (image === null) return res.json({ ok: 0, message: "Invalid image URL" });
   if (req.method === "POST") {
     try {
       const userCollection = await client.db().collection("users");

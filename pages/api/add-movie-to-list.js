@@ -1,7 +1,16 @@
 import { MongoClient, ObjectId } from "mongodb";
 import withProtect from "../../middleware/withProtect";
 import sanitize from "mongo-sanitize";
+const cleanMovieId = (id) => {
+  let movieId = id;
+  if (movieId !== "string") {
+    return null;
+  } else {
+    return sanitize(movieId);
+  }
+};
 async function addMovieToListHandler(req, res) {
+  console.log(req.body);
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -14,7 +23,9 @@ async function addMovieToListHandler(req, res) {
 
       const user = await usersCollection.findOne({ _id: ObjectId(req.userId) });
 
-      const movieId = sanitize(req.body.movieId);
+      const movieId = cleanMovieId(req.body.movieId);
+      if (movieId === null)
+        return res.json({ ok: 0, message: "Failed! Expected a string." });
 
       if (movieId && user.username) {
         let oldMovieList = user.movieList;

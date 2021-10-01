@@ -2,6 +2,14 @@ import { MongoClient } from "mongodb";
 import sanitize from "mongo-sanitize";
 //import sgMail from "@sendgrid/mail";
 import jwt from "jsonwebtoken";
+const cleanEmail = (theEmail) => {
+  const { email } = theEmail;
+  if (typeof email !== "string") {
+    return null;
+  } else {
+    return sanitize({ ...theEmail });
+  }
+};
 export default async function passwordResetSendEmailHandler(req, res) {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -10,8 +18,11 @@ export default async function passwordResetSendEmailHandler(req, res) {
   const usersCollection = client.db().collection("users");
   //sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
   if (req.method === "POST") {
+    console.log(req.body);
     try {
-      const { email } = sanitize(req.body);
+      const { email } = cleanEmail(req.body);
+      if (email === null)
+        return res.json({ ok: 0, message: "Failed! Expected a string." });
       const user = await usersCollection.findOne({ email });
       if (user?.email) {
         let token = await jwt.sign({ id: user._id }, process.env.SECRET, {
