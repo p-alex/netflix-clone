@@ -98,7 +98,7 @@ export default function GlobalState({ children }) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(movieId),
+      body: JSON.stringify({ movieId }),
     });
     const resultJSON = await result.json();
   };
