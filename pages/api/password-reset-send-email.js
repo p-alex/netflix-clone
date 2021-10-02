@@ -16,7 +16,7 @@ export default async function passwordResetSendEmailHandler(req, res) {
     useUnifiedTopology: true,
   });
   const usersCollection = client.db().collection("users");
-  //sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+  sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
   if (req.method === "POST") {
     console.log(req.body);
     try {
