@@ -1,6 +1,13 @@
 import { MongoClient, ObjectId } from "mongodb";
 import jwt from "jsonwebtoken";
 import sanitize from "mongo-sanitize";
+const cleanToken = (token) => {
+  if (token !== "string") {
+    return null;
+  } else {
+    return token;
+  }
+};
 export default async function verifyTokenHandler(req, res) {
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -9,7 +16,7 @@ export default async function verifyTokenHandler(req, res) {
   const collection = client.db().collection("users");
   if (req.method === "POST") {
     try {
-      const token = req.headers.authorization.split(" ")[1];
+      const token = cleanToken(req.headers.authorization.split(" ")[1]);
       if (token) {
         let decoded = await jwt.verify(
           token,
@@ -21,20 +28,21 @@ export default async function verifyTokenHandler(req, res) {
         );
 
         if (!decoded?.id) {
-          return res.json({ message: "Invalid signiture" });
+          return res.json({ ok: 0, message: "Invalid signiture" });
         }
+
         const user = await collection.findOne({ _id: ObjectId(decoded.id) });
         if (user?.username) {
-          return res.json({
-            message: "Authorized",
-          });
+          return res.json({ ok: 1, message: "Authorized" });
         } else {
-          return res.json({ message: "That user doesn't exist" });
+          return res.json({ ok: 0, message: "That user doesn't exist" });
         }
+      } else {
+        return res.json({ ok: 0, message: "Token incorrect" });
       }
     } catch (error) {
       console.log(error);
-      return res.json(error.message);
+      return res.json({ ok: 0, message: "Something went wrong" });
     } finally {
       client.close();
     }
