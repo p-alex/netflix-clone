@@ -44,7 +44,7 @@ export default async function passwordReset(req, res) {
       if (user?._id) {
         const hashedPassword = await bcrypt.hash(
           passwordResetInfo.password,
-          12
+          Number(process.env.SALT_ROUNDS)
         );
         if (hashedPassword) {
           await collection.updateOne(

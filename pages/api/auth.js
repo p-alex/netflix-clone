@@ -103,7 +103,10 @@ export default async function authHandler(req, res) {
         if (password !== confirmPassword)
           return res.json({ ok: 0, message: "Passwords must match" });
 
-        const hashedPassword = await bcrypt.hash(password, 12);
+        const hashedPassword = await bcrypt.hash(
+          password,
+          Number(process.env.SALT_ROUNDS)
+        );
 
         const result = await nonVerifiedUsersCollection.insertOne({
           username,
