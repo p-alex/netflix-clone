@@ -1,29 +1,27 @@
 import { MongoClient, ObjectId } from "mongodb";
 import withProtect from "../../middleware/withProtect";
-import sanitize from "mongo-sanitize";
 const cleanMovieId = (id) => {
   let movieId = id;
-  if (movieId !== "string") {
+  console.log(movieId);
+  if (typeof movieId !== "string") {
     return null;
   } else {
-    return sanitize(movieId);
+    return movieId;
   }
 };
 async function addMovieToListHandler(req, res) {
-  console.log(req.body);
   const client = await MongoClient.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
 
   if (req.method === "POST") {
-    console.log(req.body);
     try {
       const usersCollection = client.db().collection("users");
 
       const user = await usersCollection.findOne({ _id: ObjectId(req.userId) });
 
-      const movieId = cleanMovieId(req.body.movieId);
+      let movieId = cleanMovieId(req.body.movieId);
       if (movieId === null)
         return res.json({ ok: 0, message: "Failed! Expected a string." });
 
@@ -33,7 +31,6 @@ async function addMovieToListHandler(req, res) {
         if (!oldMovieList.some((item) => item === movieId)) {
           // ADDING MOVIE ID TO MOVIE LIST
           let updatedMovieList = [movieId, ...oldMovieList];
-          console.log("here");
           const updateMovieList = await usersCollection.updateOne(
             { _id: ObjectId(req.userId) },
             { $set: { movieList: updatedMovieList } }
