@@ -23,7 +23,7 @@ export default async function verifyTokenHandler(req, res) {
         if (!decoded?.id) {
           return res.json({ message: "Invalid signiture" });
         }
-        const user = await collection.findOne({ _id: ObjectId(decodedId.id) });
+        const user = await collection.findOne({ _id: ObjectId(decoded.id) });
         if (user?.username) {
           return res.json({
             message: "Authorized",

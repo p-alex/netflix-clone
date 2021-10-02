@@ -16,7 +16,7 @@ export default async function passwordResetSendEmailHandler(req, res) {
     useUnifiedTopology: true,
   });
   const usersCollection = client.db().collection("users");
-  sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+
   if (req.method === "POST") {
     console.log(req.body);
     try {
@@ -28,7 +28,7 @@ export default async function passwordResetSendEmailHandler(req, res) {
         let token = await jwt.sign({ id: user._id }, process.env.SECRET, {
           expiresIn: "15m",
         });
-
+        sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
         if (token) {
           const msg = {
             to: email,
