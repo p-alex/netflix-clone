@@ -2,7 +2,7 @@ import { MongoClient, ObjectId } from "mongodb";
 import jwt from "jsonwebtoken";
 import sanitize from "mongo-sanitize";
 const cleanToken = (token) => {
-  if (token !== "string") {
+  if (typeof token !== "string") {
     return null;
   } else {
     return token;
@@ -16,7 +16,7 @@ export default async function verifyTokenHandler(req, res) {
   const collection = client.db().collection("users");
   if (req.method === "POST") {
     try {
-      const token = cleanToken(req.headers.authorization.split(" ")[1]);
+      let token = cleanToken(req.headers.authorization.split(" ")[1]);
       if (token) {
         let decoded = await jwt.verify(
           token,
