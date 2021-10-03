@@ -11,6 +11,7 @@ export default function InputGroup({
   handleChangeFunc,
   usernameForValidation,
   passwordForValidation,
+  inputValue,
 }) {
   const [usernameValidation, setUsernameValidation] = useState({
     usernameBetweenFiveAndTwelveChars: false,
@@ -133,6 +134,7 @@ export default function InputGroup({
                 : null
               : null
           }
+          value={inputValue}
           onFocus={
             inputFor === "register" || inputFor === "resetPassword"
               ? setName === "password"

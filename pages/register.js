@@ -10,6 +10,7 @@ import Logo from "../components/Logo/Logo";
 import Head from "next/head";
 import styles from "../styles/Register.module.css";
 export default function register() {
+  const [isLoading, setIsLoading] = useState(false);
   const [inputs, setInputs] = useState({
     username: "",
     email: "",
@@ -17,26 +18,42 @@ export default function register() {
     confirmPassword: "",
     isRegister: true,
   });
-
+  const handleResetInputs = () =>
+    setInputs((prevState) => ({
+      ...prevState,
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    }));
   const inputList = [
     {
       label: "Username",
       setNameId: "username",
       type: "text",
       placeholder: " ",
+      value: inputs.username,
     },
-    { label: "E-mail", setNameId: "email", type: "email", placeholder: " " },
+    {
+      label: "E-mail",
+      setNameId: "email",
+      type: "email",
+      placeholder: " ",
+      value: inputs.email,
+    },
     {
       label: "Password",
       setNameId: "password",
       type: "password",
       placeholder: " ",
+      value: inputs.password,
     },
     {
       label: "Confirm Password",
       setNameId: "confirmPassword",
       type: "password",
       placeholder: " ",
+      value: inputs.confirmPassword,
     },
   ];
 
@@ -50,6 +67,7 @@ export default function register() {
   };
 
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     let url =
       process.env.NODE_ENV === "development"
@@ -70,10 +88,16 @@ export default function register() {
       });
 
       const resultJSON = await result.json();
-
+      if (resultJSON.ok) {
+        handleResetInputs();
+        setIsLoading(false);
+      } else {
+        setIsLoading(false);
+      }
       setFeedback(resultJSON.message);
     } catch (error) {
-      console.log(error);
+      setIsLoading(false);
+      setFeedback(error);
     }
   };
 
@@ -100,10 +124,11 @@ export default function register() {
                 setLabel={input.label}
                 handleChangeFunc={handleChange}
                 autoFocus={id === 0 && true}
+                inputValue={input.value}
               />
             );
           })}
-          <SubmitButton>Register</SubmitButton>
+          <SubmitButton isDisabled={isLoading}>Register</SubmitButton>
           <p>
             Already have an account? <Link href="/login">Login now</Link>
           </p>

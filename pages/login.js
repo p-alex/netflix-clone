@@ -12,25 +12,35 @@ import Head from "next/head";
 import styles from "../styles/Login.module.css";
 export default function login() {
   const router = useRouter();
-
+  const [isLoading, setIsLoading] = useState(false);
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
+    authType: "login",
   });
-
+  const handleResetInputs = () =>
+    setInputs((prevState) => ({ ...prevState, email: "", password: "" }));
   const [feedback, setFeedback] = useState("");
 
   const inputList = [
-    { label: "E-mail", setNameId: "email", type: "email", placeholder: " " },
+    {
+      label: "E-mail",
+      setNameId: "email",
+      type: "email",
+      placeholder: " ",
+      value: inputs.email,
+    },
     {
       label: "Password",
       setNameId: "password",
       type: "password",
       placeholder: " ",
+      value: inputs.password,
     },
   ];
 
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     let url =
       process.env.NODE_ENV === "development"
@@ -42,17 +52,22 @@ export default function login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...inputs, authType: "login" }),
+        body: JSON.stringify({ ...inputs }),
       });
 
       const resultJSON = await result.json();
 
-      if (resultJSON.message === "Logged in!") {
+      if (resultJSON.ok) {
+        handleResetInputs();
+        setIsLoading(false);
         router.push("/");
       } else {
-        setFeedback(resultJSON.message);
+        setIsLoading(false);
       }
+      setFeedback(resultJSON.message);
     } catch {
+      handleResetInputs();
+      setIsLoading(false);
       setFeedback("Something went wrong... Try again later.");
     }
   };
@@ -85,10 +100,11 @@ export default function login() {
                 setLabel={input.label}
                 handleChangeFunc={handleChange}
                 autoFocus={id === 0 && true}
+                inputValue={input.value}
               />
             );
           })}
-          <SubmitButton>Login</SubmitButton>
+          <SubmitButton isDisabled={isLoading}>Login</SubmitButton>
           <p>
             Need an account? <Link href="/register">Register now</Link>
           </p>

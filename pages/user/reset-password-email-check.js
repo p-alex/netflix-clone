@@ -13,7 +13,8 @@ export default function resetPasswordEmailCheck() {
   const [inputs, setInputs] = useState({
     email: "",
   });
-
+  const [isLoading, setIsLoading] = useState(false);
+  const handleResetInputs = () => setInputs({ email: "" });
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
@@ -22,6 +23,7 @@ export default function resetPasswordEmailCheck() {
   };
 
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     let url =
       process.env.NODE_ENV === "development"
@@ -36,7 +38,9 @@ export default function resetPasswordEmailCheck() {
     });
     const resultJSON = await result.json();
 
-    setFeedback("We sent you an email if the account exists");
+    handleResetInputs();
+    setIsLoading(false);
+    setFeedback(resultJSON.message);
   };
 
   return (
@@ -56,8 +60,9 @@ export default function resetPasswordEmailCheck() {
             setType="email"
             handleChangeFunc={handleChange}
             autoFocus={true}
+            inputValue={inputs.email}
           />
-          <SubmitButton>Send email</SubmitButton>
+          <SubmitButton isDisabled={isLoading}>Send email</SubmitButton>
           <p>
             <Link href="/login">Go Back</Link>
           </p>

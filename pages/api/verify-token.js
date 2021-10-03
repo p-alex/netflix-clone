@@ -1,6 +1,5 @@
 import { MongoClient, ObjectId } from "mongodb";
 import jwt from "jsonwebtoken";
-import sanitize from "mongo-sanitize";
 const cleanToken = (token) => {
   if (typeof token !== "string") {
     return null;

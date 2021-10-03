@@ -37,7 +37,7 @@ export default async function passwordReset(req, res) {
               `,
         });
       if (passwordResetInfo.password !== passwordResetInfo.confirmPassword)
-        return res.json({ message: "Passwords must match." });
+        return res.json({ ok: 0, message: "Passwords must match." });
       const user = await collection.findOne({
         _id: ObjectId(passwordResetInfo.id),
       });
@@ -52,14 +52,14 @@ export default async function passwordReset(req, res) {
             { $set: { password: hashedPassword } }
           );
 
-          return res.json({ message: "Success" });
+          return res.json({ ok: 1, message: "Success" });
         }
       } else {
-        res.json({ message: "failed" });
+        return res.json({ ok: 0, message: "failed" });
       }
     } catch (error) {
       console.log(error);
-      res.json({ message: error });
+      return res.json({ ok: 0, message: error });
     } finally {
       client.close();
     }

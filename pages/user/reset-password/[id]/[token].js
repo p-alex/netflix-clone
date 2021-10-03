@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
-
 import FullscreenWrapper from "../../../../components/FullscreenWrapper/FullscreenWrapper";
 import Form from "../../../../components/Form/Form";
 import InputGroup from "../../../../components/InputGroup/InputGroup";
@@ -13,7 +12,8 @@ export default function resetPassword() {
   const router = useRouter();
 
   const [feedback, setFeedback] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [hideInputFields, setHideInputFields] = useState(false);
   const [inputs, setInputs] = useState({
     password: "",
     confirmPassword: "",
@@ -28,6 +28,7 @@ export default function resetPassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     let url =
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000"
@@ -40,9 +41,14 @@ export default function resetPassword() {
       body: JSON.stringify({ ...inputs, id: router.query.id }),
     });
     const resultJSON = await result.json();
+    if (resultJSON.ok) {
+      setHideInputFields(!hideInputFields);
+    } else {
+      setIsLoading(false);
+    }
     setFeedback(resultJSON.message);
   };
-
+  console.log(hideInputFields);
   return (
     <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.webp)"}>
       <Head>
@@ -53,26 +59,32 @@ export default function resetPassword() {
           <Logo type="big" margin="0 auto 50px auto" maxWidth="160px" />
           <p>{feedback && feedback}</p>
           {feedback === "Success" && <Link href="/login">Login</Link>}
-          <InputGroup
-            setId="password"
-            inputFor="resetPassword"
-            passwordForValidation={inputs.password}
-            setLabel="New password"
-            setName="password"
-            setPlaceholder=" "
-            setType="password"
-            handleChangeFunc={handleChange}
-            autoFocus={true}
-          />
-          <InputGroup
-            setId="confirmPassword"
-            setLabel="Confirm new password"
-            setName="confirmPassword"
-            setPlaceholder=" "
-            setType="password"
-            handleChangeFunc={handleChange}
-          />
-          <SubmitButton>Reset password</SubmitButton>
+          {hideInputFields === false ? (
+            <>
+              <InputGroup
+                setId="password"
+                inputFor="resetPassword"
+                passwordForValidation={inputs.password}
+                setLabel="New password"
+                setName="password"
+                setPlaceholder=" "
+                setType="password"
+                handleChangeFunc={handleChange}
+                autoFocus={true}
+                inputValue={inputs.password}
+              />
+              <InputGroup
+                setId="confirmPassword"
+                setLabel="Confirm new password"
+                setName="confirmPassword"
+                setPlaceholder=" "
+                setType="password"
+                handleChangeFunc={handleChange}
+                inputValue={inputs.confirmPassword}
+              />
+              <SubmitButton isDisabled={isLoading}>Reset password</SubmitButton>
+            </>
+          ) : null}
         </Form>
       </main>
     </FullscreenWrapper>

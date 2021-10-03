@@ -9,3 +9,7 @@
   font-size: 1.2rem;
   font-weight: bold;
 }
+.submitButton:disabled {
+  background: grey;
+  cursor: not-allowed;
+}

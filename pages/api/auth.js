@@ -35,7 +35,7 @@ export default async function authHandler(req, res) {
         } = sanitize(req.body);
         console.log(typeof req.body.movieList);
         if (!username || !email || !password || !confirmPassword)
-          return res.json({ message: "Please fill in all fields" });
+          return res.json({ ok: 0, message: "Please fill in all fields" });
 
         if (
           typeof username !== "string" ||
@@ -51,16 +51,16 @@ export default async function authHandler(req, res) {
         }
 
         //checks if the username is between 5 and 12 characters long
-        const usernameRegexTest = /^[a-zA-Z0-9]{5,12}$/.test(username);
+        const usernameRegexTest = /^[a-zA-Z0-9]{5,12}$/g.test(username);
 
-        //checks if the email looks like this: example@example.example
-        const emailRegexTest = /^([a-zA-Z0-9]*)@([a-z]*)\.([a-z]+)$/.test(
+        //checks if the email is valid
+        const emailRegexTest = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/g.test(
           email
         );
 
         //checks for at least one lowercase and one uppercase letter, at least one number, at least one special character, at least 8 characters long
         const passwordRegexTest =
-          /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*-]).{8,}$/.test(
+          /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*-]).{8,}$/g.test(
             password
           );
 
@@ -127,39 +127,38 @@ export default async function authHandler(req, res) {
             expiresIn: "25m",
           }
         );
-
-        sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
-
-        const msg = {
-          to: email,
-          from: "netflixclonepalex@gmail.com",
-          subject: "Email verification link from Netflixpalexclone",
-          text: "Click the button below to verify your account",
-          html: `<div style='text-align:center;position:relative; width:400px;padding:40px;margin:0 auto;background-color:black;color:white;font-family:Helvetica, sans-serif'><h1>Hi ${username},</h1><br/><br/><p style="color:white;font-size:1.1rem">You have successfully created a Netflixpalexclone account.<br/>Please click on the link below to verify your email address and complete your registration.</p><br/><br/><a style='display:inline-block;text-decoration:none;background-color:#e50914;padding:15px;color:white;border-radius:5px;font-weight:bold;font-size:1.4rem;font-family:Helvetica, sans-serif;' href="https://netflix-clone-inky-five.vercel.app/user/verify/${token}" rel="noreferrer">Verify your email</a></div>`,
-        };
-
-        sgMail
-          .send(msg)
-          .then(() => {
-            return res.json({
-              ok: 1,
-              message:
-                "Success! We sent you an email to verify your account! Please check your email.",
+        if (process.env.NODE_ENV === "production") {
+          sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+          const msg = {
+            to: email,
+            from: "netflixclonepalex@gmail.com",
+            subject: "Email verification link from Netflixpalexclone",
+            text: "Click the button below to verify your account",
+            html: `<div style='text-align:center;position:relative; width:400px;padding:40px;margin:0 auto;background-color:black;color:white;font-family:Helvetica, sans-serif'><h1>Hi ${username},</h1><br/><br/><p style="color:white;font-size:1.1rem">You have successfully created a Netflixpalexclone account.<br/>Please click on the link below to verify your email address and complete your registration.</p><br/><br/><a style='display:inline-block;text-decoration:none;background-color:#e50914;padding:15px;color:white;border-radius:5px;font-weight:bold;font-size:1.4rem;font-family:Helvetica, sans-serif;' href="https://netflix-clone-inky-five.vercel.app/user/verify/${token}" rel="noreferrer">Verify your email</a><br/><br/><p>If that doesn't work, copy and paste the following link in your browser:<br/><br/>https://netflix-clone-inky-five.vercel.app/user/verify/${token}</p></div></div>`,
+          };
+          sgMail
+            .send(msg)
+            .then(() => {
+              return res.json({
+                ok: 1,
+                message:
+                  "Success! We sent you an email to verify your account! Please check your email.",
+              });
+            })
+            .catch((error) => {
+              return res.json({
+                ok: 0,
+                message: "Something went wrong! Please try again later.",
+              });
             });
-          })
-          .catch((error) => {
-            return res.json({
-              ok: 0,
-              message: "Something went wrong! Please try again later.",
-            });
+        } else {
+          console.log(`http://localhost:3000/user/verify/${token}`);
+          return res.json({
+            ok: 1,
+            message:
+              "Success! We sent you an email to verify your account! Please check your email.",
           });
-
-        // console.log(`http://localhost:3000/user/verify/${token}`);
-        // return res.json({
-        //   ok: 1,
-        //   message:
-        //     "Success! We sent you an email to verify your account! Please check your email.",
-        // });
+        }
       }
       if (authType === "login") {
         //-----------LOGIN-----------
@@ -182,10 +181,11 @@ export default async function authHandler(req, res) {
         const isValidPassword = await bcrypt.compare(password, user.password);
 
         if (!isValidPassword)
-          return res.json({ message: "Wrong email or password" });
+          return res.json({ ok: 0, message: "Wrong email or password" });
 
         if (!user.isVerified)
           return res.json({
+            ok: 0,
             message: "Your account isn't verified! Please check your email.",
           });
 
@@ -205,6 +205,7 @@ export default async function authHandler(req, res) {
             })
           );
           return res.json({
+            ok: 1,
             message: "Logged in!",
             user: {
               username: user.username,
@@ -227,11 +228,11 @@ export default async function authHandler(req, res) {
             expires: new Date(0),
           })
         );
-        res.json({ message: "Logged out" });
+        res.json({ ok: 1, message: "Logged out" });
       }
     } catch (error) {
       console.log(error);
-      res.json({ message: "Something went wrong..." });
+      res.json({ ok: 0, message: "Something went wrong..." });
     } finally {
       client.close();
     }
