@@ -146,7 +146,7 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
 
   return (
     <>
-      {movies.length && (
+      {movies?.length && (
         <div className={styles.slider} id={`slider` + sliderId}>
           <div className={styles.slider__title}>
             <h2>{sliderTitle}</h2>
