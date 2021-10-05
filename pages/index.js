@@ -18,20 +18,19 @@ export default function Home() {
     if (allMovies.length === 0) handleGetAllMovies();
   }, []);
 
-  useEffect(() => {
-    if (allMovies.length && typeof movieList !== undefined) {
-      let myListMovies = [];
-      for (let movie in allMovies) {
-        for (let movieFromList in movieList) {
-          if (allMovies[movie]._id === movieList[movieFromList]) {
-            myListMovies.push(allMovies[movie]);
+  const filterAllMovies = () => {
+    if (allMovies.length && movieList) {
+      const theArray = [];
+      movieList.map((movieId) => {
+        allMovies.map((movie) => {
+          if (movie._id === movieId) {
+            theArray.push(movie);
           }
-        }
-      }
-      console.log(myListMovies);
-      setMyListMovies(myListMovies);
+        });
+      });
+      return theArray;
     }
-  }, [allMovies]);
+  };
   return (
     <>
       <Head>
@@ -48,7 +47,7 @@ export default function Home() {
               <Banner movies={allMovies} />
 
               <MovieSlider
-                movies={myListMovies}
+                movies={filterAllMovies()}
                 sliderId={"my-list-slider"}
                 sliderTitle={"My List"}
               />
