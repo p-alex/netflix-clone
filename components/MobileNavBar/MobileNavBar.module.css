@@ -6,7 +6,7 @@
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 10;
+  z-index: 100;
   background: rgba(0, 0, 0, 0.8);
   padding: 0 20px;
   height: 52px;
@@ -40,7 +40,7 @@
 .mobileNavBar__menu {
   position: fixed;
   top: 52px;
-  width: 50%;
+  width: 55%;
   height: calc(100vh - 47.6px);
   z-index: 100;
   left: 0;
@@ -53,6 +53,8 @@
   position: relative;
   border-bottom: solid grey 1px;
   padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
 }
 .mobileNavBar__menu__user__profileImgAndUsername {
   display: flex;
@@ -78,6 +80,7 @@
   font-weight: bold;
   font-size: 1rem;
   padding: 8px 0;
+  text-align: left;
 }
 .mobileNavBar__menu__user__buttons button:hover,
 .mobileNavBar__menu__user__buttons a:hover {
