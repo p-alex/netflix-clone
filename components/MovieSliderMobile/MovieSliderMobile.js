@@ -101,7 +101,7 @@ export default function MovieSliderMobile({
 
   return (
     <>
-      {hasMovies && (
+      {movies.length && (
         <div className={styles.slider_container} id={`mobileSlider${sliderId}`}>
           <div className={styles.slider__title}>
             <h2>{sliderTitle}</h2>
