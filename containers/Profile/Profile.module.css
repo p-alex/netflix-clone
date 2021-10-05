@@ -89,4 +89,10 @@
   .profile {
     padding: 0 20px;
   }
+  .profile h1 {
+    font-size: 1.7rem;
+  }
+  .profile h2 {
+    font-size: 1.4rem;
+  }
 }
