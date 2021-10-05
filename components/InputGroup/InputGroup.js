@@ -47,7 +47,6 @@ export default function InputGroup({
       }
     }
   }, [usernameForValidation]);
-  console.log(isUsernameFieldFocused);
   useEffect(() => {
     if (inputFor === "register" || inputFor === "resetPassword") {
       if (setName === "password") {

@@ -20,7 +20,6 @@ export default function MovieSliderMobile({
         if (!entry.isIntersecting) {
           return;
         }
-        console.log(entry.isIntersecting);
         setIsIntersecting(entry.isIntersecting);
         observer.unobserve(entry.target);
       });

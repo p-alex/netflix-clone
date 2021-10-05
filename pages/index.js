@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import ProjectContext from "../context/Project-context";
 import NavBar from "../components/NavBar/NavBar";
 import MobileNavBar from "../components/MobileNavBar/MobileNavBar";
@@ -8,27 +8,30 @@ import MovieSlider from "../components/MovieSlider/MovieSlider";
 import Modal from "../components/Modal/Modal";
 import Head from "next/head";
 import pageWrapperStyles from "../styles/PageWrapperStyles.module.css";
-import sanitize from "mongo-sanitize";
 export default function Home() {
   const context = useContext(ProjectContext);
-  const { selectedMovie, allMovies, isLoading, handleGetAllMovies } = context;
+  const { selectedMovie, allMovies, isLoading, handleGetAllMovies, userData } =
+    context;
   const { movieList } = context.userData;
+  const [myListMovies, setMyListMovies] = useState([]);
   useEffect(() => {
     if (allMovies.length === 0) handleGetAllMovies();
   }, []);
-  const filterAllMovies = () => {
-    if (allMovies.length && movieList) {
-      const theArray = [];
-      movieList.map((movieId) => {
-        allMovies.map((movie) => {
-          if (movie._id === movieId) {
-            theArray.push(movie);
+
+  useEffect(() => {
+    if (allMovies.length && typeof movieList !== undefined) {
+      let myListMovies = [];
+      for (let movie in allMovies) {
+        for (let movieFromList in movieList) {
+          if (allMovies[movie]._id === movieList[movieFromList]) {
+            myListMovies.push(allMovies[movie]);
           }
-        });
-      });
-      return theArray;
+        }
+      }
+      console.log(myListMovies);
+      setMyListMovies(myListMovies);
     }
-  };
+  }, [allMovies]);
   return (
     <>
       <Head>
@@ -45,10 +48,9 @@ export default function Home() {
               <Banner movies={allMovies} />
 
               <MovieSlider
-                movies={filterAllMovies()}
-                sliderId={"1"}
+                movies={myListMovies}
+                sliderId={"my-list-slider"}
                 sliderTitle={"My List"}
-                hasMovies={movieList?.length}
               />
               <MovieSlider
                 movies={allMovies.filter((movie) =>
@@ -56,7 +58,6 @@ export default function Home() {
                 )}
                 sliderId={"2"}
                 sliderTitle={"Action & Adventure"}
-                hasMovies={allMovies?.length}
               />
               <MovieSlider
                 movies={allMovies.filter((movie) =>
@@ -64,7 +65,6 @@ export default function Home() {
                 )}
                 sliderId={"3"}
                 sliderTitle={"Dramas"}
-                hasMovies={allMovies?.length}
               />
               <MovieSlider
                 movies={allMovies
@@ -72,7 +72,6 @@ export default function Home() {
                   .reverse()}
                 sliderId={"4"}
                 sliderTitle={"Sci-Fi"}
-                hasMovies={allMovies?.length}
               />
               <MovieSlider
                 movies={allMovies
@@ -80,7 +79,6 @@ export default function Home() {
                   .reverse()}
                 sliderId={"5"}
                 sliderTitle={"Horror"}
-                hasMovies={allMovies?.length}
               />
               <MovieSlider
                 movies={allMovies
@@ -90,7 +88,6 @@ export default function Home() {
                   .reverse()}
                 sliderId={"6"}
                 sliderTitle={"Children & Family"}
-                hasMovies={allMovies?.length}
               />
               <MovieSlider
                 movies={allMovies
@@ -98,7 +95,6 @@ export default function Home() {
                   .reverse()}
                 sliderId={"7"}
                 sliderTitle={"Anime"}
-                hasMovies={allMovies?.length}
               />
             </>
           )}

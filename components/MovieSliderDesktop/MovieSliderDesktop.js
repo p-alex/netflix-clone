@@ -3,15 +3,10 @@ import ProjectContext from "../../context/Project-context";
 import MovieCard from "../MovieCard/MovieCard";
 import styles from "./MovieSliderDesktop.module.css";
 
-export default function MovieSliderDesktop({
-  movies,
-  sliderId,
-  sliderTitle,
-  hasMovies,
-}) {
+export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
   const context = useContext(ProjectContext);
   const { movieList } = context.userData;
-  const [isCtrlBtnDisabled, setIsControlBtnDisabled] = useState(false);
+
   const [sliderState, setSliderState] = useState({
     cardWidth: 0,
     currentIndex: 0,
@@ -42,7 +37,6 @@ export default function MovieSliderDesktop({
     }
   }, []);
   useEffect(() => {
-    console.log("Movie Slider mounted");
     const sliderCtrlLeft = document.querySelector(
       `#slider_ctrl_left${sliderId}`
     );
@@ -152,53 +146,62 @@ export default function MovieSliderDesktop({
 
   return (
     <>
-      {hasMovies && (
+      {movies.length && (
         <div className={styles.slider} id={`slider` + sliderId}>
           <div className={styles.slider__title}>
             <h2>{sliderTitle}</h2>
           </div>
 
-          {!isCtrlBtnDisabled && (
-            <button
-              className={styles.slider__ctrl + " " + styles.left__ctrl}
-              id={`slider_ctrl_left${sliderId}`}
-              onClick={() => moveSlider("left")}
-              name={`slider_ctrl_left`}
-            >
-              <i className="fas fa-chevron-left"></i>
-            </button>
-          )}
+          <button
+            className={styles.slider__ctrl + " " + styles.left__ctrl}
+            id={`slider_ctrl_left${sliderId}`}
+            onClick={() => moveSlider("left")}
+            name={`slider_ctrl_left`}
+          >
+            <i className="fas fa-chevron-left"></i>
+          </button>
 
-          {!isCtrlBtnDisabled && (
-            <button
-              className={styles.slider__ctrl + " " + styles.right__ctrl}
-              id={`slider_ctrl_right${sliderId}`}
-              onClick={() => moveSlider("right")}
-              name={`slider_ctrl_right`}
-            >
-              <i className="fas fa-chevron-right"></i>
-            </button>
-          )}
+          <button
+            className={styles.slider__ctrl + " " + styles.right__ctrl}
+            id={`slider_ctrl_right${sliderId}`}
+            onClick={() => moveSlider("right")}
+            name={`slider_ctrl_right`}
+          >
+            <i className="fas fa-chevron-right"></i>
+          </button>
 
           <div
             className={styles.slider__row}
             id={`movie_row${sliderId}`}
             style={{ transform: `translateX(-${sliderState.move}px)` }}
           >
-            {isIntersecting &&
-              movies.map((movie, id) => {
-                if (id < 12) {
-                  return (
-                    <MovieCard
-                      key={`movie-card-${movie.name}-${sliderId}`}
-                      movie={movie}
-                      fromSliderWithId={sliderId}
-                    />
-                  );
-                } else {
-                  return;
-                }
-              })}
+            {isIntersecting && sliderId !== "my-list-slider"
+              ? movies.map((movie, id) => {
+                  if (id < 15) {
+                    return (
+                      <MovieCard
+                        key={`movie-card-${movie.name}-${sliderId}`}
+                        movie={movie}
+                        fromSliderWithId={sliderId}
+                      />
+                    );
+                  } else {
+                    return;
+                  }
+                })
+              : movies.map((movie, id) => {
+                  if (id < 15) {
+                    return (
+                      <MovieCard
+                        key={`movie-card-${movie.name}-${sliderId}`}
+                        movie={movie}
+                        fromSliderWithId={sliderId}
+                      />
+                    );
+                  } else {
+                    return;
+                  }
+                })}
           </div>
         </div>
       )}
