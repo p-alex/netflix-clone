@@ -146,7 +146,7 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
 
   return (
     <>
-      {movies?.length && (
+      {movies.length && (
         <div className={styles.slider} id={`slider` + sliderId}>
           <div className={styles.slider__title}>
             <h2>{sliderTitle}</h2>
@@ -175,6 +175,20 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
             id={`movie_row${sliderId}`}
             style={{ transform: `translateX(-${sliderState.move}px)` }}
           >
+            {sliderId === "my-list-slider" &&
+              movies.map((movie, id) => {
+                if (id < 15) {
+                  return (
+                    <MovieCard
+                      key={`movie-card-${movie.name}-${sliderId}`}
+                      movie={movie}
+                      fromSliderWithId={sliderId}
+                    />
+                  );
+                } else {
+                  return;
+                }
+              })}
             {isIntersecting && sliderId !== "my-list-slider"
               ? movies.map((movie, id) => {
                   if (id < 15) {
@@ -189,19 +203,7 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
                     return;
                   }
                 })
-              : movies.map((movie, id) => {
-                  if (id < 15) {
-                    return (
-                      <MovieCard
-                        key={`movie-card-${movie.name}-${sliderId}`}
-                        movie={movie}
-                        fromSliderWithId={sliderId}
-                      />
-                    );
-                  } else {
-                    return;
-                  }
-                })}
+              : null}
           </div>
         </div>
       )}
