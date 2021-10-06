@@ -26,7 +26,7 @@ export default async function verifyTokenHandler(req, res) {
           }
         );
 
-        if (!decoded?.id) {
+        if (!decoded?.id && typeof decoded?.id !== "string") {
           return res.json({ ok: 0, message: "Invalid signiture" });
         }
 
