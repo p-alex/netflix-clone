@@ -26,7 +26,7 @@ export default function CommentSection({ movie }) {
     setComment((prevState) => ({ ...prevState, text: "", stars: 0 }));
 
   const handleSubmit = (comment) => {
-    if (comment.stars !== 0) {
+    if (comment.stars !== 0 && comment.text !== "") {
       const commentObject = {
         ...comment,
         commentId: uuidv4(),
@@ -61,12 +61,14 @@ export default function CommentSection({ movie }) {
 
       <div className={styles.commentSection__writeAComment}>
         <h2>Write a comment</h2>
-
-        <Stars howManyStars={comment.stars} handleSetStars={handleSetStars} />
+        <div className={styles.commentSection__rate}>
+          <p>Rate: </p>
+          <Stars howManyStars={comment.stars} handleSetStars={handleSetStars} />
+        </div>
 
         <textarea
           type="text"
-          placeholder="Comment...(Optional)"
+          placeholder="Comment..."
           value={comment.text}
           onChange={(e) => handleSetText(e)}
         />

@@ -18,6 +18,13 @@
 .commentSection__writeAComment {
   margin: 40px 0 10px 0;
 }
+.commentSection__rate {
+  display: flex;
+  align-items: center;
+}
+.commentSection__rate p {
+  margin-right: 5px;
+}
 .commentSection button {
   width: 100%;
   padding: 10px;

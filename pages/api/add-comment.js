@@ -1,7 +1,7 @@
 import { MongoClient, ObjectId } from "mongodb";
 import withProtect from "../../middleware/withProtect";
 import sanitize from "mongo-sanitize";
-const commentSanitize = (comment) => {
+const cleanComment = (comment) => {
   const { username, profileImg, text, stars, movieId, commentId } = comment;
   if (
     typeof username !== "string" ||
@@ -21,8 +21,8 @@ const addCommentHandler = async (req, res) => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  const comment = commentSanitize(req.body);
-  if (comment === null)
+  const newComment = cleanComment(req.body);
+  if (newComment === null)
     return res.json({ ok: 0, message: "PATHETIC! GET REKT MR. HACKER!!!!" });
 
   if (req.method === "POST") {
@@ -31,17 +31,27 @@ const addCommentHandler = async (req, res) => {
       const moviesCollection = client.db().collection("movies");
       const user = await usersCollection.findOne({ _id: ObjectId(req.userId) });
 
-      if (user.username && comment.movieId) {
+      if (user.username && newComment.movieId) {
         const movieToAddComment = await moviesCollection.findOne({
-          _id: ObjectId(comment.movieId),
+          _id: ObjectId(newComment.movieId),
         });
+
+        movieToAddComment.comments.map((comment) => {
+          if (newComment.commentId === comment.commentId) {
+            return res.json({
+              ok: 0,
+              message: "A comment with that id already exists",
+            });
+          }
+        });
+
         const oldCommentsArray = movieToAddComment.comments;
 
-        const updatedCommentsArray = [comment, ...oldCommentsArray];
+        const updatedCommentsArray = [newComment, ...oldCommentsArray];
 
         const theResult = await moviesCollection.updateOne(
           {
-            _id: ObjectId(comment.movieId),
+            _id: ObjectId(newComment.movieId),
           },
           { $set: { comments: updatedCommentsArray } }
         );
