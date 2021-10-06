@@ -1,4 +1,5 @@
 import { MongoClient, ObjectId } from "mongodb";
+import sanitize from "mongo-sanitize";
 import jwt from "jsonwebtoken";
 const cleanToken = (token) => {
   if (typeof token !== "string") {
@@ -15,7 +16,7 @@ export default async function verifyTokenHandler(req, res) {
   const collection = client.db().collection("users");
   if (req.method === "POST") {
     try {
-      let token = cleanToken(req.headers.authorization.split(" ")[1]);
+      let token = cleanToken(sanitize(req.headers.authorization.split(" ")[1]));
       if (token) {
         let decoded = await jwt.verify(
           token,
@@ -26,7 +27,7 @@ export default async function verifyTokenHandler(req, res) {
           }
         );
 
-        if (!decoded?.id && typeof decoded?.id !== "string") {
+        if (!decoded?.id) {
           return res.json({ ok: 0, message: "Invalid signiture" });
         }
 
