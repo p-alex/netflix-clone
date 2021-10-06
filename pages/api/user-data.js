@@ -9,8 +9,9 @@ const userDataHandler = async (req, res) => {
     try {
       const collection = client.db().collection("users");
       const user = await collection.findOne({ _id: ObjectId(req.userId) });
-      if (user) {
+      if (user?.username) {
         return res.json({
+          ok: 1,
           message: "Found",
           username: user.username,
           profileImg: user.profileImg,
@@ -19,9 +20,9 @@ const userDataHandler = async (req, res) => {
           date: user.date,
         });
       }
-      return res.json({ message: "That user doesn't exist" });
+      return res.json({ ok: 0, message: "That user doesn't exist" });
     } catch (error) {
-      res.json({ message: "Something went wrong" });
+      res.json({ ok: 0, message: "Something went wrong" });
     } finally {
       client.close();
     }

@@ -31,7 +31,6 @@ export default function Search() {
       handleToggleOffSearchBar();
     }
   }, [currentPath]);
-  console.count("Reload");
   return (
     <div
       className={

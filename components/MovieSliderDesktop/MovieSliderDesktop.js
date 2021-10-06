@@ -27,7 +27,6 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
         if (!entry.isIntersecting) {
           return;
         }
-        console.log(entry.isIntersecting);
         setIsIntersecting(entry.isIntersecting);
         observer.unobserve(entry.target);
       });
@@ -70,7 +69,6 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
     });
 
     return () => {
-      console.log("Movie Slider unmounted");
       cards.forEach((card) => {
         card.removeEventListener("mouseover", () => {
           sliderCtrlLeft.style.opacity = "0";

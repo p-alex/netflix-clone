@@ -53,7 +53,7 @@ export default function GlobalState({ children }) {
 
     const result = await fetch(`${url}/api/user-data`);
     const resultJSON = await result.json();
-    if (resultJSON.message !== "Found") {
+    if (!resultJSON.ok) {
       router.push("/login");
     } else {
       setUserData({
@@ -72,7 +72,7 @@ export default function GlobalState({ children }) {
 
     const movieList = await fetch(`${url}/api/movies`);
     const moviesJSON = await movieList.json();
-    if (moviesJSON.message !== "allowed") {
+    if (!moviesJSON.ok) {
       setIsLoading(false);
       router.push("/login");
     } else {
@@ -113,7 +113,7 @@ export default function GlobalState({ children }) {
       return movie;
     });
     setAllMovies(updatedMoviesArray);
-    const result = await fetch(`${url}/api/add-comment`, {
+    const result = await fetch(`${url}/api/comments`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -121,6 +121,7 @@ export default function GlobalState({ children }) {
       body: JSON.stringify(comment),
     });
     const resultJson = await result.json();
+    console.log(resultJson.message);
   };
 
   const handleDeleteComment = async (commentId, movieId) => {
@@ -135,14 +136,15 @@ export default function GlobalState({ children }) {
     });
     setAllMovies(updatedMoviesArray);
 
-    const result = await fetch(`${url}/api/delete-comment`, {
-      method: "POST",
+    const result = await fetch(`${url}/api/comments`, {
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(commentInfo),
     });
     const resultJson = await result.json();
+    console.log(resultJson.message);
   };
 
   const handleEditComment = async (editedComment) => {
@@ -158,14 +160,15 @@ export default function GlobalState({ children }) {
       return movie;
     });
     setAllMovies(updatedMoviesArray);
-    const result = await fetch(`${url}/api/edit-comment`, {
-      method: "POST",
+    const result = await fetch(`${url}/api/comments`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(editedComment),
     });
     const resultJson = await result.json();
+    console.log(resultJson.message);
   };
 
   const handleSelectMovie = (movie) =>

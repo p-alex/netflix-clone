@@ -175,6 +175,7 @@ export default async function authHandler(req, res) {
 
         if (!user)
           return res.json({
+            ok: 0,
             message: "Wrong email or password",
           });
 

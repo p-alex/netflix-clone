@@ -9,12 +9,17 @@ async function moviesHandler(req, res) {
     const collection = client.db().collection("movies");
     try {
       const movies = await collection.find({}).toArray();
-      res.json({
-        message: "allowed",
+      return res.json({
+        ok: 1,
+        message: "Allowed",
         movies,
       });
     } catch {
-      res.json({ message: "Something went wrong...", movies: [] });
+      return res.json({
+        ok: 0,
+        message: "Something went wrong...",
+        movies: [],
+      });
     } finally {
       client.close();
     }
