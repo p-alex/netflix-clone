@@ -1,11 +1,11 @@
 import { MongoClient, ObjectId } from "mongodb";
-import sanitize from "mongo-sanitize";
+
 import jwt from "jsonwebtoken";
-const cleanToken = (token) => {
-  if (typeof token !== "string") {
+const cleanAuthorization = (authorization) => {
+  if (typeof authorization !== "string") {
     return null;
   } else {
-    return token;
+    return authorization;
   }
 };
 export default async function verifyTokenHandler(req, res) {
@@ -16,7 +16,13 @@ export default async function verifyTokenHandler(req, res) {
   const collection = client.db().collection("users");
   if (req.method === "POST") {
     try {
-      let token = cleanToken(sanitize(req.headers.authorization.split(" ")[1]));
+      let cleanAuthorizationHeader = cleanAuthorization(
+        req.header.authorization
+      );
+      if (cleanAuthorization === null) {
+        return res.json({ ok: 0, message: "Authorization must be a string" });
+      }
+      let token = cleanAuthorizationHeader.split(" ")[1];
       if (token) {
         let decoded = await jwt.verify(
           token,
@@ -41,7 +47,6 @@ export default async function verifyTokenHandler(req, res) {
         return res.json({ ok: 0, message: "Token incorrect" });
       }
     } catch (error) {
-      console.log(error);
       return res.json({ ok: 0, message: "Something went wrong" });
     } finally {
       client.close();
