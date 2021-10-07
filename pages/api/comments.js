@@ -83,7 +83,7 @@ const commentsHandler = async (req, res) => {
   }
 
   //   ------------------- EDIT COMMENT -------------------
-  if (req.method === "PATCH") {
+  if (req.method === "PUT") {
     try {
       const editedComment = cleanComment(req.body);
       if (editedComment === null)

@@ -161,7 +161,7 @@ export default function GlobalState({ children }) {
     });
     setAllMovies(updatedMoviesArray);
     const result = await fetch(`${url}/api/comments`, {
-      method: "PATCH",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
