@@ -6,7 +6,7 @@ const cleanAuthorization = (authorization) => {
   if (typeof authorization !== "string") {
     return null;
   } else {
-    return `${authorization}`;
+    return "" + authorization;
   }
 };
 
