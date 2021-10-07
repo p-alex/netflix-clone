@@ -22,7 +22,7 @@ const userDataHandler = async (req, res) => {
       }
       return res.json({ ok: 0, message: "That user doesn't exist" });
     } catch (error) {
-      res.json({ ok: 0, message: "Something went wrong" });
+      return res.json({ ok: 0, message: "Something went wrong" });
     } finally {
       client.close();
     }

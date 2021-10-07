@@ -1,21 +1,18 @@
-import { MongoClient } from "mongodb";
+//Mongoose
+import dbConnect from "../../utils/dbConnect";
+import NonVerifiedUser from "../../models/NonVerifiedUser";
+import User from "../../models/User";
+
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import sanitize from "mongo-sanitize";
 import sgMail from "@sendgrid/mail";
-export default async function authHandler(req, res) {
-  const client = await MongoClient.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-  const usersCollection = client.db().collection("users");
-  const nonVerifiedUsersCollection = client
-    .db()
-    .collection("non-verified-users");
 
+export default async function authHandler(req, res) {
+  dbConnect();
   if (req.method === "POST") {
-    const { authType } = sanitize(req.body);
+    const { authType } = req.body;
     if (authType === null)
       return res.json({
         ok: 0,
@@ -24,31 +21,11 @@ export default async function authHandler(req, res) {
     try {
       if (authType === "register") {
         //-----------REGISTER-----------
-        const {
-          username,
-          email,
-          password,
-          confirmPassword,
-          date,
-          movieList,
-          isRegister,
-        } = sanitize(req.body);
-        console.log(typeof req.body.movieList);
+        const { username, email, password, confirmPassword } = sanitize(
+          req.body
+        );
         if (!username || !email || !password || !confirmPassword)
           return res.json({ ok: 0, message: "Please fill in all fields" });
-
-        if (
-          typeof username !== "string" ||
-          typeof email !== "string" ||
-          typeof password !== "string" ||
-          typeof confirmPassword !== "string" ||
-          typeof authType !== "string" ||
-          typeof date !== "number" ||
-          typeof movieList !== "object" ||
-          typeof isRegister !== "boolean"
-        ) {
-          return res.json({ ok: 0, message: "Bruh...." });
-        }
 
         //checks if the username is between 5 and 12 characters long
         const usernameRegexTest = /^[a-zA-Z0-9]{5,12}$/g.test(username);
@@ -84,9 +61,9 @@ export default async function authHandler(req, res) {
               `,
           });
 
-        const userWithEmail = await usersCollection.findOne({ email });
+        const userWithEmail = await NonVerifiedUser.findOne({ email });
 
-        const userWithUsername = await usersCollection.findOne({ username });
+        const userWithUsername = await NonVerifiedUser.findOne({ username });
 
         if (userWithUsername)
           return res.json({
@@ -108,25 +85,23 @@ export default async function authHandler(req, res) {
           Number(process.env.SALT_ROUNDS)
         );
 
-        const result = await nonVerifiedUsersCollection.insertOne({
+        const newUser = NonVerifiedUser({
           username,
           email,
           password: hashedPassword,
-          isVerified: false,
-          date: new Date(date),
+          movieList: [],
           profileImg: `/images/default-profile-pictures/image-${Math.floor(
             Math.random() * (7 - 1) + 1
           )}.jpg`,
-          movieList: [],
+          isVerified: false,
         });
 
-        const token = await jwt.sign(
-          { id: result.ops[0]._id },
-          process.env.SECRET,
-          {
-            expiresIn: "25m",
-          }
-        );
+        const result = await newUser.save();
+        console.log("Result: " + typeof result);
+
+        const token = await jwt.sign({ id: result._id }, process.env.SECRET, {
+          expiresIn: "25m",
+        });
         if (process.env.NODE_ENV === "production") {
           sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
           const msg = {
@@ -171,9 +146,9 @@ export default async function authHandler(req, res) {
           return res.json({ ok: 0, message: "Bruh...." });
         }
 
-        const user = await usersCollection.findOne({ email });
+        const user = await User.findOne({ email });
 
-        if (!user)
+        if (!user?._id)
           return res.json({
             ok: 0,
             message: "Wrong email or password",
@@ -218,7 +193,6 @@ export default async function authHandler(req, res) {
 
       if (authType === "logout") {
         //-----------LOGOUT-----------
-        console.log("here");
         res.setHeader(
           "Set-Cookie",
           cookie.serialize("token", "", {
@@ -229,13 +203,11 @@ export default async function authHandler(req, res) {
             expires: new Date(0),
           })
         );
-        res.json({ ok: 1, message: "Logged out" });
+        return res.json({ ok: 1, message: "Logged out" });
       }
     } catch (error) {
       console.log(error);
-      res.json({ ok: 0, message: "Something went wrong..." });
-    } finally {
-      client.close();
+      return res.json({ ok: 0, message: "Something went wrong..." });
     }
   }
 }

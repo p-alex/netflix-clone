@@ -133,7 +133,7 @@ export async function getServerSideProps(context) {
       },
     });
     const resultJSON = await result.json();
-    if (resultJSON.message === "Authorized") {
+    if (resultJSON.ok) {
       return {
         redirect: {
           destination: "/",
@@ -142,6 +142,7 @@ export async function getServerSideProps(context) {
         props: {},
       };
     }
+    return { props: {} };
   }
   return { props: {} };
 }

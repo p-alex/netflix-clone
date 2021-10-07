@@ -41,7 +41,7 @@ export default async function verifyTokenHandler(req, res) {
         }
 
         const user = await collection.findOne({
-          _id: ObjectId(decoded.id.toString()),
+          _id: ObjectId(decoded.id),
         });
         if (user?.username) {
           return res.json({ ok: 1, message: "Authorized" });

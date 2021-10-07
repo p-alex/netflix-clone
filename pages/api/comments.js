@@ -75,7 +75,6 @@ const commentsHandler = async (req, res) => {
         }
       }
     } catch (error) {
-      console.log(error);
       return res.json({ ok: 0, message: "Failed to add comment" });
     } finally {
       client.close();
@@ -159,7 +158,6 @@ const commentsHandler = async (req, res) => {
         });
       }
     } catch (error) {
-      console.log(error);
       return res.json({ ok: 0, message: "Something went wrong" });
     } finally {
       client.close();

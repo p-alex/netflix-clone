@@ -81,9 +81,7 @@ export default function register() {
         },
         body: JSON.stringify({
           ...inputs,
-          date: Date.now(),
           authType: "register",
-          movieList: [],
         }),
       });
 
@@ -153,7 +151,7 @@ export async function getServerSideProps(context) {
       },
     });
     const resultJSON = await result.json();
-    if (resultJSON.message === "Authorized") {
+    if (resultJSON.ok) {
       return {
         redirect: {
           destination: "/",
@@ -162,6 +160,7 @@ export async function getServerSideProps(context) {
         props: {},
       };
     }
+    return { props: {} };
   }
   return { props: {} };
 }

@@ -9,7 +9,7 @@ export default async function verifyAccountHandler(req, res) {
   const usersCollection = await client.db().collection("users");
   const nonVerifiedUsersCollection = await client
     .db()
-    .collection("non-verified-users");
+    .collection("nonverifiedusers");
 
   if (req.method === "POST") {
     try {
@@ -44,6 +44,7 @@ export default async function verifyAccountHandler(req, res) {
         return res.json({ ok: 1, message: "Verification Successful!" });
       }
     } catch (error) {
+      console.log(error);
       return res.json({ ok: 0, message: "Something went wrong" });
     } finally {
       client.close();
