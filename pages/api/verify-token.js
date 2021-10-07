@@ -26,7 +26,6 @@ export default async function verifyTokenHandler(req, res) {
         return res.json({ ok: 0, message: "Authorization must be a string" });
       }
       let token = cleanAuthorizationHeader.split(" ")[1];
-
       if (token) {
         let decoded = await jwt.verify(
           token,
@@ -41,7 +40,9 @@ export default async function verifyTokenHandler(req, res) {
           return res.json({ ok: 0, message: "Invalid signiture" });
         }
 
-        const user = await collection.findOne({ _id: ObjectId(decoded.id) });
+        const user = await collection.findOne({
+          _id: ObjectId(decoded.id.toString()),
+        });
         if (user?.username) {
           return res.json({ ok: 1, message: "Authorized" });
         } else {
