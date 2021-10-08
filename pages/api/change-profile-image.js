@@ -1,4 +1,5 @@
-import { MongoClient, ObjectId } from "mongodb";
+import User from "../../models/User";
+import dbConnect from "../../utils/dbConnect";
 import withProtect from "../../middleware/withProtect";
 import sanitize from "mongo-sanitize";
 const cleanImage = (imgUrl) => {
@@ -12,34 +13,23 @@ const cleanImage = (imgUrl) => {
     return null;
   }
 };
+dbConnect();
 const changeProfilePictureHandler = async (req, res) => {
-  const client = await MongoClient.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
   const image = cleanImage(req.body);
   if (image === null) return res.json({ ok: 0, message: "Invalid image URL" });
   if (req.method === "POST") {
     try {
-      const userCollection = await client.db().collection("users");
-      const user = await userCollection.findOne({ _id: ObjectId(req.userId) });
+      const user = await User.findByIdAndUpdate(
+        { _id: req.userId },
+        { $set: { profileImg: image } }
+      );
       if (user.username) {
-        const theResult = await userCollection.updateOne(
-          { _id: ObjectId(user._id) },
-          { $set: { profileImg: image } }
-        );
-        if (theResult.result.ok) {
-          res.json({ ok: 1, message: "Profile image changed!" });
-        } else {
-          res.json({ ok: 0, message: "Failed to change profile image" });
-        }
+        return res.json({ ok: 1, message: "Profile image changed!" });
       } else {
-        res.json({ ok: 0, message: "Couldn't find user with your username" });
+        return res.json({ ok: 0, message: "Failed to change profile image" });
       }
     } catch (error) {
       res.json({ ok: 0, message: "Something went wrong..." });
-    } finally {
-      client.close();
     }
   }
 };
