@@ -196,6 +196,7 @@ export default function GlobalState({ children }) {
     dispatchSelectedMovie({ type: "RESET" });
 
   const handleChangeProfileImage = async (image) => {
+    console.time("Change profile picture time");
     const result = await fetch(`${url}/api/change-profile-image`, {
       method: "POST",
       headers: {
@@ -203,7 +204,9 @@ export default function GlobalState({ children }) {
       },
       body: JSON.stringify(image),
     });
+
     const resultJSON = await result.json();
+    console.timeEnd("Change profile picture time");
     if (resultJSON.ok) {
       setUserData((prevState) => ({
         ...prevState,
