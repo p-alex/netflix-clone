@@ -1,13 +1,9 @@
-import { MongoClient, ObjectId } from "mongodb";
+import Movie from "../../models/Movie";
+import dbConnect from "../../utils/dbConnect";
 import sanitize from "mongo-sanitize";
 import withProtect from "../../middleware/withProtect";
+dbConnect();
 const commentsHandler = async (req, res) => {
-  const client = await MongoClient.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-  const usersCollection = client.db().collection("users");
-  const moviesCollection = client.db().collection("movies");
   const cleanComment = (comment) => {
     const { username, profileImg, text, stars, movieId, commentId } = comment;
     if (
@@ -43,13 +39,11 @@ const commentsHandler = async (req, res) => {
           message: "PATHETIC! GET REKT MR. HACKER!!!!",
         });
 
-      const user = await usersCollection.findOne({ _id: ObjectId(req.userId) });
-      if (user.username && newComment.movieId) {
-        const movieToAddComment = await moviesCollection.findOne({
-          _id: ObjectId(newComment.movieId),
-        });
-
-        movieToAddComment.comments.map((comment) => {
+      if (newComment.movieId) {
+        console.time("find the movie");
+        const movieToAddComment = await Movie.findById(newComment.movieId);
+        console.timeEnd("find the movie");
+        await movieToAddComment.comments.map((comment) => {
           if (newComment.commentId === comment.commentId) {
             return res.json({
               ok: 0,
@@ -57,27 +51,24 @@ const commentsHandler = async (req, res) => {
             });
           }
         });
-
-        const oldCommentsArray = movieToAddComment.comments;
-
-        const updatedCommentsArray = [newComment, ...oldCommentsArray];
-
-        const theResult = await moviesCollection.updateOne(
+        console.time("Update comments array");
+        const theResult = await Movie.updateOne(
           {
-            _id: ObjectId(newComment.movieId),
+            _id: newComment.movieId,
           },
-          { $set: { comments: updatedCommentsArray } }
+          { $push: { comments: { $each: [newComment], $position: 0 } } }
         );
-        if (theResult.result.ok) {
+        console.timeEnd("Update comments array");
+        if (theResult) {
           return res.json({ ok: 1, message: "Comment added successfully" });
         } else {
           return res.json({ ok: 0, message: "Failed to add comment" });
         }
+      } else {
+        return res.json({ ok: 0, message: "Something is not right" });
       }
     } catch (error) {
       return res.json({ ok: 0, message: "Failed to add comment" });
-    } finally {
-      client.close();
     }
   }
 
@@ -87,37 +78,25 @@ const commentsHandler = async (req, res) => {
       const editedComment = cleanComment(req.body);
       if (editedComment === null)
         return res.json({ ok: 0, message: "GOOD ONE BUD" });
-
-      const user = await usersCollection.findOne({ _id: ObjectId(req.userId) });
-
-      if (user.username && editedComment.commentId) {
-        const movieToEditComment = await moviesCollection.findOne({
-          _id: ObjectId(editedComment.movieId),
-        });
-        const oldCommentsArray = movieToEditComment.comments;
-        const updatedCommentsArray = oldCommentsArray.map((comment) => {
-          if (comment.commentId === editedComment.commentId) {
-            return editedComment;
-          }
-          return comment;
-        });
-        const theResult = await moviesCollection.updateOne(
-          { _id: ObjectId(editedComment.movieId) },
-          { $set: { comments: updatedCommentsArray } }
+      if (editedComment.commentId) {
+        const theResult = await Movie.updateOne(
+          {
+            _id: editedComment.movieId,
+            "comments.commentId": editedComment.commentId,
+          },
+          { $set: { "comments.$": editedComment } }
         );
-        if (theResult.result.ok) {
+        if (theResult) {
           return res.json({
             ok: 1,
             message: "The comment was changed successfuly",
           });
         } else {
-          return res.json({ ok: 0, message: "Something went wrong" });
+          return res.json({ ok: 0, message: "Didnt work" });
         }
       }
     } catch (error) {
       return res.json({ ok: 0, message: "Something went wrong" });
-    } finally {
-      client.close();
     }
   }
 
@@ -128,25 +107,17 @@ const commentsHandler = async (req, res) => {
       if (commentInfo === null)
         return res.json({ ok: 0, message: "Fock off bruv!" });
 
-      const user = await usersCollection.findOne({
-        _id: ObjectId(req.userId),
-      });
-      if (user.username && commentInfo) {
-        const deleteCommentFromMovie = await moviesCollection.findOne({
-          _id: ObjectId(commentInfo.movieId),
-        });
-        const oldCommentsArray = deleteCommentFromMovie.comments;
-        const updatedCommentsArray = oldCommentsArray.filter(
-          (co) => co.commentId !== commentInfo.commentId
+      if (commentInfo) {
+        const theResult = await Movie.updateOne(
+          {
+            _id: commentInfo.movieId,
+          },
+          { $pull: { comments: { commentId: commentInfo.commentId } } }
         );
-        const theResult = await moviesCollection.updateOne(
-          { _id: ObjectId(commentInfo.movieId) },
-          { $set: { comments: updatedCommentsArray } }
-        );
-        if (theResult.result.ok) {
+        if (theResult) {
           return res.json({
             ok: 1,
-            message: "The comment has been deleted successfuly",
+            message: "The comment has been deleted successfully",
           });
         } else {
           return res.json({ ok: 0, message: "Something went wrong" });
@@ -159,8 +130,6 @@ const commentsHandler = async (req, res) => {
       }
     } catch (error) {
       return res.json({ ok: 0, message: "Something went wrong" });
-    } finally {
-      client.close();
     }
   }
 };

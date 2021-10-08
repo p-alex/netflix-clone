@@ -19,8 +19,8 @@ export default async function authHandler(req, res) {
         message: "authType is expected to be a string",
       });
     try {
+      //---------------------------------REGISTER---------------------------------
       if (authType === "register") {
-        //-----------REGISTER-----------
         const { username, email, password, confirmPassword } = sanitize(
           req.body
         );
@@ -97,46 +97,50 @@ export default async function authHandler(req, res) {
         });
 
         const result = await newUser.save();
-        console.log("Result: " + typeof result);
 
-        const token = await jwt.sign({ id: result._id }, process.env.SECRET, {
-          expiresIn: "25m",
-        });
-        if (process.env.NODE_ENV === "production") {
-          sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
-          const msg = {
-            to: email,
-            from: "netflixclonepalex@gmail.com",
-            subject: "Email verification link from Netflixpalexclone",
-            text: "Click the button below to verify your account",
-            html: `<div style='text-align:center;position:relative; width:400px;padding:40px;margin:0 auto;background-color:black;color:white;font-family:Helvetica, sans-serif'><h1>Hi ${username},</h1><br/><br/><p style="color:white;font-size:1.1rem">You have successfully created a Netflixpalexclone account.<br/>Please click on the link below to verify your email address and complete your registration.</p><br/><br/><a style='display:inline-block;text-decoration:none;background-color:#e50914;padding:15px;color:white;border-radius:5px;font-weight:bold;font-size:1.4rem;font-family:Helvetica, sans-serif;' href="https://netflix-clone-inky-five.vercel.app/user/verify/${token}" rel="noreferrer">Verify your email</a><br/><br/><p>If that doesn't work, copy and paste the following link in your browser:<br/><br/>https://netflix-clone-inky-five.vercel.app/user/verify/${token}</p></div></div>`,
-          };
-          sgMail
-            .send(msg)
-            .then(() => {
-              return res.json({
-                ok: 1,
-                message:
-                  "Success! We sent you an email to verify your account! Please check your email.",
-              });
-            })
-            .catch((error) => {
-              return res.json({
-                ok: 0,
-                message: "Something went wrong! Please try again later.",
-              });
-            });
-        } else {
-          console.log(`http://localhost:3000/user/verify/${token}`);
-          return res.json({
-            ok: 1,
-            message:
-              "Success! We sent you an email to verify your account! Please check your email.",
+        if (result?._id) {
+          const token = await jwt.sign({ id: result._id }, process.env.SECRET, {
+            expiresIn: "25m",
           });
+          if (process.env.NODE_ENV === "production") {
+            sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+            const msg = {
+              to: email,
+              from: "netflixclonepalex@gmail.com",
+              subject: "Email verification link from Netflixpalexclone",
+              text: "Click the button below to verify your account",
+              html: `<div style='text-align:center;position:relative; width:400px;padding:40px;margin:0 auto;background-color:black;color:white;font-family:Helvetica, sans-serif'><h1>Hi ${username},</h1><br/><br/><p style="color:white;font-size:1.1rem">You have successfully created a Netflixpalexclone account.<br/>Please click on the link below to verify your email address and complete your registration.</p><br/><br/><a style='display:inline-block;text-decoration:none;background-color:#e50914;padding:15px;color:white;border-radius:5px;font-weight:bold;font-size:1.4rem;font-family:Helvetica, sans-serif;' href="https://netflix-clone-inky-five.vercel.app/user/verify/${token}" rel="noreferrer">Verify your email</a><br/><br/><p>If that doesn't work, copy and paste the following link in your browser:<br/><br/>https://netflix-clone-inky-five.vercel.app/user/verify/${token}</p></div></div>`,
+            };
+            sgMail
+              .send(msg)
+              .then(() => {
+                return res.json({
+                  ok: 1,
+                  message:
+                    "Success! We sent you an email to verify your account! Please check your email.",
+                });
+              })
+              .catch((error) => {
+                return res.json({
+                  ok: 0,
+                  message: "Something went wrong! Please try again later.",
+                });
+              });
+          } else {
+            console.log(`http://localhost:3000/user/verify/${token}`);
+            return res.json({
+              ok: 1,
+              message:
+                "Success! We sent you an email to verify your account! Please check your email.",
+            });
+          }
+        } else {
+          return res.json({ ok: 0, message: "Something went wrong" });
         }
       }
+
+      //---------------------------------LOGIN---------------------------------
       if (authType === "login") {
-        //-----------LOGIN-----------
         const { email, password } = sanitize(req.body);
 
         if (!email || !password)
@@ -191,8 +195,8 @@ export default async function authHandler(req, res) {
         }
       }
 
+      //---------------------------------LOGOUT---------------------------------
       if (authType === "logout") {
-        //-----------LOGOUT-----------
         res.setHeader(
           "Set-Cookie",
           cookie.serialize("token", "", {

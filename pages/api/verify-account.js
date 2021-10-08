@@ -1,31 +1,21 @@
-import { MongoClient, ObjectId } from "mongodb";
+import User from "../../models/User";
+import NonVerifiedUser from "../../models/NonVerifiedUser";
+import dbConnect from "../../utils/dbConnect";
 import jwt from "jsonwebtoken";
+dbConnect();
 export default async function verifyAccountHandler(req, res) {
-  const client = await MongoClient.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-
-  const usersCollection = await client.db().collection("users");
-  const nonVerifiedUsersCollection = await client
-    .db()
-    .collection("nonverifiedusers");
-
   if (req.method === "POST") {
     try {
       const { token } = req.body;
-
-      console.log(token);
 
       const decoded = await jwt.verify(token, process.env.SECRET);
 
       if (!decoded.id) return res.json({ ok: 0, message: "Invalid token" });
 
-      let user = await nonVerifiedUsersCollection.findOne({
-        _id: ObjectId(decoded.id),
+      let user = await NonVerifiedUser.findById({
+        _id: decoded.id,
       });
-
-      if (!user.username) {
+      if (!user?.username) {
         return res.json({ ok: 0, message: "That user doesn't exist" });
       }
 
@@ -34,20 +24,38 @@ export default async function verifyAccountHandler(req, res) {
           ok: 0,
           message: "Your account is already verified!",
         });
+      let updatedUser = {
+        username: user.username,
+        email: user.email,
+        password: user.password,
+        isVerified: true,
+        profileImg: user.profileImg,
+      };
+      const { username, email, password, isVerified, profileImg } = updatedUser;
 
-      let updatedUser = { ...user, isVerified: true };
+      const newVerifiedUser = User({
+        username,
+        email,
+        password,
+        isVerified,
+        profileImg,
+      });
 
-      const theResult = await usersCollection.insertOne(updatedUser);
+      let theResult = await newVerifiedUser.save();
+
       const deleteNonVerifiedUserVersion =
-        await nonVerifiedUsersCollection.deleteOne({ _id: ObjectId(user._id) });
-      if (theResult && deleteNonVerifiedUserVersion) {
+        await NonVerifiedUser.findOneAndDelete({
+          _id: user._id,
+        });
+
+      if (theResult.username && deleteNonVerifiedUserVersion.username) {
         return res.json({ ok: 1, message: "Verification Successful!" });
+      } else {
+        return res.json({ ok: 0, message: "Didnt work" });
       }
     } catch (error) {
       console.log(error);
       return res.json({ ok: 0, message: "Something went wrong" });
-    } finally {
-      client.close();
     }
   }
 }

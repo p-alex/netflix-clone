@@ -1,4 +1,5 @@
-import { MongoClient, ObjectId } from "mongodb";
+import User from "../../models/User";
+import dbConnect from "../../utils/dbConnect";
 import bcrypt from "bcryptjs";
 import sanitize from "mongo-sanitize";
 const cleanPasswordResetInfo = (passwordResetInfo) => {
@@ -13,13 +14,8 @@ const cleanPasswordResetInfo = (passwordResetInfo) => {
     return sanitize({ ...passwordResetInfo });
   }
 };
+dbConnect();
 export default async function passwordReset(req, res) {
-  const client = await MongoClient.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-
-  const collection = client.db().collection("users");
   if (req.method === "POST") {
     try {
       const passwordResetInfo = cleanPasswordResetInfo(req.body);
@@ -38,8 +34,8 @@ export default async function passwordReset(req, res) {
         });
       if (passwordResetInfo.password !== passwordResetInfo.confirmPassword)
         return res.json({ ok: 0, message: "Passwords must match." });
-      const user = await collection.findOne({
-        _id: ObjectId(passwordResetInfo.id),
+      const user = await User.findOne({
+        _id: passwordResetInfo.id,
       });
       if (user?._id) {
         const hashedPassword = await bcrypt.hash(
@@ -47,8 +43,8 @@ export default async function passwordReset(req, res) {
           Number(process.env.SALT_ROUNDS)
         );
         if (hashedPassword) {
-          await collection.updateOne(
-            { _id: ObjectId(passwordResetInfo.id) },
+          await User.updateOne(
+            { _id: passwordResetInfo.id },
             { $set: { password: hashedPassword } }
           );
 
@@ -60,8 +56,6 @@ export default async function passwordReset(req, res) {
     } catch (error) {
       console.log(error);
       return res.json({ ok: 0, message: error });
-    } finally {
-      client.close();
     }
   }
 }

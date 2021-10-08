@@ -1,27 +1,26 @@
-import { MongoClient } from "mongodb";
+import Movie from "../../models/Movie";
+import dbConnect from "../../utils/dbConnect";
 import withProtect from "../../middleware/withProtect";
+dbConnect();
 async function moviesHandler(req, res) {
-  const client = await MongoClient.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
   if (req.method === "GET") {
-    const collection = client.db().collection("movies");
     try {
-      const movies = await collection.find({}).toArray();
-      return res.json({
-        ok: 1,
-        message: "Allowed",
-        movies,
-      });
+      const movies = await Movie.find({});
+      if (movies.length) {
+        return res.json({
+          ok: 1,
+          message: "Allowed",
+          movies,
+        });
+      } else {
+        return res.json({ ok: 0, message: "Couldn't get movies" });
+      }
     } catch {
       return res.json({
         ok: 0,
         message: "Something went wrong...",
         movies: [],
       });
-    } finally {
-      client.close();
     }
   }
 }

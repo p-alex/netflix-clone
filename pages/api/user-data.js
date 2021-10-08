@@ -12,7 +12,7 @@ const userDataHandler = async (req, res) => {
       if (user?.username) {
         return res.json({
           ok: 1,
-          message: "Found",
+          message: "Found user!",
           username: user.username,
           profileImg: user.profileImg,
           isVerified: user.isVerified,

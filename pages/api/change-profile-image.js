@@ -29,15 +29,15 @@ const changeProfilePictureHandler = async (req, res) => {
           { $set: { profileImg: image } }
         );
         if (theResult.result.ok) {
-          res.json({ ok: 1, message: "Worked" });
+          res.json({ ok: 1, message: "Profile image changed!" });
         } else {
-          res.json({ ok: 0, message: "Failed" });
+          res.json({ ok: 0, message: "Failed to change profile image" });
         }
       } else {
-        res.json({ ok: 0, message: "Something went wrong" });
+        res.json({ ok: 0, message: "Couldn't find user with your username" });
       }
     } catch (error) {
-      res.json({ ok: 0, message: "Failed" });
+      res.json({ ok: 0, message: "Something went wrong..." });
     } finally {
       client.close();
     }
