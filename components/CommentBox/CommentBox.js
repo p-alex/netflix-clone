@@ -47,17 +47,14 @@ export default function CommentBox({
 
   const handleSubmit = async () => {
     if (updatedComment.stars !== 0) {
-      console.time("replace comment time in ms");
       handleEditComment(updatedComment);
-      console.timeEnd("replace comment time in ms");
       handleToggleEdit();
     }
   };
 
   const handleDeleteSubmit = async () => {
-    console.time("delete comment time in ms");
+    setIsDeleteConfirmationActive(false);
     handleDeleteComment(commentId, movieId);
-    console.timeEnd("delete comment time in ms");
   };
 
   return (

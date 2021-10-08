@@ -73,6 +73,7 @@ export default function register() {
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000"
         : "https://netflix-clone-inky-five.vercel.app";
+    console.time("Sign up time");
     try {
       const result = await fetch(`${url}/api/auth`, {
         method: "POST",
@@ -97,6 +98,7 @@ export default function register() {
       setIsLoading(false);
       setFeedback(error);
     }
+    console.timeEnd("Sign up time");
   };
 
   return (

@@ -37,6 +37,7 @@ export default function resetPasswordEmailCheck() {
       body: JSON.stringify(inputs),
     });
     const resultJSON = await result.json();
+    console.log(resultJSON.message);
 
     handleResetInputs();
     setIsLoading(false);

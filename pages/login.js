@@ -46,6 +46,7 @@ export default function login() {
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000"
         : "https://netflix-clone-inky-five.vercel.app";
+    console.time("Logging in time");
     try {
       const result = await fetch(`${url}/api/auth`, {
         method: "POST",
@@ -70,6 +71,7 @@ export default function login() {
       setIsLoading(false);
       setFeedback("Something went wrong... Try again later.");
     }
+    console.timeEnd("Logging in time");
   };
 
   const handleChange = (e) => {

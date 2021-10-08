@@ -48,7 +48,6 @@ export default function resetPassword() {
     }
     setFeedback(resultJSON.message);
   };
-  console.log(hideInputFields);
   return (
     <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.webp)"}>
       <Head>
@@ -105,7 +104,7 @@ export async function getServerSideProps(context) {
   });
   const resultJSON = await result.json();
   console.log(resultJSON.message);
-  if (resultJSON.message !== "Authorized")
+  if (!resultJSON.ok)
     return { redirect: { destination: "/login", permanent: false }, props: {} };
   return { props: {} };
 }

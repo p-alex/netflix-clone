@@ -49,8 +49,6 @@ export default function GlobalState({ children }) {
   );
 
   const handleGetUserData = async () => {
-    console.log("get user");
-
     const result = await fetch(`${url}/api/user-data`);
     const resultJSON = await result.json();
     if (!resultJSON.ok) {
@@ -64,10 +62,10 @@ export default function GlobalState({ children }) {
         date: resultJSON.date,
       });
     }
+    console.log(resultJSON.message);
   };
 
   const handleGetAllMovies = async () => {
-    console.log("get movie");
     setIsLoading(true);
 
     const movieList = await fetch(`${url}/api/movies`);
@@ -79,20 +77,11 @@ export default function GlobalState({ children }) {
       setAllMovies(moviesJSON.movies.reverse());
       setIsLoading(false);
     }
+    console.log(moviesJSON.message);
   };
 
   const handleAddMovieToList = async (movieId, isAdding) => {
-    if (isAdding) {
-      setUserData((prevState) => ({
-        ...prevState,
-        movieList: [movieId, ...prevState.movieList],
-      }));
-    } else {
-      setUserData((prevState) => ({
-        ...prevState,
-        movieList: prevState.movieList.filter((item) => item !== movieId),
-      }));
-    }
+    console.time(isAdding ? "Added movie to list" : "Removed movie from list");
     const result = await fetch(`${url}/api/add-movie-to-list`, {
       method: "POST",
       headers: {
@@ -101,18 +90,28 @@ export default function GlobalState({ children }) {
       body: JSON.stringify({ movieId }),
     });
     const resultJSON = await result.json();
+    console.log(resultJSON.message);
+    if (resultJSON.ok) {
+      if (isAdding) {
+        setUserData((prevState) => ({
+          ...prevState,
+          movieList: [movieId, ...prevState.movieList],
+        }));
+      } else {
+        setUserData((prevState) => ({
+          ...prevState,
+          movieList: prevState.movieList.filter((item) => item !== movieId),
+        }));
+      }
+    }
+
+    console.timeEnd(
+      isAdding ? "Added movie to list" : "Removed movie from list"
+    );
   };
 
   const handleAddNewComment = async (comment) => {
-    const updatedMoviesArray = allMovies.map((movie) => {
-      if (movie._id === comment.movieId) {
-        const oldCommentsArray = movie.comments;
-        const updatedCommentsArray = [comment, ...oldCommentsArray];
-        movie.comments = updatedCommentsArray;
-      }
-      return movie;
-    });
-    setAllMovies(updatedMoviesArray);
+    console.time("Add new comment");
     const result = await fetch(`${url}/api/comments`, {
       method: "POST",
       headers: {
@@ -120,22 +119,25 @@ export default function GlobalState({ children }) {
       },
       body: JSON.stringify(comment),
     });
-    const resultJson = await result.json();
-    console.log(resultJson.message);
+    const resultJSON = await result.json();
+    console.log(resultJSON.message);
+    if (resultJSON.ok) {
+      const updatedMoviesArray = allMovies.map((movie) => {
+        if (movie._id === comment.movieId) {
+          const oldCommentsArray = movie.comments;
+          const updatedCommentsArray = [comment, ...oldCommentsArray];
+          movie.comments = updatedCommentsArray;
+        }
+        return movie;
+      });
+      setAllMovies(updatedMoviesArray);
+    }
+    console.timeEnd("Add new comment");
   };
 
   const handleDeleteComment = async (commentId, movieId) => {
+    console.time("Delete comment");
     const commentInfo = { commentId, movieId };
-    const updatedMoviesArray = allMovies.map((movie) => {
-      if (movie._id === movieId) {
-        movie.comments = movie.comments.filter(
-          (co) => co.commentId !== commentId
-        );
-      }
-      return movie;
-    });
-    setAllMovies(updatedMoviesArray);
-
     const result = await fetch(`${url}/api/comments`, {
       method: "DELETE",
       headers: {
@@ -143,23 +145,24 @@ export default function GlobalState({ children }) {
       },
       body: JSON.stringify(commentInfo),
     });
-    const resultJson = await result.json();
-    console.log(resultJson.message);
+    const resultJSON = await result.json();
+    console.log(resultJSON.message);
+    if (resultJSON.ok) {
+      const updatedMoviesArray = allMovies.map((movie) => {
+        if (movie._id === movieId) {
+          movie.comments = movie.comments.filter(
+            (co) => co.commentId !== commentId
+          );
+        }
+        return movie;
+      });
+      setAllMovies(updatedMoviesArray);
+    }
+    console.timeEnd("Delete comment");
   };
 
   const handleEditComment = async (editedComment) => {
-    const updatedMoviesArray = allMovies.map((movie) => {
-      if (movie._id === editedComment.movieId) {
-        movie.comments = movie.comments.map((co) => {
-          if (co.commentId === editedComment.commentId) {
-            return editedComment;
-          }
-          return co;
-        });
-      }
-      return movie;
-    });
-    setAllMovies(updatedMoviesArray);
+    console.time("Edit comment");
     const result = await fetch(`${url}/api/comments`, {
       method: "PUT",
       headers: {
@@ -167,8 +170,23 @@ export default function GlobalState({ children }) {
       },
       body: JSON.stringify(editedComment),
     });
-    const resultJson = await result.json();
-    console.log(resultJson.message);
+    const resultJSON = await result.json();
+    console.log(resultJSON.message);
+    if (resultJSON.ok) {
+      const updatedMoviesArray = allMovies.map((movie) => {
+        if (movie._id === editedComment.movieId) {
+          movie.comments = movie.comments.map((co) => {
+            if (co.commentId === editedComment.commentId) {
+              return editedComment;
+            }
+            return co;
+          });
+        }
+        return movie;
+      });
+      setAllMovies(updatedMoviesArray);
+    }
+    console.timeEnd("Edit comment");
   };
 
   const handleSelectMovie = (movie) =>
@@ -185,13 +203,14 @@ export default function GlobalState({ children }) {
       },
       body: JSON.stringify(image),
     });
-    const resultJson = await result.json();
-    if (resultJson.ok) {
+    const resultJSON = await result.json();
+    if (resultJSON.ok) {
       setUserData((prevState) => ({
         ...prevState,
         profileImg: image,
       }));
     }
+    console.log(resultJSON.message);
   };
 
   const handleLogout = async () => {
