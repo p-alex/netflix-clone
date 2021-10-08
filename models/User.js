@@ -22,6 +22,7 @@ const userSchema = mongoose.Schema({
   date: {
     type: Date,
     default: Date.now(),
+    require: [true, "Must add a date"],
   },
   profileImg: {
     type: String,
