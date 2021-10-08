@@ -3,32 +3,33 @@ const mongoose = require("mongoose");
 const nonVerifiedUserSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: [true, "Please add a username"],
+    require: [true, "Please add a username"],
     unique: true,
   },
   email: {
     type: String,
-    required: [true, "Please add an email address"],
+    require: [true, "Please add an email address"],
   },
   password: {
     type: String,
-    required: [true, "Please add a password"],
+    require: [true, "Please add a password"],
   },
   isVerified: {
     type: Boolean,
-    required: [true, "isVerified has to exist"],
+    require: [true, "isVerified has to exist"],
   },
   date: {
     type: Date,
     default: Date.now(),
+    require: [true, "Must add a date"],
   },
   profileImg: {
     type: String,
-    required: [true, "Please provide profile image url"],
+    require: [true, "Please provide profile image url"],
   },
   movieList: {
     type: Array,
-    required: [true, "Please provide movie list"],
+    require: [true, "Please provide movie list"],
   },
 });
 
