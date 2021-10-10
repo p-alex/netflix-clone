@@ -8,6 +8,7 @@ import Logo from "../../components/Logo/Logo";
 import Head from "next/head";
 import Link from "next/link";
 import styles from "../../styles/ResetPasswordEmailCheck.module.css";
+import Spinner from "../../components/Spinner/Spinner";
 export default function resetPasswordEmailCheck() {
   const [feedback, setFeedback] = useState("");
   const [inputs, setInputs] = useState({
@@ -63,7 +64,9 @@ export default function resetPasswordEmailCheck() {
             autoFocus={true}
             inputValue={inputs.email}
           />
-          <SubmitButton isDisabled={isLoading}>Send email</SubmitButton>
+          <SubmitButton isDisabled={isLoading}>
+            {isLoading ? <Spinner /> : "Send email"}
+          </SubmitButton>
           <p>
             <Link href="/login">Go Back</Link>
           </p>

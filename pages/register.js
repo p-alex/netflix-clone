@@ -9,6 +9,7 @@ import SubmitButton from "../components/SubmitButton/SubmitButton";
 import Logo from "../components/Logo/Logo";
 import Head from "next/head";
 import styles from "../styles/Register.module.css";
+import Spinner from "../components/Spinner/Spinner";
 export default function register() {
   const [isLoading, setIsLoading] = useState(false);
   const [inputs, setInputs] = useState({
@@ -128,7 +129,9 @@ export default function register() {
               />
             );
           })}
-          <SubmitButton isDisabled={isLoading}>Register</SubmitButton>
+          <SubmitButton isDisabled={isLoading}>
+            {isLoading ? <Spinner /> : "Register"}
+          </SubmitButton>
           <p>
             Already have an account? <Link href="/login">Login now</Link>
           </p>

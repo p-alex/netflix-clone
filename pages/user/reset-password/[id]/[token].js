@@ -8,6 +8,7 @@ import Logo from "../../../../components/Logo/Logo";
 import Link from "next/link";
 import Head from "next/head";
 import styles from "../../../../styles/ResetPassword.module.css";
+import Spinner from "../../../../components/Spinner/Spinner";
 export default function resetPassword() {
   const router = useRouter();
 
@@ -81,7 +82,9 @@ export default function resetPassword() {
                 handleChangeFunc={handleChange}
                 inputValue={inputs.confirmPassword}
               />
-              <SubmitButton isDisabled={isLoading}>Reset password</SubmitButton>
+              <SubmitButton isDisabled={isLoading}>
+                {isLoading ? <Spinner /> : "Reset Password"}
+              </SubmitButton>
             </>
           ) : null}
         </Form>

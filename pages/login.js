@@ -10,6 +10,7 @@ import SubmitButton from "../components/SubmitButton/SubmitButton";
 import Logo from "../components/Logo/Logo";
 import Head from "next/head";
 import styles from "../styles/Login.module.css";
+import Spinner from "../components/Spinner/Spinner";
 export default function login() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -106,7 +107,9 @@ export default function login() {
               />
             );
           })}
-          <SubmitButton isDisabled={isLoading}>Login</SubmitButton>
+          <SubmitButton isDisabled={isLoading}>
+            {isLoading ? <Spinner /> : "Login"}
+          </SubmitButton>
           <p>
             Need an account? <Link href="/register">Register now</Link>
           </p>
