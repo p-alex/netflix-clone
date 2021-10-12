@@ -5,7 +5,12 @@ import AddToListBtn from "../AddToListBtn/AddToListBtn";
 import { useRouter } from "next/router";
 import MoreInfoBtn from "../MoreInfoBtn/MoreInfoBtn";
 import Image from "next/image";
-export default function MovieCard({ movie, fromSliderWithId, isMouseDown }) {
+export default function MovieCard({
+  movie,
+  fromSliderWithId,
+  isMouseDown,
+  isTabIndexActive,
+}) {
   const context = useContext(ProjectContext);
   const router = useRouter();
   const { handleSelectMovie } = context;
@@ -18,17 +23,20 @@ export default function MovieCard({ movie, fromSliderWithId, isMouseDown }) {
     >
       <div className={styles.card__image}>
         <span className={styles.card__image__fallback}>{name}</span>
+        {/* //Open modal for mobile */}
         <button
           className={styles.card__image__openModalMobileBtn}
           onClick={!isMouseDown ? () => handleSelectMovie(movie) : null}
         >
           {name}
         </button>
+        {/* //Open mobile for desktop */}
         <button
           className={styles.card__image__openModalDesktopBtn}
-          onClick={() => router.push(`/movie/${_id}`)}
+          onClick={() => handleSelectMovie(movie)}
           name={name}
           aria-label={name}
+          tabIndex={isTabIndexActive}
         >
           {name}
         </button>
