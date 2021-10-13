@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import ProjectContext from "../../context/Project-context";
 import styles from "./Modal.module.css";
@@ -15,6 +15,34 @@ export default function Modal({ movie }) {
   const { nameSlug } = movie;
   const context = useContext(ProjectContext);
   const { handleResetSelectedMovie, allMovies } = context;
+
+  const topTabTrap = useRef();
+  const bottomTabTrap = useRef();
+
+  const firstFocusableElement = useRef();
+  const lastFocusableElement = useRef();
+
+  useEffect(() => {
+    document.addEventListener("focusin", trapFocus);
+
+    return () => {
+      document.removeEventListener("focusin", trapFocus);
+    };
+    function trapFocus(event) {
+      if (event.target === topTabTrap.current) {
+        lastFocusableElement.current.focus();
+      }
+
+      if (event.target === bottomTabTrap.current) {
+        firstFocusableElement.current.focus();
+      }
+    }
+  }, [firstFocusableElement, lastFocusableElement]);
+
+  const handleChangeFocus = (event) => {
+    bottomTabTrap.current.focus();
+  };
+
   useEffect(() => {
     setMoreLikeThisArray(
       allMovies.filter((mov) => {
@@ -44,14 +72,19 @@ export default function Modal({ movie }) {
             ></div>
 
             <div className={styles.modal}>
-              <button
-                className={styles.modal__closeBtn}
-                onClick={handleResetSelectedMovie}
-              >
-                X
-              </button>
+              <span ref={topTabTrap} tabIndex="0"></span>
 
-              <div className={styles.modal__header}>
+              <div className={styles.modal__header} id={"modalHeader"}>
+                <button
+                  className={styles.modal__closeBtn}
+                  onClick={handleResetSelectedMovie}
+                  ref={firstFocusableElement}
+                  id="modalCloseBtn"
+                  autoFocus
+                  aria-label="Close modal"
+                >
+                  X
+                </button>
                 <div className={styles.modal__header__video}>
                   <img
                     className={styles.modal__header__video__videoImage}
@@ -61,15 +94,20 @@ export default function Modal({ movie }) {
                   <img
                     className={styles.modal__header__video__movieLogo}
                     src={`/movies/${nameSlug}/${nameSlug}-logo.png`}
-                    alt=""
+                    alt={`the ${movie.name} logo`}
                   />
                   <div className={styles.modal__header__video__btnContainer}>
                     <Button
                       type="play"
                       value="Play"
                       func={() => router.push(`/movie/${movie._id}`)}
+                      ariaLabel={`Play ${movie.name}`}
                     />
-                    <AddToListBtn movieId={movie._id} btnType="rounded" />
+                    <AddToListBtn
+                      movieId={movie._id}
+                      btnType="rounded"
+                      movieName={movie.name}
+                    />
                   </div>
                   <BottomFade />
                 </div>
@@ -84,6 +122,18 @@ export default function Modal({ movie }) {
               <AboutMovieSection movie={movie} />
 
               <CommentSection movie={movie} />
+
+              <div className={styles.modal__backToTop}>
+                <a
+                  href={"#modal"}
+                  ref={lastFocusableElement}
+                  onClick={handleChangeFocus}
+                >
+                  Back to top
+                </a>
+              </div>
+
+              <span ref={bottomTabTrap} tabIndex="0"></span>
             </div>
           </div>
         </>

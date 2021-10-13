@@ -18,6 +18,7 @@
 }
 .commentBox__deleteConfirmation {
   position: absolute;
+  z-index: 50;
   left: 0;
   right: 0;
   margin: auto;
@@ -25,7 +26,6 @@
   top: 50%;
   transform: translateY(-50%);
   animation: scaleForDeleteConfirmation 300ms;
-
   padding: 10px;
   text-align: center;
   border-radius: 5px;
@@ -66,11 +66,12 @@
   display: flex;
   align-items: center;
 }
-.commentBox__userAndBtns__btns button i {
+.commentBox__userAndBtns__btns__deleteBtn i {
   margin-right: 5px;
 }
 .commentBox__userAndBtns__btns__deleteBtn {
   color: green;
+  margin-right: 10px;
 }
 .commentBox__userAndBtns__user {
   display: flex;
@@ -86,6 +87,8 @@
 }
 .commentBox__editBtn {
   margin-top: 10px;
+  padding: 10px 20px;
+  border-radius: 5px;
 }
 .commentBox__textBox {
   width: 100%;

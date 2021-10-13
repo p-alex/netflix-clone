@@ -64,7 +64,11 @@ export default function CommentSection({ movie }) {
         <h2>Write a comment</h2>
         <div className={styles.commentSection__rate}>
           <p>Rate: </p>
-          <Stars howManyStars={comment.stars} handleSetStars={handleSetStars} />
+          <Stars
+            howManyStars={comment.stars}
+            handleSetStars={handleSetStars}
+            focusable={true}
+          />
         </div>
 
         <textarea
@@ -74,7 +78,12 @@ export default function CommentSection({ movie }) {
           onChange={(e) => handleSetText(e)}
         />
 
-        <button onClick={() => handleSubmit(comment)}>Comment</button>
+        <button
+          className={styles.commentSection__submitCommentBtn}
+          onClick={() => handleSubmit(comment)}
+        >
+          Comment
+        </button>
       </div>
     </section>
   );

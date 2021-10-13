@@ -1,5 +1,12 @@
 import styles from "./Button.module.css";
-export default function Button({ type, func, value, responsive, isDisabled }) {
+export default function Button({
+  type,
+  func,
+  value,
+  responsive,
+  isDisabled,
+  ariaLabel,
+}) {
   return (
     <>
       <button
@@ -7,6 +14,7 @@ export default function Button({ type, func, value, responsive, isDisabled }) {
         onClick={func}
         disabled={isDisabled ? true : false}
         name={value}
+        aria-label={ariaLabel}
       >
         {type && (
           <i

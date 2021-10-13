@@ -63,12 +63,14 @@ export default function Banner({ movies }) {
                 type="play"
                 func={() => router.push(`/movie/${movie._id}`)}
                 responsive={true}
+                ariaLabel={`Play ${movie.name}`}
               />
               <Button
                 value="More Info"
                 type="moreInfo"
                 func={() => handleSelectMovie(movie)}
                 responsive={true}
+                ariaLabel={`Open modal for ${movie.name}`}
               />
             </div>
             <div className={styles.banner__content__btn_container__mobileBtns}>
@@ -76,6 +78,7 @@ export default function Banner({ movies }) {
                 movieId={movie._id}
                 btnType="regular"
                 margin="0 0 0 0"
+                movieName={movie.name}
               />
               <Button
                 value=""

@@ -35,7 +35,7 @@ export default function MovieCard({
           className={styles.card__image__openModalDesktopBtn}
           onClick={() => handleSelectMovie(movie)}
           name={name}
-          aria-label={name}
+          aria-label={`${name} open modal`}
           tabIndex={isTabIndexActive}
         >
           {name}
@@ -58,7 +58,11 @@ export default function MovieCard({
             >
               <i className="fas fa-play"></i>
             </button>
-            <AddToListBtn movieId={movie._id} btnType="rounded" />
+            <AddToListBtn
+              movieId={movie._id}
+              btnType="rounded"
+              movieName={movie.name}
+            />
           </div>
           <MoreInfoBtn movie={movie} />
         </div>

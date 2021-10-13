@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import ProjectContext from "../../context/Project-context";
 import Stars from "../Stars/Stars";
 import styles from "./CommentBox.module.css";
@@ -27,6 +27,59 @@ export default function CommentBox({
     movieId,
     commentId,
   });
+
+  // Trap focus for delete mode
+  const topTabTrapDeleteConfirmation = useRef();
+  const bottomTabTrapDeleteConfirmation = useRef();
+
+  const firstFocusableElementDeleteConfirmation = useRef();
+  const lastFocusableElementDeleteConfirmation = useRef();
+  useEffect(() => {
+    document.addEventListener("focusin", trapFocus);
+
+    return () => {
+      document.removeEventListener("focusin", trapFocus);
+    };
+
+    function trapFocus(event) {
+      if (event.target === topTabTrapDeleteConfirmation.current) {
+        lastFocusableElementDeleteConfirmation.current.focus();
+      }
+
+      if (event.target === bottomTabTrapDeleteConfirmation.current) {
+        firstFocusableElementDeleteConfirmation.current.focus();
+      }
+    }
+  }, [
+    firstFocusableElementDeleteConfirmation,
+    lastFocusableElementDeleteConfirmation,
+  ]);
+
+  // Trap focus for edit mode
+  const topTabTrapEditMode = useRef();
+  const bottomTabTrapEditMode = useRef();
+
+  const firstFocusableElementEditMode = useRef();
+  const lastFocusableElementEditMode = useRef();
+  useEffect(() => {
+    if (isEditMode) {
+      document.addEventListener("focusin", trapFocus);
+
+      return () => {
+        document.removeEventListener("focusin", trapFocus);
+      };
+
+      function trapFocus(event) {
+        if (event.target === topTabTrapEditMode.current) {
+          lastFocusableElementEditMode.current.focus();
+        }
+
+        if (event.target === bottomTabTrapEditMode.current) {
+          firstFocusableElementEditMode.current.focus();
+        }
+      }
+    }
+  }, [isEditMode, firstFocusableElementEditMode, lastFocusableElementEditMode]);
 
   useEffect(() => {
     setUpdatedComment((prevState) => ({ ...prevState, stars: 0, text }));
@@ -59,36 +112,6 @@ export default function CommentBox({
 
   return (
     <div className={styles.commentBox}>
-      {isDeleteConfirmationActive && (
-        <>
-          <div
-            className={styles.commentBox__deleteConfirmationBackdrop}
-            onClick={handleToggleDelete}
-          ></div>
-          <div className={styles.commentBox__deleteConfirmation}>
-            <p>Are you sure you want to delete this comment?</p>
-            <div className={styles.commentBox__deleteConfirmation__btns}>
-              <button
-                className={
-                  styles.commentBox__deleteConfirmation__btns__deleteBtn
-                }
-                onClick={handleDeleteSubmit}
-              >
-                Delete
-              </button>
-              <button
-                className={
-                  styles.commentBox__deleteConfirmation__btns__cancelBtn
-                }
-                onClick={handleToggleDelete}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </>
-      )}
-
       <div className={styles.commentBox__userAndBtns}>
         <div className={styles.commentBox__userAndBtns__user}>
           <img
@@ -107,17 +130,27 @@ export default function CommentBox({
               <button
                 className={styles.commentBox__userAndBtns__btns__deleteBtn}
                 onClick={handleToggleDelete}
+                aria-label={`Delete your comment which is rating ${stars} ${
+                  stars === 1 ? "star" : "stars"
+                } and says '${text}'`}
               >
                 <i className="fas fa-trash-alt"></i>Delete
               </button>
             )}
-            <button onClick={handleToggleEdit}>
+            {isEditMode && <span ref={topTabTrapEditMode} tabIndex="0"></span>}
+            <button
+              onClick={handleToggleEdit}
+              aria-label={`Edit your comment which is rating ${stars} ${
+                stars === 1 ? "star" : "stars"
+              } and says '${text}'`}
+              ref={isEditMode ? firstFocusableElementEditMode : null}
+            >
               {isEditMode ? (
                 "Cancel"
               ) : (
-                <span>
+                <>
                   <i className="far fa-edit"></i>Edit
-                </span>
+                </>
               )}
             </button>
           </div>
@@ -128,9 +161,10 @@ export default function CommentBox({
         <Stars
           howManyStars={updatedComment.stars}
           handleSetStars={handleStarsChange}
+          focusable={true}
         />
       ) : (
-        <Stars howManyStars={stars} />
+        <Stars howManyStars={stars} focusable={false} />
       )}
       {isEditMode ? (
         <textarea
@@ -143,9 +177,52 @@ export default function CommentBox({
         <p className={styles.commentBox__commentText}>{text}</p>
       )}
       {isEditMode && (
-        <button className={styles.commentBox__editBtn} onClick={handleSubmit}>
+        <button
+          className={styles.commentBox__editBtn}
+          onClick={handleSubmit}
+          ref={lastFocusableElementEditMode}
+        >
           Edit
         </button>
+      )}
+
+      {isEditMode && <span ref={bottomTabTrapEditMode} tabIndex="0"></span>}
+
+      {isDeleteConfirmationActive && (
+        <>
+          <div
+            className={styles.commentBox__deleteConfirmationBackdrop}
+            onClick={handleToggleDelete}
+          ></div>
+          <div className={styles.commentBox__deleteConfirmation}>
+            <span ref={topTabTrapDeleteConfirmation} tabIndex="0"></span>
+            <p>Are you sure you want to delete this comment?</p>
+            <div className={styles.commentBox__deleteConfirmation__btns}>
+              <button
+                className={
+                  styles.commentBox__deleteConfirmation__btns__deleteBtn
+                }
+                onClick={handleDeleteSubmit}
+                aria-label={"Delete the comment"}
+                ref={firstFocusableElementDeleteConfirmation}
+                autoFocus
+              >
+                Delete
+              </button>
+              <button
+                className={
+                  styles.commentBox__deleteConfirmation__btns__cancelBtn
+                }
+                onClick={handleToggleDelete}
+                ref={lastFocusableElementDeleteConfirmation}
+                aria-label={"Cancel delete process"}
+              >
+                Cancel
+              </button>
+            </div>
+            <span ref={bottomTabTrapDeleteConfirmation} tabIndex="0"></span>
+          </div>
+        </>
       )}
     </div>
   );

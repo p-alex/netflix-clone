@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import ProjectContext from "../../context/Project-context";
 import styles from "./AddToListBtn.module.css";
-export default function AddToListBtn({ movieId, btnType, margin }) {
+export default function AddToListBtn({ movieId, btnType, margin, movieName }) {
   const context = useContext(ProjectContext);
   const { userMovieList, handleAddMovieToList } = context;
 
@@ -23,6 +23,7 @@ export default function AddToListBtn({ movieId, btnType, margin }) {
             }
             onClick={() => handleAddMovieToList(movieId, false)}
             name={"addToListBtn"}
+            aria-label={`Remove ${movieName} from list`}
           >
             <i className="fas fa-check"></i>
           </button>
@@ -43,6 +44,7 @@ export default function AddToListBtn({ movieId, btnType, margin }) {
             }
             onClick={() => handleAddMovieToList(movieId, true)}
             name={"addToListBtn"}
+            aria-label={`Add ${movieName} to list`}
           >
             <i className="fas fa-plus"></i>
           </button>

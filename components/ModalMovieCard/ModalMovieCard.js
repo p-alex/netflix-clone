@@ -17,6 +17,9 @@ export default function ModalMovieCard({ movie, isMaxThree }) {
       <div
         className={styles.modalMovieCard__cardHeader}
         onClick={() => router.push(`/movie/${_id}`)}
+        tabIndex="0"
+        role="button"
+        aria-label={`Play ${movie.name}`}
       >
         <p className={styles.modalMovieCard__cardHeader__duration}>
           {duration}
@@ -51,7 +54,11 @@ export default function ModalMovieCard({ movie, isMaxThree }) {
               {release}
             </p>
           </div>
-          <AddToListBtn movieId={movie._id} btnType="rounded" />
+          <AddToListBtn
+            movieId={movie._id}
+            btnType="rounded"
+            movieName={movie.name}
+          />
         </div>
         <p className={styles.modalMovieCard__cardBody__description}>
           {description}

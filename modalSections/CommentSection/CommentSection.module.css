@@ -25,10 +25,12 @@
 .commentSection__rate p {
   margin-right: 5px;
 }
-.commentSection button {
-  width: 100%;
-  padding: 10px;
+.commentSection__submitCommentBtn {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
   text-align: center;
+  border-radius: 5px;
 }
 
 @media screen and (max-width: 800px) {
