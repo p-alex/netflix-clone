@@ -159,15 +159,6 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
             <i className="fas fa-chevron-left"></i>
           </button>
 
-          <button
-            className={styles.slider__ctrl + " " + styles.right__ctrl}
-            id={`slider_ctrl_right${sliderId}`}
-            onClick={() => moveSlider("right")}
-            name={`slider_ctrl_right`}
-          >
-            <i className="fas fa-chevron-right"></i>
-          </button>
-
           <div
             className={styles.slider__row}
             id={`movie_row${sliderId}`}
@@ -203,6 +194,15 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
                 })
               : null}
           </div>
+          <button
+            className={styles.slider__ctrl + " " + styles.right__ctrl}
+            id={`slider_ctrl_right${sliderId}`}
+            onClick={() => moveSlider("right")}
+            name={`slider_ctrl_right`}
+            aria-label={"See more titles"}
+          >
+            <i className="fas fa-chevron-right"></i>
+          </button>
         </div>
       )}
     </>

@@ -36,6 +36,7 @@
 }
 .right__ctrl {
   right: 0;
+  top: 0;
 }
 .slider__row {
   position: relative;
