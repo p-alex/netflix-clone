@@ -29,6 +29,7 @@
   cursor: pointer;
   background: none;
   color: white;
+
   font-size: 1.2rem;
 }
 .movieFilter__filtersToggle:hover {
@@ -55,6 +56,11 @@
 .movieFilter__dropdown__filter {
   cursor: pointer;
 }
+.movieFilter__dropdown__filter button {
+  background: none;
+  color: white;
+  text-align: left;
+}
 .movieFilter__dropdown__filter:hover {
   text-decoration: underline;
 }
@@ -64,6 +70,7 @@
   color: rgb(194, 194, 194);
   align-items: center;
   cursor: pointer;
+  background: none;
 }
 
 .movieFilter__activeFilter i {

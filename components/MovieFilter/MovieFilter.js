@@ -34,6 +34,7 @@ export default function MovieFilter({
             className={styles.movieFilter__filtersToggle}
             onClick={() => setIsDropdownActive(!isDropdownActive)}
             name="filterMenuToggleBtn"
+            aria-label="Open genres dropdown menu"
           >
             <p>Genres</p>
             <i className="fas fa-sort-down"></i>
@@ -44,25 +45,30 @@ export default function MovieFilter({
                 <li
                   className={styles.movieFilter__dropdown__filter}
                   key={filter}
-                  onClick={() => handleSetActiveFilter(filter)}
                 >
-                  {filter}
+                  <button
+                    aria-label={`Add ${filter} filter`}
+                    onClick={() => handleSetActiveFilter(filter)}
+                  >
+                    {filter}
+                  </button>
                 </li>
               ))}
             </ul>
           )}
         </div>
       ) : (
-        <div
+        <button
           className={styles.movieFilter__activeFilter}
           onClick={() => {
             setIsDropdownActive(false);
             handleResetActiveFilter();
           }}
+          aria-label={`Remove ${activeFilter} filter`}
         >
           <i className="fas fa-times"></i>
           <p>{activeFilter}</p>
-        </div>
+        </button>
       )}
     </div>
   );
