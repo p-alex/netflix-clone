@@ -199,13 +199,13 @@ export default function CommentBox({
             <p>Are you sure you want to delete this comment?</p>
             <div className={styles.commentBox__deleteConfirmation__btns}>
               <button
+                ref={firstFocusableElementDeleteConfirmation}
                 className={
                   styles.commentBox__deleteConfirmation__btns__deleteBtn
                 }
-                onClick={handleDeleteSubmit}
-                aria-label={"Delete the comment"}
-                ref={firstFocusableElementDeleteConfirmation}
                 autoFocus
+                onClick={handleDeleteSubmit}
+                aria-label="Delete the comment"
               >
                 Delete
               </button>
@@ -215,7 +215,7 @@ export default function CommentBox({
                 }
                 onClick={handleToggleDelete}
                 ref={lastFocusableElementDeleteConfirmation}
-                aria-label={"Cancel delete process"}
+                aria-label="Cancel delete process"
               >
                 Cancel
               </button>
