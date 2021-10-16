@@ -1,12 +1,8 @@
-import { useState, useEffect, useContext } from "react";
-import ProjectContext from "../../context/Project-context";
+import { useState, useEffect } from "react";
 import MovieCard from "../MovieCard/MovieCard";
 import styles from "./MovieSliderDesktop.module.css";
 
 export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
-  const context = useContext(ProjectContext);
-  const { movieList } = context.userData;
-
   const [sliderState, setSliderState] = useState({
     cardWidth: 0,
     currentIndex: 0,
@@ -15,6 +11,8 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
     maxMoveBy: 0,
     maxIndex: 0,
     move: 0,
+    maximumAmountOfCards: 15,
+    firstCardVisibleIndex: 0,
   });
   const [isIntersecting, setIsIntersecting] = useState(false);
   useEffect(() => {
@@ -90,7 +88,44 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
         });
       });
     };
-  }, [movieList, isIntersecting]);
+  }, [isIntersecting]);
+
+  useEffect(() => {
+    function checkScreenWidth() {
+      if (window.innerWidth < 1000) {
+        setSliderState((prevState) => ({
+          ...prevState,
+          howManyCardsVisible: 3,
+        }));
+        return;
+      }
+      if (window.innerWidth < 1200) {
+        setSliderState((prevState) => ({
+          ...prevState,
+          howManyCardsVisible: 4,
+        }));
+        return;
+      }
+      if (window.innerWidth < 1400) {
+        setSliderState((prevState) => ({
+          ...prevState,
+          howManyCardsVisible: 5,
+        }));
+        return;
+      }
+      if (window.innerWidth > 1400) {
+        setSliderState((prevState) => ({
+          ...prevState,
+          howManyCardsVisible: 6,
+        }));
+        return;
+      }
+    }
+    window.addEventListener("resize", checkScreenWidth);
+    return () => {
+      window.removeEventListener("resize", checkScreenWidth);
+    };
+  }, []);
 
   function moveSlider(direction) {
     const card = document.querySelector(`#card${sliderId}`);
@@ -131,6 +166,8 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
         ? maxMoveBy
         : eval(rowWidth * currentIndex + spaceBetweenCards * currentIndex);
 
+    let firstCardVisibleIndex = currentIndex * howManyCardsVisible;
+
     setSliderState((prevState) => ({
       ...prevState,
       cardWidth,
@@ -138,10 +175,42 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
       maxMoveBy,
       maxIndex,
       currentIndex,
+      firstCardVisibleIndex,
       move,
     }));
   }
 
+  useEffect(() => {
+    document
+      ?.getElementById(
+        `firstCard${sliderState.firstCardVisibleIndex}VisibleFromSlider${sliderId}`
+      )
+      ?.focus();
+  }, [sliderState.currentIndex]);
+
+  const handleCheckIsTabindexActive = (currentId, maximumId) => {
+    let { currentIndex, howManyCardsVisible, maximumAmountOfCards } =
+      sliderState;
+    if (maximumId > maximumAmountOfCards) maximumId = maximumAmountOfCards;
+    let minId = currentIndex * howManyCardsVisible;
+    let maxId = currentIndex * howManyCardsVisible + howManyCardsVisible;
+    if (maxId > maximumId) {
+      maxId = maximumId;
+      minId = maxId - howManyCardsVisible;
+    }
+    if (currentId >= minId && currentId < maxId) {
+      return "0";
+    } else {
+      return "-1";
+    }
+  };
+
+  console.log("------------");
+  console.log("how many cards visible: " + sliderState.howManyCardsVisible);
+  console.log("current index: " + sliderState.currentIndex);
+  console.log("max index: " + sliderState.maxIndex);
+  console.log("max move by: " + sliderState.maxMoveBy);
+  console.log("First card index = " + sliderState.firstCardVisibleIndex);
   return (
     <>
       {movies?.length && (
@@ -155,6 +224,7 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
             id={`slider_ctrl_left${sliderId}`}
             onClick={() => moveSlider("left")}
             name={`slider_ctrl_left`}
+            aria-label={"See previous titles"}
           >
             <i className="fas fa-chevron-left"></i>
           </button>
@@ -164,21 +234,7 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
             id={`movie_row${sliderId}`}
             style={{ transform: `translateX(-${sliderState.move}px)` }}
           >
-            {sliderId === "my-list-slider" &&
-              movies.map((movie, id) => {
-                if (id < 15) {
-                  return (
-                    <MovieCard
-                      key={`movie-card-${movie.name}-${sliderId}`}
-                      movie={movie}
-                      fromSliderWithId={sliderId}
-                    />
-                  );
-                } else {
-                  return;
-                }
-              })}
-            {isIntersecting && sliderId !== "my-list-slider"
+            {isIntersecting
               ? movies.map((movie, id) => {
                   if (id < 15) {
                     return (
@@ -186,6 +242,14 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
                         key={`movie-card-${movie.name}-${sliderId}`}
                         movie={movie}
                         fromSliderWithId={sliderId}
+                        isTabIndexActive={handleCheckIsTabindexActive(
+                          id,
+                          movies.length
+                        )}
+                        firstCardIndex={sliderState.firstCardVisibleIndex}
+                        isFirstCard={sliderState.firstCardVisibleIndex === id}
+                        cardId={id}
+                        currentIndex={sliderState.currentIndex}
                       />
                     );
                   } else {

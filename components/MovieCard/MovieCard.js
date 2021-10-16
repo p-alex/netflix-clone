@@ -10,11 +10,14 @@ export default function MovieCard({
   fromSliderWithId,
   isMouseDown,
   isTabIndexActive,
+  isFirstCard,
+  cardId,
 }) {
   const context = useContext(ProjectContext);
   const router = useRouter();
   const { handleSelectMovie } = context;
   const { name, nameSlug, maturityRating, duration, thisMovieIs, _id } = movie;
+
   return (
     <div
       className={styles.card}
@@ -30,13 +33,18 @@ export default function MovieCard({
         >
           {name}
         </button>
-        {/* //Open mobile for desktop */}
+        {/* //Open modal for desktop */}
         <button
           className={styles.card__image__openModalDesktopBtn}
           onClick={() => handleSelectMovie(movie)}
           name={name}
           aria-label={`${name} open modal`}
           tabIndex={isTabIndexActive}
+          id={
+            isFirstCard
+              ? `firstCard${cardId}VisibleFromSlider${fromSliderWithId}`
+              : null
+          }
         >
           {name}
         </button>
