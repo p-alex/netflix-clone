@@ -91,40 +91,34 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
   }, [isIntersecting]);
 
   useEffect(() => {
-    function checkScreenWidth() {
-      if (window.innerWidth < 1000) {
-        setSliderState((prevState) => ({
-          ...prevState,
-          howManyCardsVisible: 3,
-        }));
-        return;
-      }
-      if (window.innerWidth < 1200) {
-        setSliderState((prevState) => ({
-          ...prevState,
-          howManyCardsVisible: 4,
-        }));
-        return;
-      }
-      if (window.innerWidth < 1400) {
-        setSliderState((prevState) => ({
-          ...prevState,
-          howManyCardsVisible: 5,
-        }));
-        return;
-      }
-      if (window.innerWidth > 1400) {
-        setSliderState((prevState) => ({
-          ...prevState,
-          howManyCardsVisible: 6,
-        }));
-        return;
-      }
+    if (window.innerWidth < 1000) {
+      setSliderState((prevState) => ({
+        ...prevState,
+        howManyCardsVisible: 3,
+      }));
+      return;
     }
-    window.addEventListener("resize", checkScreenWidth);
-    return () => {
-      window.removeEventListener("resize", checkScreenWidth);
-    };
+    if (window.innerWidth < 1200) {
+      setSliderState((prevState) => ({
+        ...prevState,
+        howManyCardsVisible: 4,
+      }));
+      return;
+    }
+    if (window.innerWidth < 1400) {
+      setSliderState((prevState) => ({
+        ...prevState,
+        howManyCardsVisible: 5,
+      }));
+      return;
+    }
+    if (window.innerWidth > 1400) {
+      setSliderState((prevState) => ({
+        ...prevState,
+        howManyCardsVisible: 6,
+      }));
+      return;
+    }
   }, []);
 
   function moveSlider(direction) {
