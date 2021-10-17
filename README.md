@@ -2,14 +2,16 @@
 ---
 ![Application Screenshot](/public/images/application_screenshot/application_screenshot.jpg)
 
-## Overview
-### Intro
+## Intro
 Hey! This is a **fullstack Netflix Clone application** created with **Next Js**, **CSS Modules**, **MongoDb** and **SendGrid**. In this application, the movies are fetched from an API i created. 
 
 In this application you can play the movies (i just added trailers from youtube), see more info about the movie, add the movie to your list, add comments to movies (this feature does not exist in the official Netflix site), and search for a movie. You can also change your profile picture. 
 
 The application also has an authentication system. You can sign up, sign in, logout and reset your password.
 For sign up and reset password i use SendGrid to send emails for email verification.
+
+## Link
+[Live site url](https://netflix-clone-inky-five.vercel.app/) to see live version
 
 ## Features
 * I used **NextJS** library to create my app. Next.js gives you the best developer experience with all the features you need for production: hybrid static & server rendering, TypeScript support, smart bundling, route pre-fetching, and more. No config needed.
