@@ -3,6 +3,8 @@ import MovieCard from "../MovieCard/MovieCard";
 import styles from "./MovieSliderDesktop.module.css";
 
 export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
+  const [isSliderMoving, setIsSliderMoving] = useState(false);
+  const [count, setCount] = useState(0);
   const [sliderState, setSliderState] = useState({
     cardWidth: 0,
     currentIndex: 0,
@@ -15,6 +17,7 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
     firstCardVisibleIndex: 0,
   });
   const [isIntersecting, setIsIntersecting] = useState(false);
+
   useEffect(() => {
     const slider = document.querySelector(`#slider${sliderId}`);
     const options = {
@@ -22,17 +25,20 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
     };
     const observer = new IntersectionObserver(function (entries, observer) {
       entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
+        if (!entry.isIntersecting) return;
         setIsIntersecting(entry.isIntersecting);
         observer.unobserve(entry.target);
       });
     }, options);
-    if (slider) {
-      observer.observe(slider);
-    }
+    if (slider) observer.observe(slider);
   }, []);
+
+  const handleSliderInMotion = () => {
+    setIsSliderMoving(true);
+    clearTimeout(() => setIsSliderMoving(false));
+    setTimeout(() => setIsSliderMoving(false), 700);
+  };
+
   useEffect(() => {
     const sliderCtrlLeft = document.querySelector(
       `#slider_ctrl_left${sliderId}`
@@ -40,83 +46,58 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
     const sliderCtrlRight = document.querySelector(
       `#slider_ctrl_right${sliderId}`
     );
-
     const cards = document.querySelectorAll(`#card${sliderId}`);
     const cardBody = document.querySelectorAll(`#card_body${sliderId}`);
-
+    function handleHideCtrlsOnMouseOver() {
+      sliderCtrlLeft.style.opacity = "0";
+      sliderCtrlRight.style.opacity = "0";
+    }
+    function handleShowCtrlsOnMouseOut() {
+      sliderCtrlLeft.style.opacity = "0";
+      sliderCtrlRight.style.opacity = "0";
+    }
     cards.forEach((card) => {
-      card.addEventListener("mouseover", () => {
-        sliderCtrlLeft.style.opacity = "0";
-        sliderCtrlRight.style.opacity = "0";
-      });
-      card.addEventListener("mouseout", () => {
-        sliderCtrlLeft.style.opacity = "1";
-        sliderCtrlRight.style.opacity = "1";
-      });
+      card.addEventListener("mouseover", () => handleHideCtrlsOnMouseOver);
+      card.addEventListener("mouseout", () => handleShowCtrlsOnMouseOut);
     });
-
     cardBody.forEach((body) => {
-      body.addEventListener("mouseover", () => {
-        sliderCtrlLeft.style.opacity = "0";
-        sliderCtrlRight.style.opacity = "0";
-      });
-      body.addEventListener("mouseout", () => {
-        sliderCtrlLeft.style.opacity = "1";
-        sliderCtrlRight.style.opacity = "1";
-      });
+      body.addEventListener("mouseover", () => handleHideCtrlsOnMouseOver);
+      body.addEventListener("mouseout", () => handleShowCtrlsOnMouseOut);
     });
-
     return () => {
       cards.forEach((card) => {
-        card.removeEventListener("mouseover", () => {
-          sliderCtrlLeft.style.opacity = "0";
-          sliderCtrlRight.style.opacity = "0";
-        });
-        card.removeEventListener("mouseout", () => {
-          sliderCtrlLeft.style.opacity = "1";
-          sliderCtrlRight.style.opacity = "1";
-        });
+        card.removeEventListener("mouseover", () => handleHideCtrlsOnMouseOver);
+        card.removeEventListener("mouseout", () => handleShowCtrlsOnMouseOut);
       });
       cardBody.forEach((body) => {
-        body.removeEventListener("mouseover", () => {
-          sliderCtrlLeft.style.opacity = "0";
-          sliderCtrlRight.style.opacity = "0";
-        });
-        body.removeEventListener("mouseout", () => {
-          sliderCtrlLeft.style.opacity = "1";
-          sliderCtrlRight.style.opacity = "1";
-        });
+        body.removeEventListener("mouseover", () => handleHideCtrlsOnMouseOver);
+        body.removeEventListener("mouseout", () => handleShowCtrlsOnMouseOut);
       });
     };
   }, [isIntersecting]);
 
   useEffect(() => {
-    if (window.innerWidth < 1000) {
+    const windowWidth = window.innerWidth;
+    function handleSetHowManyCardsVisible(number) {
       setSliderState((prevState) => ({
         ...prevState,
-        howManyCardsVisible: 3,
+        howManyCardsVisible: number,
       }));
+    }
+    if (windowWidth < 1000) {
+      handleSetHowManyCardsVisible(3);
       return;
     }
-    if (window.innerWidth < 1200) {
-      setSliderState((prevState) => ({
-        ...prevState,
-        howManyCardsVisible: 4,
-      }));
+    if (windowWidth < 1200) {
+      handleSetHowManyCardsVisible(4);
       return;
     }
-    if (window.innerWidth < 1400) {
-      setSliderState((prevState) => ({
-        ...prevState,
-        howManyCardsVisible: 5,
-      }));
+    if (windowWidth < 1400) {
+      handleSetHowManyCardsVisible(5);
       return;
     }
-    if (window.innerWidth > 1400) {
-      setSliderState((prevState) => ({
-        ...prevState,
-        howManyCardsVisible: 6,
-      }));
+    if (windowWidth > 1400) {
+      handleSetHowManyCardsVisible(6);
       return;
     }
   }, []);
@@ -172,14 +153,24 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
       firstCardVisibleIndex,
       move,
     }));
+
+    handleSliderInMotion();
+    setCount(count + 1);
   }
 
   useEffect(() => {
-    document
-      ?.getElementById(
-        `firstCard${sliderState.firstCardVisibleIndex}VisibleFromSlider${sliderId}`
-      )
-      ?.focus();
+    // Skipping initial render
+    if (count > 0) {
+      function focusFirstCard() {
+        document
+          ?.getElementById(
+            `firstCard${sliderState.firstCardVisibleIndex}VisibleFromSlider${sliderId}`
+          )
+          ?.focus();
+      }
+      clearTimeout(focusFirstCard);
+      setTimeout(focusFirstCard, 700);
+    }
   }, [sliderState.currentIndex]);
 
   const handleCheckIsTabindexActive = (currentId, maximumId) => {
@@ -192,19 +183,10 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
       maxId = maximumId;
       minId = maxId - howManyCardsVisible;
     }
-    if (currentId >= minId && currentId < maxId) {
-      return "0";
-    } else {
-      return "-1";
-    }
+    if (currentId >= minId && currentId < maxId) return "0";
+    return "-1";
   };
-
-  console.log("------------");
-  console.log("how many cards visible: " + sliderState.howManyCardsVisible);
-  console.log("current index: " + sliderState.currentIndex);
-  console.log("max index: " + sliderState.maxIndex);
-  console.log("max move by: " + sliderState.maxMoveBy);
-  console.log("First card index = " + sliderState.firstCardVisibleIndex);
+  console.count("reload");
   return (
     <>
       {movies?.length && (
@@ -219,6 +201,7 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
             onClick={() => moveSlider("left")}
             name={`slider_ctrl_left`}
             aria-label={"See previous titles"}
+            disabled={isSliderMoving}
           >
             <i className="fas fa-chevron-left"></i>
           </button>
@@ -246,8 +229,6 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
                         currentIndex={sliderState.currentIndex}
                       />
                     );
-                  } else {
-                    return;
                   }
                 })
               : null}
@@ -258,6 +239,7 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
             onClick={() => moveSlider("right")}
             name={`slider_ctrl_right`}
             aria-label={"See more titles"}
+            disabled={isSliderMoving}
           >
             <i className="fas fa-chevron-right"></i>
           </button>
