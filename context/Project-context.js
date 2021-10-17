@@ -24,4 +24,5 @@ export default createContext({
   handleClearSearchQuery: () => {},
   handleToggleOffSearchBar: () => {},
   setSearchBarState: () => {},
+  isAddToListLoading: false,
 });

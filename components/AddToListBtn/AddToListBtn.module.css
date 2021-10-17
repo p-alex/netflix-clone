@@ -49,6 +49,11 @@
   font-size: 14px;
 }
 
+.addToListRegularBtn:disabled,
+.addToListRoundedBtn:disabled {
+  opacity: 0.3;
+}
+
 .addToListRegularBtn {
   position: relative;
   display: flex;

@@ -1,12 +1,13 @@
 import { useState, useReducer } from "react";
 import { useRouter } from "next/router";
 import ProjectContext from "./Project-context";
-import { selectedMovieReducer } from "./reducers";
+import { selectedMovieReducer, commentsReducer } from "./reducers";
 export default function GlobalState({ children }) {
   const router = useRouter();
   const [userData, setUserData] = useState({});
   const [allMovies, setAllMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isAddToListLoading, setIsAddToListLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchBarActive, setIsSearchBarActive] = useState(false);
 
@@ -17,6 +18,8 @@ export default function GlobalState({ children }) {
   const handleClearSearchQuery = () => setSearchQuery("");
 
   const handleToggleOffSearchBar = () => setIsSearchBarActive(false);
+
+  const [comments, dispatchComments] = useReducer(commentsReducer, {});
 
   const filters = [
     "Action & Adventure",
@@ -81,6 +84,7 @@ export default function GlobalState({ children }) {
   };
 
   const handleAddMovieToList = async (movieId, isAdding) => {
+    setIsAddToListLoading(true);
     console.time(isAdding ? "Added movie to list" : "Removed movie from list");
     const result = await fetch(`${url}/api/add-movie-to-list`, {
       method: "POST",
@@ -103,6 +107,7 @@ export default function GlobalState({ children }) {
           movieList: prevState.movieList.filter((item) => item !== movieId),
         }));
       }
+      setIsAddToListLoading(false);
     }
 
     console.timeEnd(
@@ -258,6 +263,7 @@ export default function GlobalState({ children }) {
         handleClearSearchQuery,
         handleToggleOffSearchBar,
         //setSearchBarState,
+        isAddToListLoading,
       }}
     >
       {children}

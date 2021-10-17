@@ -3,7 +3,7 @@ import ProjectContext from "../../context/Project-context";
 import styles from "./AddToListBtn.module.css";
 export default function AddToListBtn({ movieId, btnType, margin, movieName }) {
   const context = useContext(ProjectContext);
-  const { userMovieList, handleAddMovieToList } = context;
+  const { userMovieList, handleAddMovieToList, isAddToListLoading } = context;
 
   return (
     <>
@@ -24,6 +24,7 @@ export default function AddToListBtn({ movieId, btnType, margin, movieName }) {
             onClick={() => handleAddMovieToList(movieId, false)}
             name={"addToListBtn"}
             aria-label={`Remove ${movieName} from list`}
+            disabled={isAddToListLoading}
           >
             <i className="fas fa-check"></i>
           </button>
@@ -45,6 +46,7 @@ export default function AddToListBtn({ movieId, btnType, margin, movieName }) {
             onClick={() => handleAddMovieToList(movieId, true)}
             name={"addToListBtn"}
             aria-label={`Add ${movieName} to list`}
+            disabled={isAddToListLoading}
           >
             <i className="fas fa-plus"></i>
           </button>
