@@ -2,14 +2,10 @@ import styles from "./MovieSliderMobile.module.css";
 import { useState, useEffect } from "react";
 import MovieCard from "../MovieCard/MovieCard";
 
-export default function MovieSliderMobile({
-  movies,
-  sliderId,
-  sliderTitle,
-  hasMovies,
-}) {
+export default function MovieSliderMobile({ movies, sliderId, sliderTitle }) {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [isIntersecting, setIsIntersecting] = useState(false);
+  // Lazy loading the slider
   useEffect(() => {
     const slider = document.querySelector(`#mobileSlider${sliderId}`);
     const options = {
@@ -17,88 +13,56 @@ export default function MovieSliderMobile({
     };
     const observer = new IntersectionObserver(function (entries, observer) {
       entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
+        if (!entry.isIntersecting) return;
         setIsIntersecting(entry.isIntersecting);
         observer.unobserve(entry.target);
       });
     }, options);
-    if (slider) {
-      observer.observe(slider);
-    }
+    if (slider) observer.observe(slider);
   }, []);
   useEffect(() => {
     const rowContainer = document.querySelector(`#slider${sliderId}`);
     let isDown = false;
     let startX;
     let scrollLeft;
-
-    rowContainer?.addEventListener("mousedown", (e) => {
+    function handleMouseDown(e) {
       isDown = true;
       setTimeout(() => {
         setIsMouseDown(true);
       }, 150);
       startX = e.pageX - rowContainer.offsetLeft;
       scrollLeft = rowContainer.scrollLeft;
-    });
-
-    rowContainer?.addEventListener("mouseleave", () => {
+    }
+    function handleMouseLeave() {
       isDown = false;
       setTimeout(() => {
         setIsMouseDown(false);
       }, 150);
-    });
-
-    rowContainer?.addEventListener("mouseup", () => {
+    }
+    function handleMouseUp() {
       isDown = false;
       setTimeout(() => {
         setIsMouseDown(false);
       }, 150);
-    });
-
-    rowContainer?.addEventListener("mousemove", (e) => {
+    }
+    function handleMouseMove(e) {
       if (!isDown) return;
       e.preventDefault();
       let x = e.pageX - rowContainer.offsetLeft;
       let walk = (x - startX) * 1.5;
       rowContainer.scrollLeft = scrollLeft - walk;
-    });
-
+    }
+    rowContainer?.addEventListener("mousedown", (e) => handleMouseDown(e));
+    rowContainer?.addEventListener("mouseleave", handleMouseLeave);
+    rowContainer?.addEventListener("mouseup", handleMouseUp);
+    rowContainer?.addEventListener("mousemove", (e) => handleMouseMove(e));
     return () => {
-      rowContainer?.removeEventListener("mousedown", (e) => {
-        isDown = true;
-        setTimeout(() => {
-          setIsMouseDown(true);
-        }, 150);
-        startX = e.pageX - rowContainer.offsetLeft;
-        scrollLeft = rowContainer.scrollLeft;
-      });
-
-      rowContainer?.removeEventListener("mouseleave", () => {
-        isDown = false;
-        setTimeout(() => {
-          setIsMouseDown(false);
-        }, 150);
-      });
-
-      rowContainer?.removeEventListener("mouseup", () => {
-        isDown = false;
-        setTimeout(() => {
-          setIsMouseDown(false);
-        }, 150);
-      });
-
-      rowContainer?.removeEventListener("mousemove", (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        let x = e.pageX - rowContainer.offsetLeft;
-        let walk = (x - startX) * 1.5;
-        rowContainer.scrollLeft = scrollLeft - walk;
-      });
+      rowContainer?.removeEventListener("mousedown", (e) => handleMouseDown(e));
+      rowContainer?.removeEventListener("mouseleave", handleMouseLeave);
+      rowContainer?.removeEventListener("mouseup", handleMouseUp);
+      rowContainer?.removeEventListener("mousemove", (e) => handleMouseMove(e));
     };
   }, [isIntersecting]);
-
   return (
     <>
       {movies?.length && (
@@ -109,16 +73,14 @@ export default function MovieSliderMobile({
           {isIntersecting && (
             <div className={styles.slider} id={`slider${sliderId}`}>
               <div className={styles.slider__row} id={`movie_row${sliderId}`}>
-                {movies.map((movie) => {
-                  return (
-                    <MovieCard
-                      key={`movie-card-${movie.name}-${sliderId}`}
-                      movie={movie}
-                      fromSliderWithId={sliderId}
-                      isMouseDown={isMouseDown}
-                    />
-                  );
-                })}
+                {movies.map((movie) => (
+                  <MovieCard
+                    key={`movie-card-${movie.name}-${sliderId}`}
+                    movie={movie}
+                    fromSliderWithId={sliderId}
+                    isMouseDown={isMouseDown}
+                  />
+                ))}
               </div>
             </div>
           )}
