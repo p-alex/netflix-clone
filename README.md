@@ -1,4 +1,5 @@
 # Netflix Clone
+**I kinda stole all the images and information about the movies ... please don't sue me. I built this application just to have something to show in my portfolio so I can land a job.**
 ---
 ![Application Screenshot](/public/images/application_screenshot/application_screenshot.jpg)
 
