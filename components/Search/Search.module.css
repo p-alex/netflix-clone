@@ -27,7 +27,7 @@
   color: white;
 }
 .search a {
-  color: none;
+  color: white;
 }
 .search__input {
   background: none;
@@ -40,12 +40,6 @@
 
 .search__inputAndClear {
   transform-origin: right;
-}
-.search__link {
-  border: solid red 1px;
-}
-.search__link:hover {
-  cursor: pointer;
 }
 
 @keyframes scale {

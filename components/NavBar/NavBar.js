@@ -65,7 +65,7 @@ export default function NavBar() {
         <div className={styles.navbar__searchAndUser}>
           <Search />
           <ul>
-            <li>
+            <li tabIndex="0">
               <p>{username}</p>
               <div className={styles.navbar__searchAndUser__profileImage}>
                 <Image src={profileImg} alt="" width="300px" height="300px" />
@@ -74,7 +74,7 @@ export default function NavBar() {
               <i className="fas fa-caret-down"></i>
               <ul>
                 <li>
-                  <Link href="/profile">Profile</Link>
+                  <Link href="/profile">My Profile</Link>
                 </li>
                 <li>
                   <button onClick={handleLogout} name="signOutBtn">

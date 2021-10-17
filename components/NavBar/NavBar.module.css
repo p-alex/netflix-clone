@@ -55,8 +55,8 @@
 }
 .navbar__searchAndUser ul li ul {
   position: absolute;
-  top: 60px;
-  background: black;
+  top: 69px;
+  background: #141414;
   padding: 10px;
   right: 0;
   display: none;
@@ -65,14 +65,20 @@
 .navbar__searchAndUser ul li ul li button,
 .navbar__searchAndUser ul li ul li a {
   background: transparent;
-  text-decoration: underline;
+  text-decoration: none;
   color: white;
   font-size: 1rem;
   margin: 0;
   padding: 0;
 }
 
-.navbar__searchAndUser ul li:hover ul {
+.navbar__searchAndUser ul li ul li button:hover,
+.navbar__searchAndUser ul li ul li a:hover {
+  text-decoration: underline;
+}
+
+.navbar__searchAndUser ul li:hover ul,
+.navbar__searchAndUser ul li:focus-within ul {
   display: block;
 }
 

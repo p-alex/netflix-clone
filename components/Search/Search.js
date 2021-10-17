@@ -1,18 +1,16 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect } from "react";
 import ProjectContext from "../../context/Project-context";
 import Link from "next/link";
 import styles from "./Search.module.css";
 export default function Search() {
   const context = useContext(ProjectContext);
-  const searchInput = useRef(null);
-  const searchBar = useRef(null);
+
   const [currentPath, setCurrentPath] = useState("");
   const {
     searchQuery,
     handleChangeSearchQuery,
     isSearchBarActive,
     setIsSearchBarActive,
-    //   handleToggleSearchBar,
     handleClearSearchQuery,
     handleToggleOffSearchBar,
   } = context;
@@ -39,10 +37,11 @@ export default function Search() {
           : styles.search
       }
       name={"searchBar"}
-      ref={searchBar}
     >
       <Link href="/search">
-        <i className="fas fa-search"></i>
+        <a aria-label="Toggle search bar" role="button">
+          <i className="fas fa-search"></i>
+        </a>
       </Link>
       {isSearchBarActive && (
         <div className={styles.search__inputAndClear}>
@@ -55,13 +54,13 @@ export default function Search() {
             placeholder="Search..."
             value={searchQuery}
             onChange={(e) => handleChangeSearchQuery(e)}
-            ref={searchInput}
             autoFocus
           />
           <button
             className={styles.search__clear}
             onClick={handleClearSearchQuery}
             name="clearSearchQueryBtn"
+            aria-label="Clear search query"
           >
             <i className="fas fa-times"></i>
           </button>
