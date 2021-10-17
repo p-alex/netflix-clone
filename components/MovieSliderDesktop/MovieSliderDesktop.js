@@ -53,25 +53,33 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
       sliderCtrlRight.style.opacity = "0";
     }
     function handleShowCtrlsOnMouseOut() {
-      sliderCtrlLeft.style.opacity = "0";
-      sliderCtrlRight.style.opacity = "0";
+      sliderCtrlLeft.style.opacity = "1";
+      sliderCtrlRight.style.opacity = "1";
     }
     cards.forEach((card) => {
-      card.addEventListener("mouseover", () => handleHideCtrlsOnMouseOver);
-      card.addEventListener("mouseout", () => handleShowCtrlsOnMouseOut);
+      card.addEventListener("mouseover", () => handleHideCtrlsOnMouseOver());
+      card.addEventListener("mouseout", () => handleShowCtrlsOnMouseOut());
     });
     cardBody.forEach((body) => {
-      body.addEventListener("mouseover", () => handleHideCtrlsOnMouseOver);
-      body.addEventListener("mouseout", () => handleShowCtrlsOnMouseOut);
+      body.addEventListener("mouseover", () => handleHideCtrlsOnMouseOver());
+      body.addEventListener("mouseout", () => handleHideCtrlsOnMouseOver());
     });
     return () => {
       cards.forEach((card) => {
-        card.removeEventListener("mouseover", () => handleHideCtrlsOnMouseOver);
-        card.removeEventListener("mouseout", () => handleShowCtrlsOnMouseOut);
+        card.removeEventListener("mouseover", () =>
+          handleHideCtrlsOnMouseOver()
+        );
+        card.removeEventListener("mouseout", () =>
+          handleHideCtrlsOnMouseOver()
+        );
       });
       cardBody.forEach((body) => {
-        body.removeEventListener("mouseover", () => handleHideCtrlsOnMouseOver);
-        body.removeEventListener("mouseout", () => handleShowCtrlsOnMouseOut);
+        body.removeEventListener("mouseover", () =>
+          handleHideCtrlsOnMouseOver()
+        );
+        body.removeEventListener("mouseout", () =>
+          handleHideCtrlsOnMouseOver()
+        );
       });
     };
   }, [isIntersecting]);
