@@ -22,7 +22,7 @@ export default function MovieInfoSection({ movie }) {
         <div className={styles.modal__info__container__mobileBtnContainer}>
           <Button
             type="play"
-            value=""
+            value="Play"
             func={() => router.push(`/movie/${movie._id}`)}
           />
 
