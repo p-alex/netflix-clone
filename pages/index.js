@@ -37,67 +37,65 @@ export default function Home() {
         <title>Netflix Clone made by Alex Daniel</title>
       </Head>
       <div style={{ overflowX: "hidden" }}>
-        <div className={selectedMovie.name && pageWrapperStyles.disableScroll}>
-          {isLoading && <FullscreenLoader />}
-          {selectedMovie?.name ? <Modal movie={selectedMovie} /> : null}
-          <NavBar />
-          <MobileNavBar />
-          {allMovies.length !== 0 && (
-            <>
-              <Banner movies={allMovies} />
-              {/* 
+        {isLoading && <FullscreenLoader />}
+        {selectedMovie?.name ? <Modal movie={selectedMovie} /> : null}
+        <NavBar />
+        <MobileNavBar />
+        {allMovies.length !== 0 && (
+          <>
+            <Banner movies={allMovies} />
+            {/* 
               <MovieSlider
                 movies={filterAllMovies()}
                 sliderId={"my-list-slider"}
                 sliderTitle={"My List"}
               /> */}
-              <MovieSlider
-                movies={allMovies.filter((movie) =>
-                  movie.genres.includes("Action & Adventure")
-                )}
-                sliderId={"2"}
-                sliderTitle={"Action & Adventure"}
-              />
-              <MovieSlider
-                movies={allMovies.filter((movie) =>
-                  movie.genres.includes("Dramas")
-                )}
-                sliderId={"3"}
-                sliderTitle={"Dramas"}
-              />
-              <MovieSlider
-                movies={allMovies
-                  .filter((movie) => movie.genres.includes("Sci-Fi Movies"))
-                  .reverse()}
-                sliderId={"4"}
-                sliderTitle={"Sci-Fi"}
-              />
-              <MovieSlider
-                movies={allMovies
-                  .filter((movie) => movie.genres.includes("Horror"))
-                  .reverse()}
-                sliderId={"5"}
-                sliderTitle={"Horror"}
-              />
-              <MovieSlider
-                movies={allMovies
-                  .filter((movie) =>
-                    movie.genres.includes("Children & Family Movies")
-                  )
-                  .reverse()}
-                sliderId={"6"}
-                sliderTitle={"Children & Family"}
-              />
-              <MovieSlider
-                movies={allMovies
-                  .filter((movie) => movie.genres.includes("Anime"))
-                  .reverse()}
-                sliderId={"7"}
-                sliderTitle={"Anime"}
-              />
-            </>
-          )}
-        </div>
+            <MovieSlider
+              movies={allMovies.filter((movie) =>
+                movie.genres.includes("Action & Adventure")
+              )}
+              sliderId={"2"}
+              sliderTitle={"Action & Adventure"}
+            />
+            <MovieSlider
+              movies={allMovies.filter((movie) =>
+                movie.genres.includes("Dramas")
+              )}
+              sliderId={"3"}
+              sliderTitle={"Dramas"}
+            />
+            <MovieSlider
+              movies={allMovies
+                .filter((movie) => movie.genres.includes("Sci-Fi Movies"))
+                .reverse()}
+              sliderId={"4"}
+              sliderTitle={"Sci-Fi"}
+            />
+            <MovieSlider
+              movies={allMovies
+                .filter((movie) => movie.genres.includes("Horror"))
+                .reverse()}
+              sliderId={"5"}
+              sliderTitle={"Horror"}
+            />
+            <MovieSlider
+              movies={allMovies
+                .filter((movie) =>
+                  movie.genres.includes("Children & Family Movies")
+                )
+                .reverse()}
+              sliderId={"6"}
+              sliderTitle={"Children & Family"}
+            />
+            <MovieSlider
+              movies={allMovies
+                .filter((movie) => movie.genres.includes("Anime"))
+                .reverse()}
+              sliderId={"7"}
+              sliderTitle={"Anime"}
+            />
+          </>
+        )}
       </div>
     </>
   );
