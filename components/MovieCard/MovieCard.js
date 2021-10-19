@@ -84,7 +84,14 @@ export default function MovieCard({
         <div className={styles.card__body__thisMovieIs}>
           {thisMovieIs.map((item, id) => {
             if (id < 3) {
-              return <p key={`card-body-${item}`}>{item}</p>;
+              return (
+                <p
+                  key={`card-body-${item}`}
+                  className={styles.card__body__thisMovieIs__type}
+                >
+                  {item}
+                </p>
+              );
             }
             return;
           })}

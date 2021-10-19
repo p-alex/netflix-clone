@@ -64,7 +64,7 @@
   padding: 20px;
   color: white;
   bottom: 1px;
-  background: rgb(0, 0, 0);
+  background: rgb(21, 21, 21);
   width: 100%;
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
@@ -113,7 +113,7 @@
 }
 .card__body__stats {
   margin-bottom: 10px;
-  font-size: 14px;
+  font-size: 1rem;
 }
 .card__body__stats span {
   margin-right: 10px;
@@ -124,11 +124,29 @@
 }
 .card__body__thisMovieIs {
   display: flex;
-  font-size: 14px;
+  font-size: 1rem;
   width: 100%;
-  justify-content: space-between;
+  flex-wrap: wrap;
 }
-
+.card__body__thisMovieIs__type {
+  display: flex;
+  align-items: center;
+  width: auto;
+  margin-right: 6px;
+}
+.card__body__thisMovieIs__type::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgb(100, 100, 100);
+  margin-right: 6px;
+}
+.card__body__thisMovieIs__type:first-of-type::before {
+  content: "";
+  display: none;
+}
 @keyframes transition {
   from {
     opacity: 0;
@@ -137,12 +155,6 @@
   to {
     opacity: 1;
     transform: translateY(100%);
-  }
-}
-
-@media screen and (max-width: 1600px) {
-  .card__body__thisMovieIs p:nth-child(3) {
-    display: none;
   }
 }
 @media screen and (max-width: 1400px) {
@@ -155,7 +167,6 @@
     width: calc(25% - 4px);
   }
 }
-
 @media screen and (max-width: 1000px) {
   .card {
     width: calc(33.333333% - 3px);
