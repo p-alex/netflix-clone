@@ -1,20 +1,25 @@
 /* Shrink based on vw */
 .btnResponsive {
   display: inline-block;
-  padding: 0.5vw 1.7vw;
+  padding: 0.6vw 1.7vw;
   font-size: 1.2vw;
   border-radius: 5px;
   margin-right: 20px;
+  font-weight: bold;
+  color: #333;
+  background: #f3f3f3;
+  transition: background 100ms;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
 }
 .btnResponsive:hover {
-  opacity: 0.7;
+  background: #dadada;
 }
 .btnResponsive:last-of-type {
   margin-right: 0;
 }
 .btnResponsive i {
-  font-size: 1.3vw;
-  margin-right: 10px;
+  font-size: 1.2vw;
+  margin-right: 20px;
 }
 .btnResponsive:disabled,
 .btnResponsive[disabled] {
@@ -29,12 +34,16 @@
   font-size: 1rem;
   border-radius: 5px;
   margin-right: 20px;
+  font-weight: bold;
+  background: #f3f3f3;
+  color: #333;
+  transition: background 100ms;
 }
 .btn:last-of-type {
   margin-right: 0;
 }
 .btn:hover {
-  opacity: 0.7;
+  background: #dadada;
 }
 .btn i {
   font-size: 1rem;
