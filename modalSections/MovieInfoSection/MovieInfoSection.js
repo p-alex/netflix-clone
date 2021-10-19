@@ -19,7 +19,7 @@ export default function MovieInfoSection({ movie }) {
     <div className={styles.modal__info}>
       <div className={styles.modal__info__container}>
         <h2 className={styles.modal__info__container__nameMobile}>{name}</h2>
-        <div className={styles.modal__info__container__mobileBtnContainer}>
+        <div className={styles.modal__info__container__BtnContainer}>
           <Button
             type="play"
             value="Play"

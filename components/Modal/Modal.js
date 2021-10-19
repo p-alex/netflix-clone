@@ -71,7 +71,7 @@ export default function Modal({ movie }) {
               onClick={handleResetSelectedMovie}
             ></div>
 
-            <div className={styles.modal}>
+            <div className={styles.modal} aria-modal="true" role="dialog">
               <span ref={topTabTrap} tabIndex="0"></span>
 
               <div className={styles.modal__header} id={"modalHeader"}>
@@ -96,19 +96,7 @@ export default function Modal({ movie }) {
                     src={`/movies/${nameSlug}/${nameSlug}-logo.png`}
                     alt={`the ${movie.name} logo`}
                   />
-                  <div className={styles.modal__header__video__btnContainer}>
-                    <Button
-                      type="play"
-                      value="Play"
-                      func={() => router.push(`/movie/${movie._id}`)}
-                      ariaLabel={`Play ${movie.name}`}
-                    />
-                    <AddToListBtn
-                      movieId={movie._id}
-                      btnType="rounded"
-                      movieName={movie.name}
-                    />
-                  </div>
+
                   <BottomFade />
                 </div>
               </div>

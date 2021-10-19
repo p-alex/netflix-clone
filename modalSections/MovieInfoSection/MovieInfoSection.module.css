@@ -9,8 +9,8 @@
 .modal__info__container__nameMobile {
   display: none;
 }
-.modal__info__container__mobileBtnContainer {
-  display: none;
+.modal__info__container__BtnContainer {
+  display: flex;
   margin-bottom: 20px;
 }
 .modal__info__stats {
@@ -51,14 +51,11 @@
   content: "";
 }
 .modal__info__description {
-  font-size: 1.3rem;
+  font-size: 1.35rem;
 }
 @media screen and (max-width: 800px) {
   .modal__info__container {
     padding: 20px 20px 60px 20px;
-  }
-  .modal__info__container__mobileBtnContainer {
-    display: flex;
   }
   .modal__info {
     display: flex;

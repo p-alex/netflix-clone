@@ -6,7 +6,9 @@
   left: 0;
   z-index: 10000;
   overflow-y: scroll;
+  overscroll-behavior: contain;
   scroll-behavior: smooth;
+  will-change: scroll-position;
 }
 .modal__backdrop {
   position: fixed;
@@ -81,7 +83,7 @@
 .modal__header__video__movieLogo {
   position: absolute;
   z-index: 5;
-  bottom: 120px;
+  bottom: 60px;
   left: 60px;
   width: 50%;
 }
