@@ -1,7 +1,7 @@
 /* Shrink based on vw */
 .btnResponsive {
   display: inline-block;
-  padding: 0.6vw 1.7vw;
+  padding: 0.6vw 1.2vw;
   font-size: 1.2vw;
   border-radius: 5px;
   margin-right: 20px;
@@ -19,7 +19,7 @@
 }
 .btnResponsive i {
   font-size: 1.2vw;
-  margin-right: 20px;
+  margin-right: 1vw;
 }
 .btnResponsive:disabled,
 .btnResponsive[disabled] {
