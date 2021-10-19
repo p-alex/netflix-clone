@@ -4,7 +4,7 @@
  **I kinda stole all the images and information about the movies from Netflix ... please don't sue me. I built this application just to have something to show in my portfolio so I can maybe land a job.**
 
 ---
-![Application Screenshot](/public/images/application_screenshot/application_screenshot.jpg)
+![Application Screenshot](/public/images/application_screenshot/netflix-clone-screenshot.webp)
 
 ## Intro
 Hey! This is a **fullstack Netflix Clone application** created with **Next Js**, **CSS Modules**, **MongoDb** and **SendGrid**. In this application, the movies are fetched from an API i created. 
