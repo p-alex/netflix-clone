@@ -33,7 +33,6 @@
 }
 .btnContainer:hover .infoPopup {
   display: block;
-  animation: opacity 200ms;
 }
 .addToListRoundedBtn {
   position: relative;
@@ -46,7 +45,8 @@
   border: solid grey 2px;
   width: 38px;
   height: 38px;
-  font-size: 14px;
+  font-size: 1rem;
+  transition: border 100ms ease-out;
 }
 
 .addToListRegularBtn {
@@ -54,16 +54,17 @@
   display: flex;
   justify-content: center;
   padding: 10px 20px;
-  font-size: 1rem;
   border-radius: 5px;
   margin-right: 20px;
-  background: white;
+  background: #f3f3f3;
+  font-size: 1rem;
+  transition: opacity 100ms ease-out;
 }
 .addToListRoundedBtn:hover {
   border: solid white 2px;
 }
 .addToListRegularBtn:hover {
-  opacity: 0.7;
+  opacity: 0.9;
 }
 .movieIsAdded {
   background: grey;
