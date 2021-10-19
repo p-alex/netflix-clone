@@ -84,7 +84,7 @@
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background: red;
+    background: rgb(238, 132, 34);
     margin: 0 5px;
   }
   .banner__content__btn_container {
