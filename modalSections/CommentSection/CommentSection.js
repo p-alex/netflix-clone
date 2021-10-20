@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import CommentBox from "../../components/CommentBox/CommentBox";
 import Stars from "../../components/Stars/Stars";
 import ProjectContext from "../../context/Project-context";
+import Button from "../../components/Button/Button";
 import styles from "./CommentSection.module.css";
 export default function CommentSection({ movie }) {
   const context = useContext(ProjectContext);
@@ -77,13 +78,7 @@ export default function CommentSection({ movie }) {
           value={comment.text}
           onChange={(e) => handleSetText(e)}
         />
-
-        <button
-          className={styles.commentSection__submitCommentBtn}
-          onClick={() => handleSubmit(comment)}
-        >
-          Comment
-        </button>
+        <Button func={() => handleSubmit(comment)} value="Comment" />
       </div>
     </section>
   );
