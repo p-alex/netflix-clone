@@ -1,45 +1,27 @@
 import { useState, useReducer } from "react";
 import { useRouter } from "next/router";
 import ProjectContext from "./Project-context";
-import { selectedMovieReducer, commentsReducer } from "./reducers";
+import { userReducer, moviesReducer, selectedMovieReducer } from "./reducers";
+import { filtersList } from "../filtersList/filtersList";
 export default function GlobalState({ children }) {
   const router = useRouter();
-  const [userData, setUserData] = useState({});
-  const [allMovies, setAllMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const [allMovies, dispatchMovies] = useReducer(moviesReducer, {
+    movies: [],
+    isLoading: false,
+  });
+
+  const [user, dispatchUser] = useReducer(userReducer, {});
+
   const [isAddToListLoading, setIsAddToListLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchBarActive, setIsSearchBarActive] = useState(false);
 
-  const handleChangeSearchQuery = (e) => {
-    setSearchQuery(e.target.value);
-  };
-
+  const handleChangeSearchQuery = (e) => setSearchQuery(e.target.value);
   const handleClearSearchQuery = () => setSearchQuery("");
-
   const handleToggleOffSearchBar = () => setIsSearchBarActive(false);
 
-  const [comments, dispatchComments] = useReducer(commentsReducer, {});
-
-  const filters = [
-    "Action & Adventure",
-    "Anime",
-    "Award-Winning",
-    "Children & Family Movies",
-    "Classic",
-    "Comedies",
-    "Crime Movies",
-    "Documentaries",
-    "Dramas",
-    "Fantasy Movie",
-    "Horror",
-    "Independent",
-    "Music & Musicals",
-    "Romantic",
-    "Sci-Fi Movies",
-    "Sports",
-    "Thriller",
-  ];
+  const filters = filtersList;
 
   let url =
     process.env.NODE_ENV === "development"
@@ -54,33 +36,28 @@ export default function GlobalState({ children }) {
   const handleGetUserData = async () => {
     const result = await fetch(`${url}/api/user-data`);
     const resultJSON = await result.json();
-    if (!resultJSON.ok) {
-      router.push("/login");
+    console.log(resultJSON);
+    if (resultJSON.ok) {
+      dispatchUser({ type: "GET_USER", payload: resultJSON });
     } else {
-      setUserData({
-        username: resultJSON.username,
-        profileImg: resultJSON.profileImg,
-        isVerified: resultJSON.isVerified,
-        movieList: resultJSON.movieList,
-        date: resultJSON.date,
-      });
+      router.push("/login");
     }
     console.log(resultJSON.message);
   };
 
   const handleGetAllMovies = async () => {
-    setIsLoading(true);
-
+    dispatchMovies({ type: "LOADING" });
     const movieList = await fetch(`${url}/api/movies`);
     const moviesJSON = await movieList.json();
-    if (!moviesJSON.ok) {
-      setIsLoading(false);
-      router.push("/login");
+    if (moviesJSON.ok) {
+      dispatchMovies({
+        type: "GET_MOVIES",
+        payload: moviesJSON.movies.reverse(),
+      });
     } else {
-      setAllMovies(moviesJSON.movies.reverse());
-      setIsLoading(false);
+      dispatchMovies({ type: "STOP_LOADING" });
+      router.push("/login");
     }
-    console.log(moviesJSON.message);
   };
 
   const handleAddMovieToList = async (movieId, isAdding) => {
@@ -94,18 +71,11 @@ export default function GlobalState({ children }) {
       body: JSON.stringify({ movieId }),
     });
     const resultJSON = await result.json();
-    console.log(resultJSON.message);
     if (resultJSON.ok) {
       if (isAdding) {
-        setUserData((prevState) => ({
-          ...prevState,
-          movieList: [movieId, ...prevState.movieList],
-        }));
+        dispatchUser({ type: "ADD_MOVIE_TO_LIST", payload: { movieId } });
       } else {
-        setUserData((prevState) => ({
-          ...prevState,
-          movieList: prevState.movieList.filter((item) => item !== movieId),
-        }));
+        dispatchUser({ type: "REMOVE_MOVIE_FROM_LIST", payload: { movieId } });
       }
       setIsAddToListLoading(false);
     }
@@ -125,17 +95,8 @@ export default function GlobalState({ children }) {
       body: JSON.stringify(comment),
     });
     const resultJSON = await result.json();
-    console.log(resultJSON.message);
     if (resultJSON.ok) {
-      const updatedMoviesArray = allMovies.map((movie) => {
-        if (movie._id === comment.movieId) {
-          const oldCommentsArray = movie.comments;
-          const updatedCommentsArray = [comment, ...oldCommentsArray];
-          movie.comments = updatedCommentsArray;
-        }
-        return movie;
-      });
-      setAllMovies(updatedMoviesArray);
+      dispatchMovies({ type: "ADD_COMMENT", payload: { comment } });
     }
     console.timeEnd("Add new comment");
   };
@@ -151,17 +112,11 @@ export default function GlobalState({ children }) {
       body: JSON.stringify(commentInfo),
     });
     const resultJSON = await result.json();
-    console.log(resultJSON.message);
     if (resultJSON.ok) {
-      const updatedMoviesArray = allMovies.map((movie) => {
-        if (movie._id === movieId) {
-          movie.comments = movie.comments.filter(
-            (co) => co.commentId !== commentId
-          );
-        }
-        return movie;
+      dispatchMovies({
+        type: "DELETE_COMMENT",
+        payload: { commentId, movieId },
       });
-      setAllMovies(updatedMoviesArray);
     }
     console.timeEnd("Delete comment");
   };
@@ -176,20 +131,9 @@ export default function GlobalState({ children }) {
       body: JSON.stringify(editedComment),
     });
     const resultJSON = await result.json();
-    console.log(resultJSON.message);
+    handleChangeCommentsFeeback(resultJSON.message);
     if (resultJSON.ok) {
-      const updatedMoviesArray = allMovies.map((movie) => {
-        if (movie._id === editedComment.movieId) {
-          movie.comments = movie.comments.map((co) => {
-            if (co.commentId === editedComment.commentId) {
-              return editedComment;
-            }
-            return co;
-          });
-        }
-        return movie;
-      });
-      setAllMovies(updatedMoviesArray);
+      dispatchMovies({ type: "EDIT_COMMENT", payload: { editedComment } });
     }
     console.timeEnd("Edit comment");
   };
@@ -209,16 +153,11 @@ export default function GlobalState({ children }) {
       },
       body: JSON.stringify(image),
     });
-
     const resultJSON = await result.json();
     console.timeEnd("Change profile picture time");
     if (resultJSON.ok) {
-      setUserData((prevState) => ({
-        ...prevState,
-        profileImg: image,
-      }));
+      dispatchUser({ type: "CHANGE_PROFILE_IMAGE", payload: { image } });
     }
-    console.log(resultJSON.message);
   };
 
   const handleLogout = async () => {
@@ -230,9 +169,9 @@ export default function GlobalState({ children }) {
       body: JSON.stringify({ authType: "logout" }),
     });
     const resultJSON = await result.json();
-    if (resultJSON.message === "Logged out") {
+    if (resultJSON.ok) {
       router.push("/login");
-      setUserData({});
+      dispatchUser({ type: "CLEAR_USER" });
     }
   };
 
@@ -240,16 +179,16 @@ export default function GlobalState({ children }) {
     <ProjectContext.Provider
       value={{
         handleLogout,
-        userData,
+        userData: user,
         selectedMovie,
         handleSelectMovie,
         handleResetSelectedMovie,
-        allMovies,
-        isLoading,
+        allMovies: allMovies.movies,
+        isLoading: allMovies.isLoading,
         handleGetAllMovies,
         handleGetUserData,
         handleAddMovieToList,
-        userMovieList: userData.movieList,
+        userMovieList: user.movieList,
         filters,
         handleAddNewComment,
         handleEditComment,
@@ -259,10 +198,8 @@ export default function GlobalState({ children }) {
         isSearchBarActive,
         setIsSearchBarActive,
         handleChangeSearchQuery,
-        //handleToggleSearchBar,
         handleClearSearchQuery,
         handleToggleOffSearchBar,
-        //setSearchBarState,
         isAddToListLoading,
       }}
     >
