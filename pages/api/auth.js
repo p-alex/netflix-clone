@@ -56,9 +56,7 @@ export default async function authHandler(req, res) {
         if (!passwordRegexTest)
           return res.json({
             ok: 0,
-            message: `
-                Not a valid password.
-              `,
+            message: "Not a valid password.",
           });
 
         const userWithEmail = await NonVerifiedUser.findOne({ email });
