@@ -46,7 +46,7 @@ export default function resetPasswordEmailCheck() {
   };
 
   return (
-    <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.webp)"}>
+    <FullscreenWrapper>
       <Head>
         <title>Netflix Clone | Reset password</title>
       </Head>

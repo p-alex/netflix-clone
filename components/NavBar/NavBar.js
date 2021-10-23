@@ -43,10 +43,10 @@ export default function NavBar() {
     >
       <div className={styles.navbar__logoBig}>
         <Image
-          src={"/images/logo/netflix-logo.png"}
+          src={"/images/logo/netplix-logo.png"}
           alt=""
           width="112"
-          height="30"
+          height="30" //30
         />
       </div>
 
@@ -78,7 +78,7 @@ export default function NavBar() {
                 </li>
                 <li>
                   <button onClick={handleLogout} name="signOutBtn">
-                    Sign out of Netflix
+                    Sign out of Netplix
                   </button>
                 </li>
               </ul>

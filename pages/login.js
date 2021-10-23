@@ -83,7 +83,7 @@ export default function login() {
   };
 
   return (
-    <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.webp)"}>
+    <FullscreenWrapper>
       <Head>
         <title>Netflix Clone | Login</title>
       </Head>

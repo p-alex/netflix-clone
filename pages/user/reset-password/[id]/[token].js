@@ -50,7 +50,7 @@ export default function resetPassword() {
     setFeedback(resultJSON.message);
   };
   return (
-    <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.webp)"}>
+    <FullscreenWrapper>
       <Head>
         <title>Netflix Clone | Reset Password</title>
       </Head>

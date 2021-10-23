@@ -103,7 +103,7 @@ export default function register() {
   };
 
   return (
-    <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.webp)"}>
+    <FullscreenWrapper>
       <Head>
         <title>Netflix Clone | Register</title>
       </Head>

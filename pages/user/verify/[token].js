@@ -7,7 +7,7 @@ import styles from "../../../styles/Verify.module.css";
 import Head from "next/head";
 export default function verify({ message }) {
   return (
-    <FullscreenWrapper bgImg={"url(/images/bg/auth-bg.webp)"}>
+    <FullscreenWrapper>
       <Head>
         <title>Netflix Clone | Verify Email</title>
       </Head>

@@ -6,7 +6,7 @@ export default function Logo({ type, margin, maxWidth }) {
         <div className={styles.logo} style={{ margin }}>
           <img
             style={{ maxWidth }}
-            src="/images/logo/netflix-logo.png"
+            src="/images/logo/netplix-logo.png"
             alt=""
           />
         </div>
