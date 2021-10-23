@@ -35,7 +35,6 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
 
   const handleSliderInMotion = () => {
     setIsSliderMoving(true);
-    clearTimeout(() => setIsSliderMoving(false));
     setTimeout(() => setIsSliderMoving(false), 700);
   };
 
@@ -194,7 +193,6 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
     if (currentId >= minId && currentId < maxId) return "0";
     return "-1";
   };
-  console.count("reload");
   return (
     <>
       {movies?.length && (

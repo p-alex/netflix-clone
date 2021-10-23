@@ -58,7 +58,6 @@ export default function Modal({ movie }) {
     );
     return () => {
       handleResetSelectedMovie();
-      console.log("Modal unmounted");
     };
   }, []);
   return (

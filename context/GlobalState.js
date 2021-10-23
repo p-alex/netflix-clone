@@ -36,13 +36,11 @@ export default function GlobalState({ children }) {
   const handleGetUserData = async () => {
     const result = await fetch(`${url}/api/user-data`);
     const resultJSON = await result.json();
-    console.log(resultJSON);
     if (resultJSON.ok) {
       dispatchUser({ type: "GET_USER", payload: resultJSON });
     } else {
       router.push("/login");
     }
-    console.log(resultJSON.message);
   };
 
   const handleGetAllMovies = async () => {
