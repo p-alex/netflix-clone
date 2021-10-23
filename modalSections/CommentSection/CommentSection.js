@@ -78,7 +78,11 @@ export default function CommentSection({ movie }) {
           value={comment.text}
           onChange={(e) => handleSetText(e)}
         />
-        <Button func={() => handleSubmit(comment)} value="Comment" />
+        <Button
+          func={() => handleSubmit(comment)}
+          value="Comment"
+          isDisabled={comment.stars <= 0 || comment.text === ""}
+        />
       </div>
     </section>
   );
