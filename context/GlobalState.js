@@ -129,7 +129,6 @@ export default function GlobalState({ children }) {
       body: JSON.stringify(editedComment),
     });
     const resultJSON = await result.json();
-    handleChangeCommentsFeeback(resultJSON.message);
     if (resultJSON.ok) {
       dispatchMovies({ type: "EDIT_COMMENT", payload: { editedComment } });
     }
