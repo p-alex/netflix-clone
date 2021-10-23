@@ -3,14 +3,20 @@ export default function Button({
   type,
   func,
   value,
-  responsive,
+  size,
   isDisabled,
   ariaLabel,
 }) {
   return (
     <>
       <button
-        className={responsive ? styles.btnResponsive : styles.btn}
+        className={
+          size === "responsive"
+            ? styles.btnResponsive
+            : size === "large"
+            ? styles.btnLarge
+            : styles.btn
+        }
         onClick={func}
         disabled={isDisabled ? true : false}
         name={value}
@@ -18,6 +24,7 @@ export default function Button({
       >
         {type && (
           <i
+            style={!value ? { marginRight: "0" } : null}
             className={
               type === "play"
                 ? "fas fa-play"

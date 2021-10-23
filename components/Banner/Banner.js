@@ -62,14 +62,14 @@ export default function Banner({ movies }) {
                 value="Play"
                 type="play"
                 func={() => router.push(`/movie/${movie._id}`)}
-                responsive={true}
+                size="responsive"
                 ariaLabel={`Play ${movie.name}`}
               />
               <Button
                 value="More Info"
                 type="moreInfo"
                 func={() => handleSelectMovie(movie)}
-                responsive={true}
+                size="responsive"
                 ariaLabel={`Open modal for ${movie.name}`}
               />
             </div>

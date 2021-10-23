@@ -53,3 +53,29 @@
   opacity: 0.2;
   cursor: not-allowed;
 }
+/* btn large */
+.btnLarge {
+  display: block;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  margin-right: 20px;
+  font-weight: bold;
+  background: #f3f3f3;
+  color: #333;
+  transition: background 100ms;
+}
+.btnLarge:last-of-type {
+  margin-right: 0;
+}
+.btnLarge:hover {
+  background: #dadada;
+}
+.btnLarge i {
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+.btnLarge:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}

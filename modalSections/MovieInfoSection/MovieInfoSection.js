@@ -23,6 +23,7 @@ export default function MovieInfoSection({ movie }) {
           <Button
             type="play"
             value="Play"
+            size="large"
             func={() => router.push(`/movie/${movie._id}`)}
           />
 
