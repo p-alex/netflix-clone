@@ -1,8 +1,10 @@
 .form {
   position: relative;
-  background: rgba(0, 0, 0, 0.7);
   padding: 50px;
   width: 100%;
+  border: solid #202020 1px;
+  background: #000;
+  border-radius: 5px;
 }
 
 .form p {
