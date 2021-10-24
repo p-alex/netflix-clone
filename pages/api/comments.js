@@ -40,6 +40,10 @@ const commentsHandler = async (req, res) => {
         });
 
       if (newComment.movieId) {
+        if (!newComment.text)
+          return res.json({ ok: 0, message: "Please write a comment." });
+        if (!newComment.stars)
+          return res.json({ ok: 0, message: "Please rate the movie." });
         console.time("find the movie");
         const movieToAddComment = await Movie.findById(newComment.movieId);
         console.timeEnd("find the movie");
