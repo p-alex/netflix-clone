@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import ProjectContext from "../context/Project-context";
 import NavBar from "../components/NavBar/NavBar";
 import MobileNavBar from "../components/MobileNavBar/MobileNavBar";
@@ -7,30 +7,15 @@ import FullscreenLoader from "../components/FullscreenLoader/FullscreenLoader";
 import MovieSlider from "../components/MovieSlider/MovieSlider";
 import Modal from "../components/Modal/Modal";
 import Head from "next/head";
-import pageWrapperStyles from "../styles/PageWrapperStyles.module.css";
 export default function Home() {
   const context = useContext(ProjectContext);
   const { selectedMovie, allMovies, isLoading, handleGetAllMovies, userData } =
     context;
-  //const { movieList } = context.userData;
-  //const [myListMovies, setMyListMovies] = useState([]);
+
   useEffect(() => {
     if (allMovies.length === 0) handleGetAllMovies();
   }, []);
 
-  // const filterAllMovies = () => {
-  //   if (allMovies.length && movieList) {
-  //     const theArray = [];
-  //     movieList.map((movieId) => {
-  //       allMovies.map((movie) => {
-  //         if (movie._id === movieId) {
-  //           theArray.push(movie);
-  //         }
-  //       });
-  //     });
-  //     return theArray;
-  //   }
-  // };
   return (
     <>
       <Head>
@@ -44,12 +29,6 @@ export default function Home() {
         {allMovies.length !== 0 && (
           <>
             <Banner movies={allMovies} />
-            {/* 
-              <MovieSlider
-                movies={filterAllMovies()}
-                sliderId={"my-list-slider"}
-                sliderTitle={"My List"}
-              /> */}
             <MovieSlider
               movies={allMovies.filter((movie) =>
                 movie.genres.includes("Action & Adventure")
