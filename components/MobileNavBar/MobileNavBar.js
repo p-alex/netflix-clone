@@ -23,7 +23,7 @@ export default function MobileNavBar() {
         </button>
         <Image
           className={styles.mobileNavBar__barsAndLogo__logo}
-          src="/images/logo/netplix-logo.png"
+          src="/images/logo/netflix-logo.png"
           alt=""
           width="100"
           height="25"
