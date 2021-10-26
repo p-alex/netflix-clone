@@ -1,0 +1,52 @@
+.footer {
+  position: relative;
+  margin: 0 auto 50px auto;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+.footer__social {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.footer__social a {
+  font-size: 2.5rem;
+  color: grey;
+  margin-right: 20px;
+  transition: color 100ms;
+}
+.footer__social a:hover {
+  color: white;
+}
+.footer__links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  margin: 20px 0;
+}
+.footer__links a {
+  display: block;
+  color: grey;
+  padding: 10px 0;
+}
+.footer__links a:hover {
+  text-decoration: underline;
+}
+.footer__bottom {
+  color: grey;
+  text-align: center;
+}
+.footer__bottom small {
+  display: block;
+  margin-bottom: 10px;
+}
+.footer__bottom a {
+  color: #e50914;
+}
+.footer__bottom a:hover {
+  text-decoration: underline;
+}
+@media screen and (max-width: 800px) {
+  .footer {
+    margin: 50px auto 50px auto;
+  }
+}
