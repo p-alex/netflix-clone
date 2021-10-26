@@ -8,9 +8,9 @@ export default function Footer() {
             href="https://github.com/p-alex"
             target="_blank"
             rel="noreferrer noopener"
-            title="My Github"
+            title="My Github profile"
           >
-            <i class="fab fa-github"></i>
+            <i className="fab fa-github"></i>
           </a>
         </li>
         <li>
@@ -18,9 +18,9 @@ export default function Footer() {
             href="https://www.linkedin.com/in/alexandru-daniel-pistol"
             target="_blank"
             rel="noreferrer noopener"
-            title="My LinkedIn"
+            title="My LinkedIn profile"
           >
-            <i class="fab fa-linkedin"></i>
+            <i className="fab fa-linkedin"></i>
           </a>
         </li>
       </ul>
@@ -29,7 +29,7 @@ export default function Footer() {
           <a href="#">Audio and Subtitles</a>
         </li>
         <li>
-          <a href="#">Audio Descripton</a>
+          <a href="#">Audio Description</a>
         </li>
         <li>
           <a href="#">Help Center</a>
@@ -72,7 +72,7 @@ export default function Footer() {
             href="https://www.linkedin.com/in/alexandru-daniel-pistol"
             target="_blank"
             rel="noreferrer noopener"
-            title="My LinkedIn"
+            title="My LinkedIn profile"
           >
             Alex Daniel
           </a>
