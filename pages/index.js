@@ -57,22 +57,6 @@ export default function Home() {
               sliderId={"5"}
               sliderTitle={"Horror"}
             />
-            <MovieSlider
-              movies={allMovies
-                .filter((movie) =>
-                  movie.genres.includes("Children & Family Movies")
-                )
-                .reverse()}
-              sliderId={"6"}
-              sliderTitle={"Children & Family"}
-            />
-            <MovieSlider
-              movies={allMovies
-                .filter((movie) => movie.genres.includes("Anime"))
-                .reverse()}
-              sliderId={"7"}
-              sliderTitle={"Anime"}
-            />
           </>
         )}
       </div>
