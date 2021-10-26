@@ -1,16 +1,13 @@
 import { useState, useEffect, useContext } from "react";
 import ProjectContext from "../context/Project-context";
-import Modal from "../components/Modal/Modal";
-import NavBar from "../components/NavBar/NavBar";
 import MovieFilter from "../components/MovieFilter/MovieFilter";
 import MoviesContainer from "../components/MoviesContainer/MoviesContainer";
-import FullscreenLoader from "../components/FullscreenLoader/FullscreenLoader";
-import MobileNavBar from "../components/MobileNavBar/MobileNavBar";
 import Head from "next/head";
+import Layout from "../layout/layout";
 export default function Movies() {
   const context = useContext(ProjectContext);
 
-  const { allMovies, selectedMovie, handleGetAllMovies, isLoading } = context;
+  const { allMovies } = context;
   const [activeFilter, setActiveFilter] = useState("");
   const [filterdMovieArray, setFilteredMovieArray] = useState([]);
 
@@ -27,19 +24,11 @@ export default function Movies() {
     setFilteredMovieArray(filtered);
   }, [activeFilter]);
 
-  useEffect(() => {
-    if (allMovies.length === 0) handleGetAllMovies();
-  }, []);
-
   return (
-    <>
+    <Layout>
       <Head>
         <title>Netflix Clone | All movies</title>
       </Head>
-      {isLoading && <FullscreenLoader />}
-      {selectedMovie?.name ? <Modal movie={selectedMovie} /> : null}
-      <NavBar />
-      <MobileNavBar />
       <MovieFilter
         handleSetActiveFilter={handleSetActiveFilter}
         activeFilter={activeFilter}
@@ -47,6 +36,6 @@ export default function Movies() {
       />
 
       <MoviesContainer movies={activeFilter ? filterdMovieArray : allMovies} />
-    </>
+    </Layout>
   );
 }

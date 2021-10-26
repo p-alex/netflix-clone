@@ -1,17 +1,12 @@
 import { useState, useEffect, useContext } from "react";
-import NavBar from "../components/NavBar/NavBar";
-import MobileNavBar from "../components/MobileNavBar/MobileNavBar";
+import Layout from "../layout/layout";
 import ProjectContext from "../context/Project-context";
 import MoviesContainer from "../components/MoviesContainer/MoviesContainer";
-import Modal from "../components/Modal/Modal";
 import Head from "next/head";
 export default function search() {
   const context = useContext(ProjectContext);
-  const { searchQuery, allMovies, handleGetAllMovies, selectedMovie } = context;
-  const [filteredMovies, setFilteredMovies] = useState();
-  useEffect(() => {
-    if (allMovies.length === 0) handleGetAllMovies();
-  }, []);
+  const { searchQuery, allMovies } = context;
+  const [filteredMovies, setFilteredMovies] = useState([]);
   useEffect(() => {
     setFilteredMovies(
       allMovies.filter((movie) =>
@@ -23,17 +18,14 @@ export default function search() {
     );
   }, [allMovies, searchQuery]);
   return (
-    <>
+    <Layout>
       <Head>
         <title>Netflix Clone | Search</title>
       </Head>
-      {selectedMovie?.name ? <Modal movie={selectedMovie} /> : null}
-      <NavBar />
-      <MobileNavBar />
       <MoviesContainer
-        movies={filteredMovies}
+        movies={searchQuery ? filteredMovies : []}
         title={`Results for '${searchQuery}'`}
       />
-    </>
+    </Layout>
   );
 }
