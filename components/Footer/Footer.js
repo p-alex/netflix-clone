@@ -80,7 +80,7 @@ export default function Footer() {
         </small>
         <small>
           This application was created just to be added to my portfolio so i can
-          maybe land job.
+          maybe land a job.
         </small>
       </div>
     </footer>
