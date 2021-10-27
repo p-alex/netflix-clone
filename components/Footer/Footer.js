@@ -66,21 +66,18 @@ export default function Footer() {
         </li>
       </ul>
       <div className={styles.footer__bottom}>
+        <small>Netflix Clone created by Alex Daniel.</small>
         <small>
-          Netflix Clone created by{" "}
+          This application was built ONLY to be added to my{" "}
           <a
-            href="https://www.linkedin.com/in/alexandru-daniel-pistol"
+            href="https://github.com/p-alex"
             target="_blank"
             rel="noreferrer noopener"
-            title="My LinkedIn profile"
+            title="My Github profile"
           >
-            Alex Daniel
+            portfolio
           </a>
           .
-        </small>
-        <small>
-          This application was created just to be added to my portfolio so i can
-          maybe land a job.
         </small>
       </div>
     </footer>

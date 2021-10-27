@@ -1,8 +1,9 @@
 .footer {
-  position: relative;
-  margin: 0 auto 50px auto;
+  position: sticky;
   max-width: 1200px;
-  padding: 0 20px;
+  padding: 40px 20px;
+  top: 100%;
+  margin: auto;
 }
 .footer__social {
   position: relative;
@@ -32,8 +33,9 @@
   text-decoration: underline;
 }
 .footer__bottom {
+  display: block;
+  margin-top: 50px;
   color: grey;
-  text-align: center;
 }
 .footer__bottom small {
   display: block;
@@ -47,6 +49,9 @@
 }
 @media screen and (max-width: 800px) {
   .footer {
-    margin: 50px auto 50px auto;
+    margin: 50px auto 0 auto;
+  }
+  .footer__links {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
 }

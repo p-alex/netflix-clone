@@ -8,11 +8,16 @@
   text-decoration: none;
   font-family: "Roboto", sans-serif;
 }
-
+html {
+  height: 100%;
+}
 body {
   background: #141414;
 }
-
+#__next {
+  min-height: 100vh;
+  border: solid red 1px;
+}
 button {
   border: none;
   cursor: pointer;
