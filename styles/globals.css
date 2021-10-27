@@ -16,7 +16,6 @@ body {
 }
 #__next {
   min-height: 100vh;
-  border: solid red 1px;
 }
 button {
   border: none;
