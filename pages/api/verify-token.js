@@ -6,7 +6,6 @@ export default async function verifyTokenHandler(req, res) {
   if (req.method === "POST") {
     try {
       let token = req.headers.authorization.split(" ")[1];
-      console.log(token);
       if (token) {
         let decoded = await jwt.verify(
           token,
