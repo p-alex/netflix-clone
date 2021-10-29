@@ -35,6 +35,15 @@
 .banner__content__btn_container__mobileBtns {
   display: none;
 }
+@media screen and (max-width: 1400px) {
+  .banner__content__description {
+    color: white;
+    font-size: 1.6vw;
+    width: 32vw;
+    margin: 1.4vw 0;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+  }
+}
 @media screen and (max-width: 800px) {
   .banner {
     height: 70vh;

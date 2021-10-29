@@ -1,16 +1,12 @@
 import { useState, useContext, useEffect, useRef } from "react";
-import { useRouter } from "next/router";
 import ProjectContext from "../../context/Project-context";
 import styles from "./Modal.module.css";
 import MoreLikeThisSection from "../../modalSections/MoreLikeThisSection/MoreLikeThisSection";
 import AboutMovieSection from "../../modalSections/AboutMovieSection/AboutMovieSection";
-import Button from "../Button/Button";
-import AddToListBtn from "../AddToListBtn/AddToListBtn";
 import BottomFade from "../BottomFade/BottomFade";
 import CommentSection from "../../modalSections/CommentSection/CommentSection";
 import MovieInfoSection from "../../modalSections/MovieInfoSection/MovieInfoSection";
 export default function Modal({ movie }) {
-  const router = useRouter();
   const [moreLikeThisArray, setMoreLikeThisArray] = useState([]);
   const { nameSlug } = movie;
   const context = useContext(ProjectContext);

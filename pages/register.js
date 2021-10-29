@@ -159,7 +159,7 @@ export async function getServerSideProps(context) {
     if (resultJSON.ok) {
       return {
         redirect: {
-          destination: "/",
+          destination: "/browse",
           permanent: false,
         },
         props: {},

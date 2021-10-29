@@ -53,7 +53,7 @@ export default function MobileNavBar() {
 
             <ul className={styles.mobileNavBar__menu__links}>
               <li>
-                <Link href="/">Home</Link>
+                <Link href="/browse">Home</Link>
               </li>
               <li>
                 <Link href="/my-list">My List</Link>

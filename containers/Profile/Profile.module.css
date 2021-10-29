@@ -3,6 +3,7 @@
   max-width: 800px;
   padding: 0 60px;
   margin-top: 100px;
+  margin-bottom: 100px;
   color: white;
 }
 .profile h1,
@@ -15,6 +16,9 @@
 .profile__section {
   border-bottom: 3px #333 solid;
   padding: 20px 0;
+}
+.profile__section:last-of-type {
+  border: none;
 }
 .profile__info__userImage img {
   border-radius: 5px;

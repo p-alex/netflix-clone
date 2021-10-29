@@ -29,6 +29,9 @@ export default function Banner({ movies }) {
           <BottomFade />
           <div className={styles.banner__content}>
             <div className={styles.banner__content__logo}>
+              {/* <p className={styles.banner__content__logo__paragraph}>
+                {movie.name}
+              </p> */}
               <Image
                 src={`/movies/${nameSlug}/${nameSlug}-logo.png`}
                 alt=""

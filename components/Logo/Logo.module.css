@@ -1,4 +1,9 @@
 .logo {
   position: relative;
+  cursor: pointer;
   text-align: center;
+}
+.logo a {
+  display: block;
+  cursor: pointer;
 }

@@ -52,7 +52,7 @@ export default function NavBar() {
 
       <ul className={styles.navbar__links}>
         <li>
-          <Link href="/">Home</Link>
+          <Link href="/browse">Home</Link>
         </li>
         <li>
           <Link href="/movies">Movies</Link>

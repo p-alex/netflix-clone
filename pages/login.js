@@ -62,7 +62,7 @@ export default function login() {
       if (resultJSON.ok) {
         handleResetInputs();
         setIsLoading(false);
-        router.push("/");
+        router.push("/browse");
       } else {
         setIsLoading(false);
       }
@@ -141,7 +141,7 @@ export async function getServerSideProps(context) {
     if (resultJSON.ok) {
       return {
         redirect: {
-          destination: "/",
+          destination: "/browse",
           permanent: false,
         },
         props: {},
