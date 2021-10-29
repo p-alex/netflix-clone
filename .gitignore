@@ -34,3 +34,4 @@ yarn-error.log*
 .vercel
 post-movie.js
 search-movie.js
+database.js
