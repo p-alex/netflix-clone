@@ -78,7 +78,7 @@ export default function NavBar() {
                 </li>
                 <li>
                   <button onClick={handleLogout} name="signOutBtn">
-                    Sign out of Netplix
+                    Sign out of Netflix
                   </button>
                 </li>
               </ul>
