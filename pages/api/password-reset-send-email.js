@@ -1,4 +1,3 @@
-import { MongoClient } from "mongodb";
 import User from "../../models/User";
 import dbConnect from "../../utils/dbConnect";
 import sanitize from "mongo-sanitize";
@@ -57,7 +56,7 @@ export default async function passwordResetSendEmailHandler(req, res) {
               `http://localhost:3000/user/reset-password/${user[0]._id}/${token}`
             );
 
-            res.json({
+            return res.json({
               ok: 1,
               message: "We sent you an email if the account exists",
             });
@@ -70,11 +69,12 @@ export default async function passwordResetSendEmailHandler(req, res) {
         }
       } else {
         return res.json({
+          ok: 0,
           message: "We sent you an email if the account exists",
         });
       }
     } catch (error) {
-      return res.json({ message: "Something went wrong..." });
+      return res.json({ ok: 0, message: "Something went wrong..." });
     }
   }
 }
