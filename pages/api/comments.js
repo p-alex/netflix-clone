@@ -61,6 +61,7 @@ const commentsHandler = async (req, res) => {
           { $push: { comments: { $each: [newComment], $position: 0 } } }
         );
         console.timeEnd("Update comments array");
+        console.log(theResult);
         if (theResult) {
           return res.json({ ok: 1, message: "Comment added successfully" });
         } else {
@@ -80,15 +81,15 @@ const commentsHandler = async (req, res) => {
       const editedComment = cleanComment(req.body);
       if (editedComment === null)
         return res.json({ ok: 0, message: "GOOD ONE BUD" });
-      if (editedComment.commentId) {
-        const theResult = await Movie.findByIdAndUpdate(
+      if (editedComment.username) {
+        const theResult = await Movie.updateOne(
           {
             _id: editedComment.movieId,
             "comments.commentId": editedComment.commentId,
           },
           { $set: { "comments.$": editedComment } }
         );
-        if (theResult) {
+        if (theResult.acknowledged) {
           return res.json({
             ok: 1,
             message: "The comment was changed successfuly",
