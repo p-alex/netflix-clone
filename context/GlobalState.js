@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import ProjectContext from "./Project-context";
 import { userReducer, moviesReducer, selectedMovieReducer } from "./reducers";
 import { filtersList } from "../filtersList/filtersList";
+import handleFetch from "../utils/handleFetch";
 export default function GlobalState({ children }) {
   const router = useRouter();
 
@@ -34,42 +35,40 @@ export default function GlobalState({ children }) {
   );
 
   const handleGetUserData = async () => {
-    const result = await fetch(`${url}/api/user-data`);
-    const resultJSON = await result.json();
-    if (resultJSON.ok) {
-      dispatchUser({ type: "GET_USER", payload: resultJSON });
+    console.time("Getting user");
+    const result = await handleFetch(`${url}/api/user-data`, "GET");
+    if (result.ok) {
+      dispatchUser({ type: "GET_USER", payload: result });
     } else {
       router.push("/login");
     }
+    console.timeEnd("Getting user");
   };
 
   const handleGetAllMovies = async () => {
+    console.time("Getting movies");
     dispatchMovies({ type: "LOADING" });
-    const movieList = await fetch(`${url}/api/movies`);
-    const moviesJSON = await movieList.json();
-    if (moviesJSON.ok) {
+    const moviesList = await handleFetch(`${url}/api/movies`, "GET");
+    if (moviesList.ok) {
       dispatchMovies({
         type: "GET_MOVIES",
-        payload: moviesJSON.movies.reverse(),
+        payload: moviesList.movies.reverse(),
       });
     } else {
       dispatchMovies({ type: "STOP_LOADING" });
       router.push("/login");
     }
+    console.timeEnd("Getting movies");
   };
 
   const handleAddMovieToList = async (movieId, isAdding) => {
-    setIsAddToListLoading(true);
     console.time(isAdding ? "Added movie to list" : "Removed movie from list");
-    const result = await fetch(`${url}/api/add-movie-to-list`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ movieId }),
+    setIsAddToListLoading(true);
+    const result = await handleFetch(`${url}/api/add-movie-to-list`, "POST", {
+      movieId,
+      currentUserMovieList: user.movieList,
     });
-    const resultJSON = await result.json();
-    if (resultJSON.ok) {
+    if (result.ok) {
       if (isAdding) {
         dispatchUser({ type: "ADD_MOVIE_TO_LIST", payload: { movieId } });
       } else {
@@ -77,7 +76,6 @@ export default function GlobalState({ children }) {
       }
       setIsAddToListLoading(false);
     }
-
     console.timeEnd(
       isAdding ? "Added movie to list" : "Removed movie from list"
     );
@@ -85,15 +83,8 @@ export default function GlobalState({ children }) {
 
   const handleAddNewComment = async (comment) => {
     console.time("Add new comment");
-    const result = await fetch(`${url}/api/comments`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(comment),
-    });
-    const resultJSON = await result.json();
-    if (resultJSON.ok) {
+    const result = await handleFetch(`${url}/api/comments`, "POST", comment);
+    if (result.ok) {
       dispatchMovies({ type: "ADD_COMMENT", payload: { comment } });
     }
     console.timeEnd("Add new comment");
@@ -101,16 +92,11 @@ export default function GlobalState({ children }) {
 
   const handleDeleteComment = async (commentId, movieId) => {
     console.time("Delete comment");
-    const commentInfo = { commentId, movieId };
-    const result = await fetch(`${url}/api/comments`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(commentInfo),
+    const result = await handleFetch(`${url}/api/comments`, "DELETE", {
+      commentId,
+      movieId,
     });
-    const resultJSON = await result.json();
-    if (resultJSON.ok) {
+    if (result.ok) {
       dispatchMovies({
         type: "DELETE_COMMENT",
         payload: { commentId, movieId },
@@ -121,15 +107,12 @@ export default function GlobalState({ children }) {
 
   const handleEditComment = async (editedComment) => {
     console.time("Edit comment");
-    const result = await fetch(`${url}/api/comments`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(editedComment),
-    });
-    const resultJSON = await result.json();
-    if (resultJSON.ok) {
+    const result = await handleFetch(
+      `${url}/api/comments`,
+      "PUT",
+      editedComment
+    );
+    if (result.ok) {
       dispatchMovies({ type: "EDIT_COMMENT", payload: { editedComment } });
     }
     console.timeEnd("Edit comment");
@@ -143,30 +126,22 @@ export default function GlobalState({ children }) {
 
   const handleChangeProfileImage = async (image) => {
     console.time("Change profile picture time");
-    const result = await fetch(`${url}/api/change-profile-image`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(image),
-    });
-    const resultJSON = await result.json();
-    console.timeEnd("Change profile picture time");
-    if (resultJSON.ok) {
+    const result = await handleFetch(
+      `${url}/api/change-profile-image`,
+      "POST",
+      image
+    );
+    if (result.ok) {
       dispatchUser({ type: "CHANGE_PROFILE_IMAGE", payload: { image } });
     }
+    console.timeEnd("Change profile picture time");
   };
 
   const handleLogout = async () => {
-    const result = await fetch(`${url}/api/auth`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ authType: "logout" }),
+    const result = await handleFetch(`${url}/api/auth`, "POST", {
+      authType: "logout",
     });
-    const resultJSON = await result.json();
-    if (resultJSON.ok) {
+    if (result.ok) {
       router.push("/login");
       dispatchUser({ type: "CLEAR_USER" });
     }
