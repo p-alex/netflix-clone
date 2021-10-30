@@ -1,14 +1,11 @@
-import { MongoClient, ObjectId } from "mongodb";
+import User from "../../models/User";
+import dbConnect from "../../utils/dbConnect";
 import withProtect from "../../middleware/withProtect";
+dbConnect();
 const userDataHandler = async (req, res) => {
-  const client = await MongoClient.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
   if (req.method === "GET") {
     try {
-      const collection = client.db().collection("users");
-      const user = await collection.findOne({ _id: ObjectId(req.userId) });
+      const user = await User.findById({ _id: req.userId });
       if (user?.username) {
         return res.json({
           ok: 1,
@@ -23,8 +20,6 @@ const userDataHandler = async (req, res) => {
       return res.json({ ok: 0, message: "That user doesn't exist" });
     } catch (error) {
       return res.json({ ok: 0, message: "Something went wrong" });
-    } finally {
-      client.close();
     }
   }
 };
