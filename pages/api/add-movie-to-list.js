@@ -11,17 +11,15 @@ const cleanMovieId = (id) => {
 };
 dbConnect();
 async function addMovieToListHandler(req, res) {
+  const { movieId, currentUserMovieList } = req.body;
   if (req.method === "POST") {
     try {
-      let movieId = cleanMovieId(req.body.movieId);
-
-      if (movieId === null)
+      let id = cleanMovieId(movieId);
+      if (id === null)
         return res.json({ ok: 0, message: "Failed! Expected a string." });
       let isMovieIdAlreadyInList = false;
-      const userMovieList = await User.findById(req.userId);
-
-      await userMovieList.movieList.map((movie) => {
-        if (movie === movieId) {
+      await currentUserMovieList.map((movie) => {
+        if (movie === id) {
           isMovieIdAlreadyInList = true;
           return;
         }
