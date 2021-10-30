@@ -31,8 +31,9 @@ const commentsHandler = async (req, res) => {
 
   //   ------------------- ADD COMMENT -------------------
   if (req.method === "POST") {
+    const { comment, currentMovieCommentsList } = req.body;
     try {
-      const newComment = cleanComment(req.body);
+      const newComment = cleanComment(comment);
       if (newComment === null)
         return res.json({
           ok: 0,
@@ -44,11 +45,8 @@ const commentsHandler = async (req, res) => {
           return res.json({ ok: 0, message: "Please write a comment." });
         if (!newComment.stars)
           return res.json({ ok: 0, message: "Please rate the movie." });
-        console.time("find the movie");
-        const movieToAddComment = await Movie.findById(newComment.movieId);
-        console.timeEnd("find the movie");
-        await movieToAddComment.comments.map((comment) => {
-          if (newComment.commentId === comment.commentId) {
+        currentMovieCommentsList.map((com) => {
+          if (newComment.commentId === com.commentId) {
             return res.json({
               ok: 0,
               message: "A comment with that id already exists",
@@ -56,7 +54,7 @@ const commentsHandler = async (req, res) => {
           }
         });
         console.time("Update comments array");
-        const theResult = await Movie.updateOne(
+        const theResult = await Movie.findByIdAndUpdate(
           {
             _id: newComment.movieId,
           },
@@ -83,7 +81,7 @@ const commentsHandler = async (req, res) => {
       if (editedComment === null)
         return res.json({ ok: 0, message: "GOOD ONE BUD" });
       if (editedComment.commentId) {
-        const theResult = await Movie.updateOne(
+        const theResult = await Movie.findByIdAndUpdate(
           {
             _id: editedComment.movieId,
             "comments.commentId": editedComment.commentId,
@@ -112,7 +110,7 @@ const commentsHandler = async (req, res) => {
         return res.json({ ok: 0, message: "Fock off bruv!" });
 
       if (commentInfo) {
-        const theResult = await Movie.updateOne(
+        const theResult = await Movie.findByIdAndUpdate(
           {
             _id: commentInfo.movieId,
           },

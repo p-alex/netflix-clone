@@ -33,7 +33,7 @@ export default function CommentSection({ movie }) {
         commentId: uuidv4(),
       };
 
-      handleAddNewComment(commentObject);
+      handleAddNewComment(commentObject, movie.comments);
       handleResetCommentState();
     }
   };

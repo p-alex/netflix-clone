@@ -81,9 +81,12 @@ export default function GlobalState({ children }) {
     );
   };
 
-  const handleAddNewComment = async (comment) => {
+  const handleAddNewComment = async (comment, currentMovieCommentsList) => {
     console.time("Add new comment");
-    const result = await handleFetch(`${url}/api/comments`, "POST", comment);
+    const result = await handleFetch(`${url}/api/comments`, "POST", {
+      comment,
+      currentMovieCommentsList,
+    });
     if (result.ok) {
       dispatchMovies({ type: "ADD_COMMENT", payload: { comment } });
     }
