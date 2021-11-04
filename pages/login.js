@@ -1,8 +1,6 @@
 import { useState } from "react";
-
 import Link from "next/link";
 import { useRouter } from "next/router";
-
 import FullscreenWrapper from "../components/FullscreenWrapper/FullscreenWrapper";
 import Form from "../components/Form/Form";
 import InputGroup from "../components/InputGroup/InputGroup";
@@ -11,6 +9,10 @@ import Logo from "../components/Logo/Logo";
 import Head from "next/head";
 import styles from "../styles/Login.module.css";
 import Spinner from "../components/Spinner/Spinner";
+let url =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://netflix-clone-inky-five.vercel.app";
 export default function login() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -43,10 +45,6 @@ export default function login() {
   const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
-    let url =
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000"
-        : "https://netflix-clone-inky-five.vercel.app";
     console.time("Logging in time");
     try {
       const result = await fetch(`${url}/api/auth`, {
@@ -122,12 +120,7 @@ export default function login() {
     </FullscreenWrapper>
   );
 }
-
 export async function getServerSideProps(context) {
-  let url =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : "https://netflix-clone-inky-five.vercel.app";
   const token = await context.req.cookies.token;
   if (token) {
     const result = await fetch(`${url}/api/verify-token`, {
@@ -147,7 +140,11 @@ export async function getServerSideProps(context) {
         props: {},
       };
     }
-    return { props: {} };
+    return {
+      props: {},
+    };
   }
-  return { props: {} };
+  return {
+    props: {},
+  };
 }
