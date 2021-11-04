@@ -48,7 +48,6 @@
   font-size: 1rem;
   transition: border 100ms ease-out;
 }
-
 .addToListRegularBtn {
   position: relative;
   display: flex;
@@ -69,6 +68,11 @@
 .movieIsAdded {
   background: grey;
   color: white;
+}
+
+.addToListRegularBtn[disabled],
+.addToListRoundedBtn[disabled] {
+  opacity: 0.2;
 }
 
 @media screen and (max-width: 800px) {
