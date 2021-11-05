@@ -4,7 +4,7 @@ import ProjectContext from "../context/Project-context";
 import Banner from "../components/Banner/Banner";
 import MovieSlider from "../components/MovieSlider/MovieSlider";
 import Head from "next/head";
-export default function Home() {
+export default function Browse() {
   const context = useContext(ProjectContext);
   const { allMovies } = context;
   const sliders = ["Action & Adventure", "Sci-Fi Movies", "Horror", "Dramas"];
