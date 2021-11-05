@@ -22,7 +22,8 @@ const withProtect = (handler) => {
         return res.json({ message: "Something went wrong" });
       }
     } catch (error) {
-      return res.json(error);
+      console.log(error);
+      return res.json({ ok: 0, message: "Something went wrong" });
     }
   };
 };
