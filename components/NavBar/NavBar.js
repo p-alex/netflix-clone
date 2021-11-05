@@ -10,27 +10,22 @@ export default function NavBar() {
   const { username, profileImg } = context.userData;
   const [isScrolled, setIsScrolled] = useState(false);
   const { handleLogout, userData, handleGetUserData } = context;
-
   useEffect(() => {
     if (!userData?.username) handleGetUserData();
   }, []);
 
   useEffect(() => {
-    window.addEventListener("scroll", () => {
+    function handleSetNavBarActive() {
       if (window.scrollY > 0) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
       }
-    });
+    }
+    window.addEventListener("scroll", handleSetNavBarActive);
     return () => {
-      window.removeEventListener("scroll", () => {
-        if (window.scrollY > 0) {
-          setIsScrolled(true);
-        } else {
-          setIsScrolled(false);
-        }
-      });
+      console.log("NavBar unmounted");
+      window.removeEventListener("scroll", handleSetNavBarActive);
     };
   }, []);
 
