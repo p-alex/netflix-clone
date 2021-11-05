@@ -75,10 +75,13 @@ export default function GlobalState({ children }) {
         dispatchUser({ type: "REMOVE_MOVIE_FROM_LIST", payload: { movieId } });
       }
       setIsAddToListLoading(false);
+      console.timeEnd(
+        isAdding ? "Added movie to list" : "Removed movie from list"
+      );
+    } else {
+      setIsAddToListLoading(false);
+      console.log("Something went wrong");
     }
-    console.timeEnd(
-      isAdding ? "Added movie to list" : "Removed movie from list"
-    );
   };
 
   const handleAddNewComment = async (comment, currentMovieCommentsList) => {
@@ -87,9 +90,9 @@ export default function GlobalState({ children }) {
       comment,
       currentMovieCommentsList,
     });
-    if (result.ok) {
+    if (result.ok)
       dispatchMovies({ type: "ADD_COMMENT", payload: { comment } });
-    }
+
     console.timeEnd("Add new comment");
   };
 
@@ -99,12 +102,12 @@ export default function GlobalState({ children }) {
       commentId,
       movieId,
     });
-    if (result.ok) {
+    if (result.ok)
       dispatchMovies({
         type: "DELETE_COMMENT",
         payload: { commentId, movieId },
       });
-    }
+
     console.timeEnd("Delete comment");
   };
 

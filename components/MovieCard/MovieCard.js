@@ -15,7 +15,7 @@ export default function MovieCard({
 }) {
   const context = useContext(ProjectContext);
   const router = useRouter();
-  const { handleSelectMovie } = context;
+  const { handleSelectMovie, isAddToListLoading } = context;
   const { name, nameSlug, maturityRating, duration, thisMovieIs, _id } = movie;
 
   return (
