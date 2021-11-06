@@ -24,7 +24,6 @@ export default function NavBar() {
     }
     window.addEventListener("scroll", handleSetNavBarActive);
     return () => {
-      console.log("NavBar unmounted");
       window.removeEventListener("scroll", handleSetNavBarActive);
     };
   }, []);
