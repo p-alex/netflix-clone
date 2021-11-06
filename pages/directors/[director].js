@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
+import Layout from "../../layout/layout";
 import FullscreenLoader from "../../components/FullscreenLoader/FullscreenLoader";
 import MobileNavBar from "../../components/MobileNavBar/MobileNavBar";
 import Modal from "../../components/Modal/Modal";
@@ -25,7 +26,7 @@ export default function DirectorMovies() {
     );
   }, [allMovies, router.query.director]);
   return (
-    <>
+    <Layout>
       <Head>
         <title>Netflix Clone | {router.query.director}</title>
       </Head>
@@ -34,6 +35,6 @@ export default function DirectorMovies() {
       <NavBar />
       <MobileNavBar />
       <MoviesContainer movies={filteredMovies} title={router.query.director} />
-    </>
+    </Layout>
   );
 }
