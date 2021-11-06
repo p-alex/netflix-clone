@@ -11,13 +11,17 @@ export default function MovieFilter({
   const [isDropdownActive, setIsDropdownActive] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   useEffect(() => {
-    window.addEventListener("scroll", () => {
+    function handleSetNavBarActive() {
       if (window.scrollY > 0) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
       }
-    });
+    }
+    window.addEventListener("scroll", handleSetNavBarActive);
+    return () => {
+      window.removeEventListener("scroll", handleSetNavBarActive);
+    };
   }, []);
   return (
     <div
