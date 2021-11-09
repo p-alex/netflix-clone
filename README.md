@@ -9,7 +9,19 @@
 ## Intro
 Hey! This is a **fullstack Netflix Clone application** created with **Next Js**, **CSS Modules**, **MongoDb** and **SendGrid**. In this application, the movies are fetched from an API i created. 
 
-You can play the movies (i just added trailers from youtube), see more info about the movie, add the movie to your list, add comments to movies (this feature does not exist in the official Netflix site), and search for a movie. You can also change your profile picture. 
+You can:
+* register a new account
+* login
+* reset password
+* play movies (i just added trailers from youtube)
+* see more info about the movie
+* add movies to your list
+* remove movies from your list
+* add comments to movies (this feature does not exist in the official Netflix site)
+* edit comments you wrote
+* delete comments you wrote
+* search for a movie
+* change your profile picture.
 
 The application also has an authentication system. You can sign up, sign in, logout and reset your password.
 For sign up and reset password i use SendGrid to send emails for email verification.
