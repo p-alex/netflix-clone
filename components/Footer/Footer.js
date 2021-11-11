@@ -1,5 +1,7 @@
+import { memo } from "react";
 import styles from "./Footer.module.css";
-export default function Footer() {
+const Footer = memo(() => {
+  console.log("Footer");
   return (
     <footer className={styles.footer}>
       <ul className={styles.footer__social}>
@@ -82,4 +84,6 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+});
+
+export default Footer;
