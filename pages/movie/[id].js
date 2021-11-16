@@ -6,6 +6,7 @@ import ProjectContext from "../../context/Project-context";
 import FullscreenLoader from "../../components/FullscreenLoader/FullscreenLoader";
 import MobileNavBar from "../../components/MobileNavBar/MobileNavBar";
 import Head from "next/head";
+import Layout from "../../layout/layout";
 export default function PlayMovie() {
   const router = useRouter();
   const context = useContext(ProjectContext);
@@ -27,7 +28,7 @@ export default function PlayMovie() {
   }, [allMovies]);
 
   return (
-    <>
+    <Layout>
       <Head>
         <title>Netflix Clone | {currentMovie.name}</title>
       </Head>
@@ -70,6 +71,6 @@ export default function PlayMovie() {
           <p style={{ color: "white" }}>This movie doesn't exist.</p>
         </section>
       )}
-    </>
+    </Layout>
   );
 }
