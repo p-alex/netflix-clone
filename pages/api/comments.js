@@ -37,14 +37,17 @@ const commentsHandler = async (req, res) => {
       if (newComment === null)
         return res.json({
           ok: 0,
-          message: "PATHETIC! GET REKT MR. HACKER!!!!",
+          message: "Something is wrong with the request's body",
         });
 
       if (newComment.movieId) {
         if (!newComment.text)
           return res.json({ ok: 0, message: "Please write a comment." });
-        if (!newComment.stars)
-          return res.json({ ok: 0, message: "Please rate the movie." });
+        if (!newComment.stars || newComment.stars < 0 || newComment.stars > 5)
+          return res.json({
+            ok: 0,
+            message: "Stars value must be a number(min: 0, max: 5)",
+          });
         currentMovieCommentsList.map((com) => {
           if (newComment.commentId === com.commentId) {
             return res.json({
@@ -62,7 +65,7 @@ const commentsHandler = async (req, res) => {
         );
         console.timeEnd("Update comments array");
         console.log(theResult);
-        if (theResult) {
+        if (theResult._id) {
           return res.json({ ok: 1, message: "Comment added successfully" });
         } else {
           return res.json({ ok: 0, message: "Failed to add comment" });
@@ -80,7 +83,21 @@ const commentsHandler = async (req, res) => {
     try {
       const editedComment = cleanComment(req.body);
       if (editedComment === null)
-        return res.json({ ok: 0, message: "GOOD ONE BUD" });
+        return res.json({
+          ok: 0,
+          message: "Something is wrong with the request's body",
+        });
+      if (!editedComment.text)
+        return res.json({ ok: 0, message: "Please write a comment." });
+      if (
+        !editedComment.stars ||
+        editedComment.stars < 0 ||
+        editedComment.stars > 5
+      )
+        return res.json({
+          ok: 0,
+          message: "Stars value must be a number(min: 0, max: 5)",
+        });
       if (editedComment.username) {
         const theResult = await Movie.updateOne(
           {
@@ -108,7 +125,10 @@ const commentsHandler = async (req, res) => {
     try {
       const commentInfo = cleanDeleteCommentInfo(req.body);
       if (commentInfo === null)
-        return res.json({ ok: 0, message: "Fock off bruv!" });
+        return res.json({
+          ok: 0,
+          message: "Something is wrong with the request's body",
+        });
 
       if (commentInfo) {
         const theResult = await Movie.findByIdAndUpdate(
