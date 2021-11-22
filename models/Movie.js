@@ -1,33 +1,60 @@
-const mongoose = require("mongoose");
+const { Schema, models, model } = require("mongoose");
 
-const movieSchema = mongoose.Schema({
+const commentsSchema = new Schema({
+  username: {
+    type: String,
+    required: true,
+  },
+  profileImg: {
+    type: String,
+    required: true,
+  },
+  stars: {
+    type: Number,
+    required: true,
+  },
+  text: {
+    type: String,
+    required: true,
+  },
+  movieId: {
+    type: String,
+    required: true,
+  },
+  commentId: {
+    type: String,
+    required: true,
+  },
+});
+
+const movieSchema = new Schema({
   name: {
     type: String,
-    require: [true, "Movie must have a name"],
+    required: [true, "Movie must have a name"],
   },
   nameSlug: {
     type: String,
-    require: [true, "Movie must have a nameSlug"],
+    required: [true, "Movie must have a nameSlug"],
   },
   isOnlyOnNetflix: {
     type: Boolean,
-    require: [true, "Movie must have a isOnlyOnNetflix"],
+    required: [true, "Movie must have a isOnlyOnNetflix"],
   },
   release: {
     type: Number,
-    require: [true, "Movie must have a release date"],
+    required: [true, "Movie must have a release date"],
   },
   maturityRating: {
     type: Number,
-    require: [true, "Movie must have a maturityRating"],
+    required: [true, "Movie must have a maturityRating"],
   },
   duration: {
     type: String,
-    require: [true, "Movie must have a duration"],
+    required: [true, "Movie must have a duration"],
   },
   description: {
     type: String,
-    require: [true, "Movie must have a description"],
+    required: [true, "Movie must have a description"],
   },
   directors: {
     type: Array,
@@ -35,7 +62,7 @@ const movieSchema = mongoose.Schema({
   },
   writer: {
     type: Array,
-    require: [true, "Movie must have a writers array"],
+    required: [true, "Movie must have a writers array"],
   },
   cast: {
     type: Array,
@@ -43,20 +70,19 @@ const movieSchema = mongoose.Schema({
   },
   genres: {
     type: Array,
-    require: [true, "Movie must have a genres array"],
+    required: [true, "Movie must have a genres array"],
   },
   thisMovieIs: {
     type: Array,
-    require: [true, "Movie must have a thisMovieIs array"],
+    required: [true, "Movie must have a thisMovieIs array"],
   },
   datePosted: {
     type: Date,
-    require: [true, "Please add the date"],
+    required: [true, "Please add the date"],
     default: Date.now(),
   },
   comments: {
-    type: Array,
-    required: [true, "Movie must have a comments array"],
+    type: [commentsSchema],
   },
   videoUrl: {
     type: String,
@@ -64,4 +90,4 @@ const movieSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.models.Movie || mongoose.model("Movie", movieSchema);
+module.exports = models.Movie || model("Movie", movieSchema);

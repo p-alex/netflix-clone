@@ -1,37 +1,37 @@
-const mongoose = require("mongoose");
+const { Schema, models, model } = require("mongoose");
 
-const userSchema = mongoose.Schema({
+const userSchema = Schema({
   username: {
     type: String,
     unique: true,
-    require: [true, "Please provide a username"],
+    required: [true, "Please provide a username"],
   },
   email: {
     type: String,
     unique: true,
-    require: [true, "Please provide an email"],
+    required: [true, "Please provide an email"],
   },
   password: {
     type: String,
-    require: [true, "Please provide a password"],
+    required: [true, "Please provide a password"],
   },
   isVerified: {
     type: Boolean,
-    require: [true, "Please provide a isVerified"],
+    required: [true, "Please provide a isVerified"],
   },
   date: {
     type: Date,
     default: Date.now(),
-    require: [true, "Must add a date"],
+    required: [true, "Must add a date"],
   },
   profileImg: {
     type: String,
-    require: [true, "Please provide a profile image url"],
+    required: [true, "Please provide a profile image url"],
   },
   movieList: {
     type: Array,
-    require: [true, "Please provide a movieList array"],
+    required: [true, "Please provide a movieList array"],
   },
 });
 
-module.exports = mongoose.models.User || mongoose.model("User", userSchema);
+module.exports = models.User || model("User", userSchema);
