@@ -8,7 +8,7 @@ export default function index() {
     <>
       <nav className={styles.nav}>
         <Image
-          src={"/images/logo/netflix-logo.png"}
+          src={"/images/logo/netplix-logo.png"}
           alt=""
           width="112"
           height="30" //30

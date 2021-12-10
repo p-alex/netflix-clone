@@ -37,7 +37,7 @@ const NavBar = memo(() => {
     >
       <div className={styles.navbar__logoBig}>
         <Image
-          src={"/images/logo/netflix-logo.png"}
+          src={"/images/logo/netplix-logo.png"}
           alt=""
           width="112"
           height="30" //30

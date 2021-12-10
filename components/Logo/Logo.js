@@ -8,7 +8,7 @@ export default function Logo({ type, margin, maxWidth }) {
           <Link href="/" style={{ margin }}>
             <img
               style={{ maxWidth }}
-              src="/images/logo/netflix-logo.png"
+              src="/images/logo/netplix-logo.png"
               alt=""
             />
           </Link>
