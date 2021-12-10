@@ -73,7 +73,7 @@ export default function register() {
     let url =
       process.env.NODE_ENV === "development"
         ? "http://localhost:3000"
-        : "https://netflix-clone-inky-five.vercel.app";
+        : "https://netplix-inky-five.vercel.app/";
     console.time("Sign up time");
     try {
       const result = await fetch(`${url}/api/auth`, {

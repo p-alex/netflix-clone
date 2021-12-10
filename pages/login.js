@@ -12,7 +12,7 @@ import Spinner from "../components/Spinner/Spinner";
 let url =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
-    : "https://netflix-clone-inky-five.vercel.app";
+    : "https://netplix-inky-five.vercel.app/";
 export default function login() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);

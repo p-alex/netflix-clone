@@ -96,7 +96,7 @@ export async function getServerSideProps(context) {
   let url =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
-      : "https://netflix-clone-inky-five.vercel.app";
+      : "https://netplix-inky-five.vercel.app/";
   const token = await context.req.cookies.token;
   if (token) {
     const result = await fetch(`${url}/api/verify-token`, {

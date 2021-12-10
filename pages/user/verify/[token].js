@@ -28,7 +28,7 @@ verify.getInitialProps = async (context) => {
   let url =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"
-      : "https://netflix-clone-inky-five.vercel.app";
+      : "https://netplix-inky-five.vercel.app/";
   const result = await fetch(`${url}/api/verify-account`, {
     method: "POST",
     headers: {
