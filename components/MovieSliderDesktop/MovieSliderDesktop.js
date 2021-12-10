@@ -150,6 +150,13 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
 
     let firstCardVisibleIndex = currentIndex * howManyCardsVisible;
 
+    console.log("------------");
+  console.log("how many cards visible: " + howManyCardsVisible);
+  console.log("current index: " + currentIndex);
+  console.log("max index: " + maxIndex);
+  console.log("max move by: " + maxMoveBy);
+
+
     setSliderState((prevState) => ({
       ...prevState,
       cardWidth,
@@ -253,4 +260,8 @@ export default function MovieSliderDesktop({ movies, sliderId, sliderTitle }) {
       )}
     </>
   );
+}
+
+const getServerSideProps = () => {
+  
 }

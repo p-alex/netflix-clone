@@ -107,7 +107,6 @@ export default function GlobalState({ children }) {
         type: "DELETE_COMMENT",
         payload: { commentId, movieId },
       });
-
     console.timeEnd("Delete comment");
   };
 

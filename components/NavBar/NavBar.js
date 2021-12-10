@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { useContext } from "react";
 import ProjectContext from "../../context/Project-context";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./NavBar.module.css";
 import Search from "../Search/Search";
-export default function NavBar() {
+const NavBar = memo(() => {
   const context = useContext(ProjectContext);
   const { username, profileImg } = context.userData;
   const [isScrolled, setIsScrolled] = useState(false);
-  const { handleLogout, userData, handleGetUserData } = context;
+  const { handleLogout, handleGetUserData } = context;
   useEffect(() => {
-    if (!userData?.username) handleGetUserData();
+    if (!username) handleGetUserData();
   }, []);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function NavBar() {
           <Link href="/my-list">My List</Link>
         </li>
       </ul>
-      {userData.username && (
+      {username && (
         <div className={styles.navbar__searchAndUser}>
           <Search />
           <ul>
@@ -82,4 +82,6 @@ export default function NavBar() {
       )}
     </nav>
   );
-}
+});
+
+export default NavBar;
