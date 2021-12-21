@@ -1,6 +1,7 @@
 import { createContext } from "react";
 export default createContext({
   handleLogout: () => {},
+  handleLoginAsGuest: () => {},
   userData: [],
   selectedMovie: {},
   handleSelectMovie: () => {},

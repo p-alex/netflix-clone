@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import FullscreenWrapper from "../components/FullscreenWrapper/FullscreenWrapper";
@@ -9,11 +9,14 @@ import Logo from "../components/Logo/Logo";
 import Head from "next/head";
 import styles from "../styles/Login.module.css";
 import Spinner from "../components/Spinner/Spinner";
+import ProjectContext from "../context/Project-context";
 let url =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
     : "https://netplix-inky-five.vercel.app/";
 export default function login() {
+  const context = useContext(ProjectContext);
+  const { handleLoginAsGuest } = context;
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [inputs, setInputs] = useState({
@@ -105,8 +108,18 @@ export default function login() {
               />
             );
           })}
-          <SubmitButton isDisabled={isLoading}>
+          <SubmitButton isDisabled={isLoading} isTypeSubmit={true}>
             {isLoading ? <Spinner /> : "Login"}
+          </SubmitButton>
+          <p style={{ width: "100%", textAlign: "center", margin: "20px 0" }}>
+            OR
+          </p>
+          <SubmitButton
+            isDisabled={isLoading}
+            isTypeSubmit={false}
+            func={handleLoginAsGuest}
+          >
+            {isLoading ? <Spinner /> : "Login as Guest"}
           </SubmitButton>
           <p>
             Need an account? <Link href="/register">Register now</Link>

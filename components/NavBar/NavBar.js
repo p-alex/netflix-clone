@@ -72,7 +72,7 @@ const NavBar = memo(() => {
                 </li>
                 <li>
                   <button onClick={handleLogout} name="signOutBtn">
-                    Sign out of Netflix
+                    Sign out of Netplix
                   </button>
                 </li>
               </ul>

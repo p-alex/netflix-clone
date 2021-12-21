@@ -13,7 +13,7 @@ export default async function authHandler(req, res) {
   dbConnect();
   if (req.method === "POST") {
     const { authType } = req.body;
-    if (authType === null)
+    if (typeof authType !== "string")
       return res.json({
         ok: 0,
         message: "authType is expected to be a string",
@@ -193,6 +193,50 @@ export default async function authHandler(req, res) {
         }
       }
 
+      //---------------------------------LOGIN AS GUEST---------------------------------
+
+      if (authType === "guestLogin") {
+        const user = await User.findOne({ email: "guest@guest59198.com" });
+        if (!user?.date)
+          return res.json({
+            ok: 0,
+            message: "Wrong email or password",
+          });
+
+        const isValidPassword = await bcrypt.compare(
+          process.env.GUEST_ACCOUNT_PASSWORD,
+          user.password
+        );
+
+        if (!isValidPassword)
+          return res.json({ ok: 0, message: "Wrong email or password" });
+
+        if (user && isValidPassword && user.isVerified) {
+          const token = await jwt.sign({ id: user._id }, process.env.SECRET, {
+            expiresIn: "72h",
+          });
+          res.setHeader(
+            "Set-Cookie",
+            cookie.serialize("token", token, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV !== "development",
+              sameSite: "Lax",
+              path: "/",
+              expiresIn: 259200,
+              maxAge: 259200,
+            })
+          );
+          return res.json({
+            ok: 1,
+            message: "Logged in as Guest!",
+            user: {
+              username: user.username,
+              profileImg: user.profileImg,
+            },
+          });
+        }
+      }
+
       //---------------------------------LOGOUT---------------------------------
       if (authType === "logout") {
         res.setHeader(
@@ -207,6 +251,8 @@ export default async function authHandler(req, res) {
         );
         return res.json({ ok: 1, message: "Logged out" });
       }
+
+      return res.json({ ok: 0, message: "Wrong authType" });
     } catch (error) {
       console.log(error);
       return res.json({ ok: 0, message: "Something went wrong..." });

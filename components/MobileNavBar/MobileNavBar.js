@@ -46,7 +46,7 @@ export default function MobileNavBar() {
               <div className={styles.mobileNavBar__menu__user__buttons}>
                 <Link href="/profile">Profile</Link>
                 <button onClick={handleLogout} name="signOutBtn">
-                  Sign out of Netflix
+                  Sign out of Netplix
                 </button>
               </div>
             </div>

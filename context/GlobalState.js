@@ -152,10 +152,20 @@ export default function GlobalState({ children }) {
     }
   };
 
+  const handleLoginAsGuest = async () => {
+    const result = await handleFetch(`${url}/api/auth`, "POST", {
+      authType: "guestLogin",
+    });
+    if (result.ok) {
+      router.push("/browse");
+    }
+  };
+
   return (
     <ProjectContext.Provider
       value={{
         handleLogout,
+        handleLoginAsGuest,
         userData: user,
         selectedMovie,
         handleSelectMovie,

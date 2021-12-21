@@ -82,7 +82,7 @@ export default function resetPassword() {
                 handleChangeFunc={handleChange}
                 inputValue={inputs.confirmPassword}
               />
-              <SubmitButton isDisabled={isLoading}>
+              <SubmitButton isDisabled={isLoading} isTypeSubmit={true}>
                 {isLoading ? <Spinner /> : "Reset Password"}
               </SubmitButton>
             </>

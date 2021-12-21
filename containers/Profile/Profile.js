@@ -134,7 +134,11 @@ export default function Profile() {
         }
       >
         <h2>Change password</h2>
-        <Link href="/user/reset-password-email-check">Change password</Link>
+        {username !== "Guest" ? (
+          <Link href="/user/reset-password-email-check">Change password</Link>
+        ) : (
+          <p>You can't change password because you are logged in as guest.</p>
+        )}
       </div>
     </main>
   );

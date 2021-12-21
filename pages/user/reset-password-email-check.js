@@ -64,7 +64,7 @@ export default function resetPasswordEmailCheck() {
             autoFocus={true}
             inputValue={inputs.email}
           />
-          <SubmitButton isDisabled={isLoading}>
+          <SubmitButton isDisabled={isLoading} isTypeSubmit={true}>
             {isLoading ? <Spinner /> : "Send email"}
           </SubmitButton>
           <p>

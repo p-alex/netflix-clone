@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import Link from "next/link";
 
@@ -10,7 +10,10 @@ import Logo from "../components/Logo/Logo";
 import Head from "next/head";
 import styles from "../styles/Register.module.css";
 import Spinner from "../components/Spinner/Spinner";
+import ProjectContext from "../context/Project-context";
 export default function register() {
+  const context = useContext(ProjectContext);
+  const { handleLoginAsGuest } = context;
   const [isLoading, setIsLoading] = useState(false);
   const [inputs, setInputs] = useState({
     username: "",
@@ -129,8 +132,18 @@ export default function register() {
               />
             );
           })}
-          <SubmitButton isDisabled={isLoading}>
+          <SubmitButton isDisabled={isLoading} isTypeSubmit={true}>
             {isLoading ? <Spinner /> : "Register"}
+          </SubmitButton>
+          <p style={{ width: "100%", textAlign: "center", margin: "20px 0" }}>
+            OR
+          </p>
+          <SubmitButton
+            isDisabled={isLoading}
+            isTypeSubmit={false}
+            func={handleLoginAsGuest}
+          >
+            {isLoading ? <Spinner /> : "Login as Guest"}
           </SubmitButton>
           <p>
             Already have an account? <Link href="/login">Login now</Link>
