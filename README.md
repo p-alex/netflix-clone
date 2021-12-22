@@ -12,6 +12,7 @@ Hey! This is a **fullstack Netflix Clone application** created with **Next Js**,
 You can:
 * register a new account
 * login
+* login as guest
 * reset password
 * play movies (i just added trailers from youtube)
 * see more info about the movie
