@@ -117,7 +117,10 @@ export default function login() {
           <SubmitButton
             isDisabled={isLoading}
             isTypeSubmit={false}
-            func={handleLoginAsGuest}
+            func={() => {
+              setIsLoading(true);
+              handleLoginAsGuest();
+            }}
           >
             {isLoading ? <Spinner /> : "Login as Guest"}
           </SubmitButton>
