@@ -127,7 +127,7 @@ export default function Profile() {
         />
       </div>
 
-      {/* - Change Password Section - */}
+      {/* - Change Password Section -- */}
       <div
         className={
           styles.profile__userChangePassword + " " + styles.profile__section
