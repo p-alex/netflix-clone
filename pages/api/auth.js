@@ -196,7 +196,9 @@ export default async function authHandler(req, res) {
       //---------------------------------LOGIN AS GUEST---------------------------------
 
       if (authType === "guestLogin") {
-        const user = await User.findOne({ email: "guest@guest59198.com" });
+        const user = await User.findOne({
+          email: process.env.GUEST_ACCOUNT_EMAIL,
+        });
         if (!user?.date)
           return res.json({
             ok: 0,
