@@ -32,7 +32,7 @@ For sign up and reset password i use SendGrid to send emails for email verificat
 
 ## Features
 * I used **NextJS** library to create my app. Next.js gives you the best developer experience with all the features you need for production: hybrid static & server rendering, TypeScript support, smart bundling, route pre-fetching, and more. No config needed.
-* I used the **useContext API** to manage global state. useContext is a hook built into React and allows you to distribute props to components without prop-drilling.
+* I used the **useContext API** to manage state. useContext is a hook built into React and allows you to distribute props to components without prop-drilling.
 * To style my app i used **css-modules**. CSS modules are CSS files in which all class names and animation names are scoped locally by default.
 * I used the **Mongoose** package to work with the mongodb database. Mongoose is a MongoDB object modeling tool designed to work in an asynchronous environment. It also allows you to specify the types of each property. This is great because this way you can prevent NOSQL injections.
 * I used **SendGrid API** to send emails to users whenever they want to create a new account or reset their password.
