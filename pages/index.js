@@ -1,14 +1,14 @@
-import Image from "next/image";
-import Link from "next/link";
-import Faq from "../components/Faq/Faq";
-import Footer from "../components/Footer/Footer";
-import styles from "../styles/Index.module.css";
+import Image from 'next/image';
+import Link from 'next/link';
+import Faq from '../components/Faq/Faq';
+import Footer from '../components/Footer/Footer';
+import styles from '../styles/Index.module.css';
 export default function index() {
   return (
     <>
       <nav className={styles.nav}>
         <Image
-          src={"/images/logo/netplix-logo.png"}
+          src={'/images/logo/netplix-logo.png'}
           alt=""
           width="112"
           height="30" //30
@@ -17,7 +17,7 @@ export default function index() {
       </nav>
       <header
         className={styles.header}
-        style={{ backgroundImage: "url(/images/bg/bg.jpg)" }}
+        style={{ backgroundImage: 'url(/images/bg/bg.jpg)' }}
       >
         <div className={styles.header__container}>
           <h1>Unlimited movies, TV shows, and more.</h1>
@@ -26,24 +26,18 @@ export default function index() {
           <Link href="/register">Get Started</Link>
         </div>
       </header>
-      <section className={styles.onTv + " " + styles.section}>
+      <section className={styles.onTv + ' ' + styles.section}>
         <div className={styles.section__container}>
           <div className={styles.section__content}>
             <h1>Enjoy on your TV.</h1>
             <h2>
-              Watch on Smart TVs, Playstation, Xbox, Chromecast, Apple TV,
-              Blu-ray players, and more.
+              Watch on Smart TVs, Playstation, Xbox, Chromecast, Apple TV, Blu-ray
+              players, and more.
             </h2>
           </div>
           <div className={styles.onTv__animation}>
             <img src="/images/assets/tv.png" alt="tv" />
-            <video
-              width="469"
-              height="327"
-              loop
-              autoPlay
-              className={styles.onTv__video}
-            >
+            <video width="469" height="327" loop autoPlay className={styles.onTv__video}>
               <source src="/videos/onTv.mp4" />
               Your browser does not support the video tag.
             </video>
@@ -51,7 +45,7 @@ export default function index() {
         </div>
       </section>
 
-      <section className={styles.watch + " " + styles.section}>
+      <section className={styles.watch + ' ' + styles.section}>
         <div className={styles.section__container}>
           <div className={styles.watch__animation}>
             <img src="/images/assets/device-pile.png" alt="device pile" />
@@ -62,27 +56,27 @@ export default function index() {
           <div className={styles.section__content}>
             <h1>Watch everywhere.</h1>
             <h2>
-              Stream unlimited movies and TV shows on your phone, tablet,
-              laptop, and TV without paying more.
+              Stream unlimited movies and TV shows on your phone, tablet, laptop, and TV
+              without paying more.
             </h2>
           </div>
         </div>
       </section>
 
-      <section className={styles.kids + " " + styles.section}>
+      <section className={styles.kids + ' ' + styles.section}>
         <div className={styles.section__container}>
           <div className={styles.section__content}>
             <h1>Create profiles for kids.</h1>
             <h2>
-              Send kids on adventures with their favorite characters in a space
-              made just for them—free with your membership.
+              Send kids on adventures with their favorite characters in a space made just
+              for them—free with your membership.
             </h2>
           </div>
           <img src="/images/assets/kids.png" alt="" />
         </div>
       </section>
 
-      <section className={styles.faq + " " + styles.section}>
+      <section className={styles.faq + ' ' + styles.section}>
         <h1>Frequently Asked Questions</h1>
         <Faq />
       </section>
@@ -94,15 +88,15 @@ export default function index() {
 
 export async function getServerSideProps(context) {
   let url =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : "https://netplix-inky-five.vercel.app/";
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000'
+      : 'https://netplix-inky-five.vercel.app/';
   const token = await context.req.cookies.token;
   if (token) {
     const result = await fetch(`${url}/api/verify-token`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
     });
@@ -110,7 +104,7 @@ export async function getServerSideProps(context) {
     if (resultJSON.ok) {
       return {
         redirect: {
-          destination: "/browse",
+          destination: '/browse',
           permanent: false,
         },
         props: {},

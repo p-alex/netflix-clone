@@ -1,67 +1,67 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from 'react';
 
-import Link from "next/link";
+import Link from 'next/link';
 
-import FullscreenWrapper from "../components/FullscreenWrapper/FullscreenWrapper";
-import Form from "../components/Form/Form";
-import InputGroup from "../components/InputGroup/InputGroup";
-import SubmitButton from "../components/SubmitButton/SubmitButton";
-import Logo from "../components/Logo/Logo";
-import Head from "next/head";
-import styles from "../styles/Register.module.css";
-import Spinner from "../components/Spinner/Spinner";
-import ProjectContext from "../context/Project-context";
+import FullscreenWrapper from '../components/FullscreenWrapper/FullscreenWrapper';
+import Form from '../components/Form/Form';
+import InputGroup from '../components/InputGroup/InputGroup';
+import SubmitButton from '../components/SubmitButton/SubmitButton';
+import Logo from '../components/Logo/Logo';
+import Head from 'next/head';
+import styles from '../styles/Register.module.css';
+import Spinner from '../components/Spinner/Spinner';
+import ProjectContext from '../context/Project-context';
 export default function register() {
   const context = useContext(ProjectContext);
   const { handleLoginAsGuest } = context;
   const [isLoading, setIsLoading] = useState(false);
   const [inputs, setInputs] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
     isRegister: true,
   });
   const handleResetInputs = () =>
     setInputs((prevState) => ({
       ...prevState,
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
     }));
   const inputList = [
     {
-      label: "Username",
-      setNameId: "username",
-      type: "text",
-      placeholder: " ",
+      label: 'Username',
+      setNameId: 'username',
+      type: 'text',
+      placeholder: ' ',
       value: inputs.username,
     },
     {
-      label: "E-mail",
-      setNameId: "email",
-      type: "email",
-      placeholder: " ",
+      label: 'E-mail',
+      setNameId: 'email',
+      type: 'email',
+      placeholder: ' ',
       value: inputs.email,
     },
     {
-      label: "Password",
-      setNameId: "password",
-      type: "password",
-      placeholder: " ",
+      label: 'Password',
+      setNameId: 'password',
+      type: 'password',
+      placeholder: ' ',
       value: inputs.password,
     },
     {
-      label: "Confirm Password",
-      setNameId: "confirmPassword",
-      type: "password",
-      placeholder: " ",
+      label: 'Confirm Password',
+      setNameId: 'confirmPassword',
+      type: 'password',
+      placeholder: ' ',
       value: inputs.confirmPassword,
     },
   ];
 
-  const [feedback, setFeedback] = useState("");
+  const [feedback, setFeedback] = useState('');
 
   const handleChange = (e) => {
     setInputs((prevState) => ({
@@ -74,19 +74,19 @@ export default function register() {
     setIsLoading(true);
     e.preventDefault();
     let url =
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000"
-        : "https://netplix-inky-five.vercel.app/";
-    console.time("Sign up time");
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3000'
+        : 'https://netplix-inky-five.vercel.app/';
+    console.time('Sign up time');
     try {
       const result = await fetch(`${url}/api/auth`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           ...inputs,
-          authType: "register",
+          authType: 'register',
         }),
       });
 
@@ -102,7 +102,7 @@ export default function register() {
       setIsLoading(false);
       setFeedback(error);
     }
-    console.timeEnd("Sign up time");
+    console.timeEnd('Sign up time');
   };
 
   return (
@@ -118,7 +118,7 @@ export default function register() {
             return (
               <InputGroup
                 key={input.label}
-                inputFor={"register"}
+                inputFor={'register'}
                 usernameForValidation={inputs.username}
                 passwordForValidation={inputs.password}
                 setId={input.setNameId}
@@ -133,11 +133,9 @@ export default function register() {
             );
           })}
           <SubmitButton isDisabled={isLoading} isTypeSubmit={true}>
-            {isLoading ? <Spinner /> : "Register"}
+            {isLoading ? <Spinner /> : 'Register'}
           </SubmitButton>
-          <p style={{ width: "100%", textAlign: "center", margin: "20px 0" }}>
-            OR
-          </p>
+          <p style={{ width: '100%', textAlign: 'center', margin: '20px 0' }}>OR</p>
           <SubmitButton
             isDisabled={isLoading}
             isTypeSubmit={false}
@@ -146,7 +144,7 @@ export default function register() {
               handleLoginAsGuest();
             }}
           >
-            {isLoading ? <Spinner /> : "Login as Guest"}
+            {isLoading ? <Spinner /> : 'Login as Guest'}
           </SubmitButton>
           <p>
             Already have an account? <Link href="/login">Login now</Link>
@@ -160,14 +158,14 @@ export default function register() {
 export async function getServerSideProps(context) {
   const token = await context.req.cookies.token;
   let url =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : "https://netflix-clone-inky-five.vercel.app";
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000'
+      : 'https://netplix-inky-five.vercel.app';
   if (token) {
     const result = await fetch(`${url}/api/verify-token`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
     });
@@ -175,7 +173,7 @@ export async function getServerSideProps(context) {
     if (resultJSON.ok) {
       return {
         redirect: {
-          destination: "/browse",
+          destination: '/browse',
           permanent: false,
         },
         props: {},
