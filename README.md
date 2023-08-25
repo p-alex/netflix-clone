@@ -28,7 +28,7 @@ The application also has an authentication system. You can sign up, sign in, log
 For sign up and reset password i use SendGrid to send emails for email verification.
 
 ## Link
-[Live site url](https://netplix-clone-inky-five.vercel.app/) to see live version
+[Live site url](https://netplix-inky-five.vercel.app/) to see live version
 
 ## Features
 * I used **NextJS** library to create my app. Next.js gives you the best developer experience with all the features you need for production: hybrid static & server rendering, TypeScript support, smart bundling, route pre-fetching, and more. No config needed.
